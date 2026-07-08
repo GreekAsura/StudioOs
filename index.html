@@ -1138,6 +1138,12 @@ function subscribeToData() {
     });
     unsubscribers.push(u4);
   }
+
+  // Pre-load YouTube channels, analytics games, and notes on startup
+  // so data is ready when user navigates to those tabs
+  try { loadConnectedGames(); } catch(e) {}
+  try { loadYouTubeData(); } catch(e) {}
+  try { loadNotes(); } catch(e) {}
 }
 
 // ── DASHBOARD ──
