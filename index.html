@@ -1483,7 +1483,7 @@ window.switchProjectTab = (id, tab) => {
   renderProjectDetail(projects.find(p=>p.id===id));
 };
 
-function renderProjectDetail(project) {
+async function renderProjectDetail(project) {
   if (!project) return;
   const tab = currentProjectTab;
   const container = document.getElementById('project-detail-content');
@@ -1562,22 +1562,47 @@ function renderProjectDetail(project) {
   } else if (tab==='team') {
     const members = teamMembers.filter(m=>(project.memberIds||[]).includes(m.id));
     const nonMembers = teamMembers.filter(m=>!(project.memberIds||[]).includes(m.id) && m.id!==currentUser.uid);
-    container.innerHTML = `
-      <div style="margin-bottom:16px">
-        ${nonMembers.length>0?`<div style="margin-bottom:16px"><label class="form-label">Add member to project</label><div style="display:flex;gap:8px;flex-wrap:wrap">${nonMembers.map(m=>`<button class="btn-secondary" onclick="addMemberToProject('${project.id}','${m.id}')">${m.name} +</button>`).join('')}</div></div>`:''}
-      </div>
-      <div class="team-grid">
-        ${members.map(m=>`
-          <div class="team-card">
-            <div class="team-avatar">${(m.name||m.email||'?')[0].toUpperCase()}</div>
-            <div class="team-name">${m.name||m.email}</div>
-            <div class="team-email">${m.email}</div>
-            <div class="team-role-badge">${m.role||'developer'}</div>
-            <div style="display:flex;gap:8px;margin-top:4px">
-              ${m.id!==currentUser.uid?`<button class="btn-ghost" style="color:var(--red);font-size:12px" onclick="removeMemberFromProject('${project.id}','${m.id}')">Remove</button>`:'<span style="font-size:12px;color:var(--text-muted)">You (owner)</span>'}
-            </div>
-          </div>`).join('') || '<div class="empty-state"><div class="empty-icon">👥</div><h3>No members yet</h3><p>Add team members above.</p></div>'}
-      </div>`;
+    
+    container.innerHTML = '<div id="team-tab-content"><div style="color:var(--text-muted);font-size:13px;padding:12px 0">Loading team...</div></div>';
+    
+    // Refresh team members from Firestore to make sure we have latest
+    try {
+      const usersSnap = await getDocs(collection(db, 'users'));
+      teamMembers = usersSnap.docs.map(d=>({id:d.id,...d.data()}));
+    } catch(e) { console.error('Team load error:', e); }
+    
+    const freshMembers = teamMembers.filter(m=>(project.memberIds||[]).includes(m.id));
+    const freshNonMembers = teamMembers.filter(m=>!(project.memberIds||[]).includes(m.id) && m.id!==currentUser.uid);
+    
+    const teamContent = document.getElementById('team-tab-content');
+    if (!teamContent) return;
+    
+    teamContent.innerHTML = (freshNonMembers.length > 0 ? `
+      <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:16px">
+        <label class="form-label" style="margin-bottom:10px;display:block">Add member to this project</label>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          ${freshNonMembers.map(m=>`
+            <button class="btn-secondary" onclick="addMemberToProject('${project.id}','${m.id}')" style="display:flex;align-items:center;gap:8px">
+              <div style="width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#A084FF);display:flex;align-items:center;justify-content:center;color:white;font-size:11px;font-weight:700">${(m.name||m.email||'?')[0].toUpperCase()}</div>
+              ${m.name||m.email} +
+            </button>`).join('')}
+        </div>
+      </div>` : '') +
+      '<div class="team-grid">' +
+      (freshMembers.length > 0 ? freshMembers.map(m=>`
+        <div class="team-card">
+          <div class="team-avatar">${(m.name||m.email||'?')[0].toUpperCase()}</div>
+          <div class="team-name">${m.name||m.email}</div>
+          <div class="team-email">${m.email||''}</div>
+          <div class="team-role-badge">${m.role||'developer'}</div>
+          <div style="display:flex;gap:8px;margin-top:6px">
+            ${m.id!==currentUser.uid
+              ? `<button class="btn-ghost" style="color:var(--red);font-size:12px" onclick="removeMemberFromProject('${project.id}','${m.id}')">Remove from project</button>`
+              : '<span style="font-size:12px;color:var(--text-muted)">You (owner)</span>'}
+          </div>
+        </div>`).join('')
+      : '<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">👥</div><h3>No members yet</h3><p>Add team members using the button above.</p></div>') +
+      '</div>';
   }
 }
 
@@ -1644,17 +1669,34 @@ window.deleteProject = async (id) => {
 };
 
 // ── TASKS ──
-window.openAddTaskModal = (projectId) => {
-  openModal('New Task', `
-    <div class="form-group"><label class="form-label">Task Title</label><input class="form-input" id="t-title" placeholder="e.g. Fix ragdoll physics"/></div>
-    <div class="form-group"><label class="form-label">Description</label><textarea class="form-textarea" id="t-desc" placeholder="Details..."></textarea></div>
-    <div class="form-group"><label class="form-label">Priority</label><select class="form-select" id="t-priority"><option value="high">🔴 High</option><option value="medium" selected>🟡 Medium</option><option value="low">🟢 Low</option></select></div>
-    <div class="form-group"><label class="form-label">Assign to</label><select class="form-select" id="t-assignee">
-      <option value="${currentUser.uid}">Me</option>
-      ${teamMembers.filter(m=>m.id!==currentUser.uid).map(m=>`<option value="${m.id}">${m.name}</option>`).join('')}
-    </select></div>
-    <div class="modal-actions"><button class="btn-secondary" onclick="closeModal()">Cancel</button><button class="btn-primary" onclick="createTask('${projectId}')">Add Task</button></div>`);
-  setTimeout(()=>document.getElementById('t-title')?.focus(),50);
+window.openAddTaskModal = async (projectId) => {
+  try {
+    const usersSnap = await getDocs(collection(db, 'users'));
+    teamMembers = usersSnap.docs.map(d=>({id:d.id,...d.data()}));
+  } catch(e) {}
+
+  const project = projects.find(p=>p.id===projectId);
+  const assignableMembers = teamMembers.filter(m=>m.id!==currentUser.uid);
+  
+  let assigneeOptions = '<option value="' + currentUser.uid + '">Me (you)</option>';
+  assignableMembers.forEach(m => {
+    assigneeOptions += '<option value="' + m.id + '">' + (m.name||m.email) + '</option>';
+  });
+
+  const body = 
+    '<div class="form-group"><label class="form-label">Task Title</label><input class="form-input" id="t-title" placeholder="e.g. Fix ragdoll physics"/></div>' +
+    '<div class="form-group"><label class="form-label">Description</label><textarea class="form-textarea" id="t-desc" placeholder="Details..."></textarea></div>' +
+    '<div class="form-group"><label class="form-label">Priority</label><select class="form-select" id="t-priority"><option value="high">High</option><option value="medium" selected>Medium</option><option value="low">Low</option></select></div>' +
+    '<div class="form-group"><label class="form-label">Assign to</label><select class="form-select" id="t-assignee">' + assigneeOptions + '</select></div>' +
+    '<div class="modal-actions"><button class="btn-secondary" onclick="closeModal()">Cancel</button><button class="btn-primary" id="create-task-btn">Add Task</button></div>';
+
+  openModal('New Task', body);
+  
+  setTimeout(() => {
+    document.getElementById('t-title')?.focus();
+    const btn = document.getElementById('create-task-btn');
+    if (btn) btn.onclick = () => createTask(projectId);
+  }, 50);
 };
 
 window.createTask = async (projectId) => {
