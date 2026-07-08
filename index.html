@@ -279,9 +279,24 @@ a{color:inherit;text-decoration:none;}
     <span class="logo-text">StudioOS</span>
   </div>
   <div class="spinner"></div>
+  <div id="loading-timeout-msg" style="display:none;color:var(--text-muted);font-size:13px;margin-top:16px;text-align:center;max-width:300px">
+    Taking longer than usual...<br>
+    <button onclick="location.reload()" style="color:var(--accent);background:none;border:none;cursor:pointer;font-size:13px;margin-top:8px">Tap to retry</button>
+  </div>
 </div>
 
 <!-- AUTH SCREEN -->
+
+<script>
+  // Show retry message if loading takes too long
+  setTimeout(() => {
+    const msg = document.getElementById('loading-timeout-msg');
+    if (msg && !document.getElementById('loading-screen').classList.contains('hidden')) {
+      msg.style.display = 'block';
+    }
+  }, 6000);
+</script>
+
 <div id="auth-screen" class="auth-screen hidden">
   <div class="auth-bg"><div class="auth-grid"></div></div>
   <div class="auth-card">
@@ -900,6 +915,7 @@ function friendlyAuthError(code) {
 
 // ── AUTH STATE ──
 onAuthStateChanged(auth, async (user) => {
+  try {
   document.getElementById('loading-screen').classList.add('hidden');
   if (user) {
     currentUser = user;
@@ -945,6 +961,11 @@ onAuthStateChanged(auth, async (user) => {
     isOwner = false;
     document.getElementById('auth-screen').classList.remove('hidden');
     document.getElementById('app').classList.add('hidden');
+  }
+  } catch(err) {
+    console.error('Auth state error:', err);
+    document.getElementById('loading-screen').classList.add('hidden');
+    document.getElementById('auth-screen').classList.remove('hidden');
   }
 });
 
