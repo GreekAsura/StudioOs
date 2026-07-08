@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudioOS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-base:#0D0E14;--bg-surface:#13151E;--bg-elevated:#1A1D2B;--bg-hover:#1F2235;
+  --border:#252840;--border-light:#2E3250;
+  --accent:#7C5CFC;--accent-dim:rgba(124,92,252,0.15);--accent-glow:rgba(124,92,252,0.35);
+  --green:#2ECC8E;--green-dim:rgba(46,204,142,0.12);
+  --yellow:#F5C842;--yellow-dim:rgba(245,200,66,0.12);
+  --red:#F05A5A;--red-dim:rgba(240,90,90,0.12);
+  --blue:#5B9CF6;--blue-dim:rgba(91,156,246,0.12);
+  --text-primary:#E8EAF2;--text-secondary:#8891AA;--text-muted:#505870;
+  --radius-sm:6px;--radius:10px;--radius-lg:14px;--radius-xl:20px;
+  --font-display:'Space Grotesk',sans-serif;--font-body:'Inter',sans-serif;
+  --sidebar-w:220px;--transition:0.18s ease;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--font-body);background:var(--bg-base);color:var(--text-primary);min-height:100vh;overflow-x:hidden;font-size:14px;line-height:1.5;}
+button{cursor:pointer;border:none;background:none;font-family:inherit;}
+input,textarea,select{font-family:inherit;}
+.hidden{display:none!important;}
+a{color:inherit;text-decoration:none;}
+
+/* LOADING */
+.loading-screen{position:fixed;inset:0;background:var(--bg-base);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;gap:16px;}
+.loading-logo{display:flex;align-items:center;gap:10px;}
+.spinner{width:28px;height:28px;border:2px solid var(--border-light);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* AUTH */
+.auth-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.auth-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(124,92,252,0.18) 0%,transparent 70%);}
+.auth-grid{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:40px 40px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 30%,transparent 100%);opacity:0.4;}
+.auth-card{position:relative;background:var(--bg-surface);border:1px solid var(--border-light);border-radius:var(--radius-xl);padding:48px 44px;width:420px;display:flex;flex-direction:column;align-items:center;box-shadow:0 0 80px rgba(124,92,252,0.12),0 24px 64px rgba(0,0,0,0.5);}
+.auth-tabs{display:flex;gap:0;border:1px solid var(--border-light);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:28px;width:100%;}
+.auth-tab{flex:1;padding:9px;font-size:13.5px;font-weight:600;color:var(--text-secondary);transition:all var(--transition);}
+.auth-tab.active{background:var(--accent);color:white;}
+.auth-logo{display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+.logo-mark{width:40px;height:40px;background:linear-gradient(135deg,var(--accent),#A084FF);border-radius:10px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px var(--accent-glow);}
+.logo-mark.sm{width:28px;height:28px;border-radius:7px;}
+.logo-s{font-family:var(--font-display);font-weight:700;color:white;font-size:20px;line-height:1;}
+.logo-mark.sm .logo-s{font-size:14px;}
+.logo-text{font-family:var(--font-display);font-weight:700;font-size:22px;color:var(--text-primary);letter-spacing:-0.3px;}
+.auth-tagline{color:var(--text-secondary);font-size:14px;margin-bottom:28px;margin-top:4px;}
+.auth-error{background:var(--red-dim);border:1px solid var(--red);color:var(--red);padding:10px 14px;border-radius:var(--radius-sm);font-size:13px;width:100%;margin-bottom:16px;display:none;}
+.auth-success{background:var(--green-dim);border:1px solid var(--green);color:var(--green);padding:10px 14px;border-radius:var(--radius-sm);font-size:13px;width:100%;margin-bottom:16px;display:none;}
+.divider{display:flex;align-items:center;gap:12px;width:100%;margin:16px 0;color:var(--text-muted);font-size:12px;}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
+.btn-google{display:flex;align-items:center;gap:12px;background:var(--bg-elevated);border:1px solid var(--border-light);color:var(--text-primary);font-size:14px;font-weight:500;padding:11px 20px;border-radius:var(--radius-sm);transition:all var(--transition);width:100%;justify-content:center;}
+.btn-google:hover{background:var(--bg-hover);border-color:var(--accent);}
+.auth-note{color:var(--text-muted);font-size:12px;margin-top:16px;text-align:center;line-height:1.6;}
+
+/* APP LAYOUT */
+.app{display:flex;min-height:100vh;}
+.sidebar{width:var(--sidebar-w);flex-shrink:0;background:var(--bg-surface);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:100;background-image:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(255,255,255,0.012) 3px,rgba(255,255,255,0.012) 4px);}
+.sidebar-top{padding:20px 16px 12px;border-bottom:1px solid var(--border);}
+.sidebar-logo{display:flex;align-items:center;gap:8px;}
+.sidebar-nav{flex:1;padding:12px 10px;display:flex;flex-direction:column;gap:2px;overflow-y:auto;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--radius-sm);color:var(--text-secondary);font-size:13.5px;font-weight:500;transition:all var(--transition);text-align:left;width:100%;}
+.nav-item:hover{background:var(--bg-hover);color:var(--text-primary);}
+.nav-item.active{background:var(--accent-dim);color:var(--accent);border:1px solid rgba(124,92,252,0.25);}
+.nav-item svg{flex-shrink:0;opacity:0.8;}
+.sidebar-bottom{padding:12px 10px 16px;border-top:1px solid var(--border);}
+.user-pill{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--radius-sm);background:var(--bg-elevated);}
+.user-avatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#A084FF);flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;color:white;font-family:var(--font-display);font-weight:700;font-size:13px;}
+.user-avatar img{width:100%;height:100%;object-fit:cover;}
+.user-info{flex:1;min-width:0;display:flex;flex-direction:column;}
+.user-name{font-size:12.5px;font-weight:600;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.user-role{font-size:11px;font-weight:500;}
+.role-owner{color:var(--accent);}
+.role-developer{color:var(--green);}
+.signout-btn{color:var(--text-muted);padding:4px;border-radius:4px;transition:color var(--transition);}
+.signout-btn:hover{color:var(--red);}
+
+/* MAIN */
+.main{flex:1;margin-left:var(--sidebar-w);min-height:100vh;overflow-y:auto;}
+.view{display:none;padding:32px 36px 48px;max-width:1200px;}
+.view.active{display:block;}
+.view-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:28px;gap:16px;}
+.view-title{font-family:var(--font-display);font-size:26px;font-weight:700;color:var(--text-primary);letter-spacing:-0.4px;}
+.view-sub{color:var(--text-secondary);font-size:13.5px;margin-top:3px;}
+
+/* BUTTONS */
+.btn-primary{background:var(--accent);color:white;font-size:13.5px;font-weight:600;padding:9px 18px;border-radius:var(--radius-sm);transition:all var(--transition);white-space:nowrap;font-family:var(--font-body);}
+.btn-primary:hover{background:#8E72FF;box-shadow:0 0 20px var(--accent-glow);}
+.btn-primary:disabled{opacity:0.5;cursor:not-allowed;}
+.btn-ghost{color:var(--text-secondary);font-size:13px;font-weight:500;padding:6px 10px;border-radius:var(--radius-sm);transition:all var(--transition);font-family:var(--font-body);}
+.btn-ghost:hover{color:var(--text-primary);background:var(--bg-elevated);}
+.btn-secondary{background:var(--bg-elevated);border:1px solid var(--border-light);color:var(--text-primary);font-size:13px;font-weight:500;padding:8px 16px;border-radius:var(--radius-sm);transition:all var(--transition);font-family:var(--font-body);}
+.btn-secondary:hover{background:var(--bg-hover);border-color:var(--accent);}
+
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px;}
+.stat-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;display:flex;flex-direction:column;gap:6px;}
+.stat-label{font-size:12px;font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;}
+.stat-value{font-family:var(--font-display);font-size:32px;font-weight:700;color:var(--text-primary);line-height:1;}
+.stat-change{font-size:12px;color:var(--text-secondary);}
+
+/* DASH GRID */
+.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.dash-section{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px;}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.section-title{font-family:var(--font-display);font-size:15px;font-weight:600;color:var(--text-primary);}
+.project-list-sm{display:flex;flex-direction:column;gap:8px;}
+.project-row-sm{display:flex;align-items:center;gap:12px;padding:10px 12px;background:var(--bg-elevated);border-radius:var(--radius-sm);cursor:pointer;transition:all var(--transition);border:1px solid transparent;}
+.project-row-sm:hover{border-color:var(--border-light);background:var(--bg-hover);}
+.project-row-name{font-size:13px;font-weight:600;color:var(--text-primary);}
+.project-row-meta{font-size:11.5px;color:var(--text-muted);margin-top:2px;}
+.task-list-sm{display:flex;flex-direction:column;gap:8px;}
+.task-row-sm{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:var(--bg-elevated);border-radius:var(--radius-sm);border:1px solid transparent;transition:all var(--transition);}
+.task-check{width:16px;height:16px;border-radius:4px;border:2px solid var(--border-light);flex-shrink:0;margin-top:1px;cursor:pointer;transition:all var(--transition);display:flex;align-items:center;justify-content:center;background:transparent;font-size:10px;}
+.task-check.done{background:var(--green);border-color:var(--green);color:white;}
+.task-row-name{font-size:13px;font-weight:500;color:var(--text-primary);}
+.task-row-name.done{text-decoration:line-through;color:var(--text-muted);}
+.task-row-meta{font-size:11.5px;color:var(--text-muted);margin-top:2px;}
+
+/* FILTER */
+.filter-bar{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap;}
+.filter-btn{padding:6px 14px;border-radius:20px;font-size:13px;font-weight:500;color:var(--text-secondary);background:var(--bg-surface);border:1px solid var(--border);transition:all var(--transition);font-family:var(--font-body);}
+.filter-btn:hover{border-color:var(--border-light);color:var(--text-primary);}
+.filter-btn.active{background:var(--accent-dim);border-color:rgba(124,92,252,0.4);color:var(--accent);}
+
+/* PROJECT CARDS */
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;}
+.project-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:22px;cursor:pointer;transition:all var(--transition);position:relative;overflow:hidden;}
+.project-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),transparent);opacity:0;transition:opacity var(--transition);}
+.project-card:hover{border-color:var(--border-light);background:var(--bg-elevated);transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,0.3);}
+.project-card:hover::before{opacity:1;}
+.project-card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;}
+.project-icon{font-size:28px;line-height:1;}
+.project-status-badge{font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:0.05em;}
+.status-active{background:var(--green-dim);color:var(--green);}
+.status-planning{background:var(--yellow-dim);color:var(--yellow);}
+.status-paused{background:var(--red-dim);color:var(--red);}
+.status-complete{background:var(--blue-dim);color:var(--blue);}
+.project-card-name{font-family:var(--font-display);font-size:17px;font-weight:700;color:var(--text-primary);margin-bottom:5px;letter-spacing:-0.2px;}
+.project-card-desc{font-size:13px;color:var(--text-secondary);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.project-card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:18px;padding-top:14px;border-top:1px solid var(--border);}
+.project-card-meta{display:flex;gap:14px;}
+.project-meta-item{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--text-muted);}
+.pulse-dot{width:8px;height:8px;border-radius:50%;background:var(--green);position:relative;flex-shrink:0;}
+.pulse-dot::after{content:'';position:absolute;inset:-3px;border-radius:50%;background:var(--green);opacity:0.3;animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:0.3;}50%{transform:scale(1.8);opacity:0;}}
+.pulse-dot.yellow{background:var(--yellow);}
+.pulse-dot.yellow::after{background:var(--yellow);}
+.pulse-dot.red{background:var(--red);}
+.pulse-dot.red::after{background:var(--red);}
+.pulse-dot.blue{background:var(--blue);}
+.pulse-dot.blue::after{background:var(--blue);}
+
+/* EMPTY */
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;text-align:center;color:var(--text-muted);grid-column:1/-1;}
+.empty-icon{font-size:40px;margin-bottom:16px;opacity:0.6;}
+.empty-state h3{font-family:var(--font-display);font-size:17px;color:var(--text-secondary);margin-bottom:8px;}
+.empty-state p{font-size:13.5px;color:var(--text-muted);max-width:280px;line-height:1.6;margin-bottom:20px;}
+
+/* PROJECT DETAIL */
+.project-detail-tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:28px;}
+.tab-btn{padding:10px 18px;font-size:13.5px;font-weight:500;color:var(--text-secondary);border-bottom:2px solid transparent;margin-bottom:-1px;transition:all var(--transition);font-family:var(--font-body);}
+.tab-btn:hover{color:var(--text-primary);}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
+
+/* TASKS */
+.tasks-board{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:start;}
+.task-column{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;}
+.task-column-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.task-column-title{font-size:13px;font-weight:600;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.07em;display:flex;align-items:center;gap:8px;}
+.task-count{background:var(--bg-elevated);color:var(--text-muted);font-size:11px;font-weight:600;padding:1px 7px;border-radius:20px;}
+.task-cards{display:flex;flex-direction:column;gap:10px;}
+.task-card{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:14px;transition:all var(--transition);}
+.task-card:hover{border-color:var(--border-light);background:var(--bg-hover);}
+.task-card-name{font-size:13.5px;font-weight:600;color:var(--text-primary);margin-bottom:8px;}
+.task-card-meta{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.task-card-project{font-size:11.5px;color:var(--text-muted);background:var(--bg-surface);padding:2px 8px;border-radius:4px;}
+.priority-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.priority-high{background:var(--red);}
+.priority-medium{background:var(--yellow);}
+.priority-low{background:var(--green);}
+
+/* FILES */
+.files-list{display:flex;flex-direction:column;gap:10px;}
+.file-item{display:flex;align-items:center;gap:14px;background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;transition:all var(--transition);}
+.file-item:hover{border-color:var(--border-light);background:var(--bg-elevated);}
+.file-icon{font-size:22px;flex-shrink:0;}
+.file-info{flex:1;min-width:0;}
+.file-name{font-size:14px;font-weight:600;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.file-meta{font-size:12px;color:var(--text-muted);margin-top:2px;}
+.file-project-tag{font-size:12px;color:var(--accent);background:var(--accent-dim);padding:2px 10px;border-radius:20px;font-weight:500;white-space:nowrap;}
+
+/* TEAM */
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;}
+.team-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:22px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;transition:all var(--transition);}
+.team-card:hover{border-color:var(--border-light);}
+.team-avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#A084FF);font-size:22px;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-family:var(--font-display);}
+.team-name{font-family:var(--font-display);font-size:15px;font-weight:700;color:var(--text-primary);}
+.team-email{font-size:12px;color:var(--text-muted);}
+.team-role-badge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:var(--accent-dim);color:var(--accent);}
+
+/* ANALYTICS */
+.analytics-coming{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 20px;text-align:center;}
+.coming-icon{font-size:56px;margin-bottom:24px;}
+.analytics-coming h2{font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--text-primary);margin-bottom:12px;}
+.analytics-coming p{color:var(--text-secondary);font-size:14px;max-width:380px;line-height:1.7;margin-bottom:28px;}
+
+/* OVERVIEW */
+.overview-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px;}
+.detail-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px;}
+.detail-card h4{font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;}
+.progress-bar-bg{height:6px;background:var(--bg-elevated);border-radius:3px;overflow:hidden;margin-top:8px;}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),#A084FF);border-radius:3px;transition:width 0.5s ease;}
+.detail-big-num{font-family:var(--font-display);font-size:36px;font-weight:700;color:var(--text-primary);}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;}
+.modal{background:var(--bg-surface);border:1px solid var(--border-light);border-radius:var(--radius-xl);padding:28px;width:100%;max-width:480px;box-shadow:0 24px 80px rgba(0,0,0,0.6);}
+.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
+.modal-header h3{font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--text-primary);}
+.modal-close{color:var(--text-muted);font-size:18px;padding:4px 8px;border-radius:4px;transition:all var(--transition);}
+.modal-close:hover{color:var(--text-primary);background:var(--bg-elevated);}
+
+/* FORMS */
+.form-group{margin-bottom:18px;}
+.form-label{display:block;font-size:12.5px;font-weight:600;color:var(--text-secondary);margin-bottom:7px;text-transform:uppercase;letter-spacing:0.05em;}
+.form-input,.form-select,.form-textarea{width:100%;background:var(--bg-elevated);border:1px solid var(--border-light);border-radius:var(--radius-sm);color:var(--text-primary);font-size:14px;padding:10px 13px;transition:all var(--transition);outline:none;}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-dim);}
+.form-textarea{resize:vertical;min-height:80px;}
+.form-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238891AA' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;cursor:pointer;}
+.form-select option{background:var(--bg-elevated);}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:24px;}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--bg-elevated);border:1px solid var(--border-light);border-radius:var(--radius);padding:12px 20px;font-size:14px;color:var(--text-primary);font-weight:500;z-index:9999;box-shadow:0 8px 32px rgba(0,0,0,0.4);animation:slideUp 0.2s ease;}
+@keyframes slideUp{from{transform:translateY(16px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+
+/* ACCESS DENIED */
+.access-denied{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 20px;text-align:center;}
+.access-denied h2{font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--text-primary);margin-bottom:12px;margin-top:16px;}
+.access-denied p{color:var(--text-secondary);font-size:14px;max-width:360px;line-height:1.7;}
+
+@media(max-width:900px){.stats-row{grid-template-columns:repeat(2,1fr);}.dash-grid{grid-template-columns:1fr;}.tasks-board{grid-template-columns:1fr;}.overview-grid{grid-template-columns:1fr;}}
+@media(max-width:640px){:root{--sidebar-w:0px;}.sidebar{display:none;}.view{padding:20px 16px 40px;}.stats-row{grid-template-columns:repeat(2,1fr);}}
+</style>
+</head>
+<body>
+
+<!-- LOADING -->
+<div id="loading-screen" class="loading-screen">
+  <div class="loading-logo">
+    <div class="logo-mark"><span class="logo-s">S</span></div>
+    <span class="logo-text">StudioOS</span>
+  </div>
+  <div class="spinner"></div>
+</div>
+
+<!-- AUTH SCREEN -->
+<div id="auth-screen" class="auth-screen hidden">
+  <div class="auth-bg"><div class="auth-grid"></div></div>
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="logo-mark"><span class="logo-s">S</span></div>
+      <span class="logo-text">StudioOS</span>
+    </div>
+    <p class="auth-tagline">Your game studio. One dashboard.</p>
+
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tab-signin" onclick="switchAuthTab('signin')">Sign In</button>
+      <button class="auth-tab" id="tab-signup" onclick="switchAuthTab('signup')">Create Account</button>
+    </div>
+
+    <div id="auth-error" class="auth-error"></div>
+    <div id="auth-success" class="auth-success"></div>
+
+    <!-- SIGN IN FORM -->
+    <div id="form-signin" style="width:100%">
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input class="form-input" id="signin-email" type="email" placeholder="you@gmail.com" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input class="form-input" id="signin-password" type="password" placeholder="Your password" />
+      </div>
+      <button class="btn-primary" id="signin-btn" onclick="doSignIn()" style="width:100%;justify-content:center">Sign In</button>
+      <div class="divider">or</div>
+      <button class="btn-google" id="google-btn" onclick="doGoogleSignIn()">
+        <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        Continue with Google
+      </button>
+    </div>
+
+    <!-- SIGN UP FORM -->
+    <div id="form-signup" style="width:100%;display:none">
+      <div class="form-group">
+        <label class="form-label">Full Name</label>
+        <input class="form-input" id="signup-name" type="text" placeholder="Your name" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input class="form-input" id="signup-email" type="email" placeholder="you@gmail.com" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input class="form-input" id="signup-password" type="password" placeholder="Min 6 characters" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Confirm Password</label>
+        <input class="form-input" id="signup-confirm" type="password" placeholder="Repeat password" />
+      </div>
+      <button class="btn-primary" id="signup-btn" onclick="doSignUp()" style="width:100%">Create Account</button>
+      <div class="divider">or</div>
+      <button class="btn-google" onclick="doGoogleSignIn()">
+        <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        Sign up with Google
+      </button>
+    </div>
+
+    <p class="auth-note">By signing up you agree to StudioOS terms.<br>Your data is stored securely in Firebase.</p>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="app" class="app hidden">
+  <aside class="sidebar">
+    <div class="sidebar-top">
+      <div class="sidebar-logo">
+        <div class="logo-mark sm"><span class="logo-s">S</span></div>
+        <span class="logo-text">StudioOS</span>
+      </div>
+    </div>
+    <nav class="sidebar-nav" id="sidebar-nav">
+      <button class="nav-item active" data-view="dashboard">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Dashboard
+      </button>
+      <button class="nav-item" data-view="projects">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>Projects
+      </button>
+      <button class="nav-item" data-view="tasks">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Tasks
+      </button>
+      <button class="nav-item" data-view="files">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>File Vault
+      </button>
+      <button class="nav-item owner-only" data-view="team">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Team
+      </button>
+      <button class="nav-item" data-view="analytics">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Analytics
+      </button>
+      <button class="nav-item owner-only" data-view="ads">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>Ad Advisor
+      </button>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="user-pill">
+        <div class="user-avatar" id="user-avatar"></div>
+        <div class="user-info">
+          <span class="user-name" id="user-name">...</span>
+          <span class="user-role" id="user-role-label">...</span>
+        </div>
+        <button class="signout-btn" onclick="doSignOut()" title="Sign out">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <!-- DASHBOARD -->
+    <div class="view active" id="view-dashboard">
+      <div class="view-header">
+        <div>
+          <h1 class="view-title">Dashboard</h1>
+          <p class="view-sub" id="dash-greeting">Welcome back</p>
+        </div>
+        <button class="btn-primary owner-only" onclick="showView('projects');setTimeout(()=>openNewProjectModal(),100)">+ New Project</button>
+      </div>
+      <div class="stats-row">
+        <div class="stat-card"><span class="stat-label">Active Projects</span><span class="stat-value" id="stat-projects">—</span><span class="stat-change">Your studio</span></div>
+        <div class="stat-card"><span class="stat-label">Open Tasks</span><span class="stat-value" id="stat-tasks">—</span><span class="stat-change">Across all projects</span></div>
+        <div class="stat-card owner-only"><span class="stat-label">Team Members</span><span class="stat-value" id="stat-team">—</span><span class="stat-change">Active devs</span></div>
+        <div class="stat-card"><span class="stat-label">Files Stored</span><span class="stat-value" id="stat-files">—</span><span class="stat-change">In vault</span></div>
+      </div>
+      <div class="dash-grid">
+        <div class="dash-section">
+          <div class="section-header"><h2 class="section-title">Recent Projects</h2><button class="btn-ghost" onclick="showView('projects')">View all →</button></div>
+          <div id="dash-projects-list" class="project-list-sm"></div>
+        </div>
+        <div class="dash-section">
+          <div class="section-header"><h2 class="section-title">My Tasks</h2><button class="btn-ghost" onclick="showView('tasks')">View all →</button></div>
+          <div id="dash-tasks-list" class="task-list-sm"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECTS -->
+    <div class="view" id="view-projects">
+      <div class="view-header">
+        <div><h1 class="view-title">Projects</h1><p class="view-sub">Your Roblox games and YouTube series</p></div>
+        <button class="btn-primary owner-only" onclick="openNewProjectModal()">+ New Project</button>
+      </div>
+      <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="roblox">🎮 Roblox</button>
+        <button class="filter-btn" data-filter="youtube">▶ YouTube</button>
+        <button class="filter-btn" data-filter="active">Active</button>
+        <button class="filter-btn" data-filter="planning">Planning</button>
+      </div>
+      <div id="projects-grid" class="projects-grid"></div>
+    </div>
+
+    <!-- PROJECT DETAIL -->
+    <div class="view" id="view-project-detail">
+      <div class="view-header">
+        <div><button class="btn-ghost" onclick="showView('projects')">← Back</button></div>
+        <div id="project-detail-header" style="flex:1;margin-left:8px"></div>
+      </div>
+      <div class="project-detail-tabs" id="project-tabs"></div>
+      <div id="project-detail-content"></div>
+    </div>
+
+    <!-- TASKS -->
+    <div class="view" id="view-tasks">
+      <div class="view-header">
+        <div><h1 class="view-title">Tasks</h1><p class="view-sub">All tasks across your projects</p></div>
+        <button class="btn-primary" onclick="openGlobalTaskModal()">+ New Task</button>
+      </div>
+      <div id="tasks-board" class="tasks-board"></div>
+    </div>
+
+    <!-- FILES -->
+    <div class="view" id="view-files">
+      <div class="view-header">
+        <div><h1 class="view-title">File Vault</h1><p class="view-sub">All files across every project</p></div>
+      </div>
+      <div id="files-list" class="files-list"></div>
+    </div>
+
+    <!-- TEAM (owner only) -->
+    <div class="view" id="view-team">
+      <div class="view-header">
+        <div><h1 class="view-title">Team</h1><p class="view-sub">Manage your developers</p></div>
+        <button class="btn-primary" onclick="openInviteModal()">+ Invite Dev</button>
+      </div>
+      <div id="team-grid" class="team-grid"></div>
+    </div>
+
+    <!-- ANALYTICS -->
+    <div class="view" id="view-analytics">
+      <div class="view-header"><div><h1 class="view-title">Analytics</h1><p class="view-sub">Roblox & YouTube performance</p></div></div>
+      <div class="analytics-coming"><div class="coming-icon">📊</div><h2>Connect your Roblox game</h2><p>Once you publish a game, paste your Roblox Universe ID to pull live analytics — DAU, sessions, revenue, and retention.</p><button class="btn-primary" onclick="showView('projects')">Go to Projects</button></div>
+    </div>
+
+    <!-- ADS -->
+    <div class="view" id="view-ads">
+      <div class="view-header"><div><h1 class="view-title">Ad Advisor</h1><p class="view-sub">AI-powered Roblox ad strategy</p></div></div>
+      <div class="analytics-coming"><div class="coming-icon">🎯</div><h2>Ad strategy — Phase 2</h2><p>Once analytics are connected, the advisor will analyze your metrics and generate a step-by-step Roblox ad campaign plan.</p><button class="btn-primary" onclick="showView('analytics')">Set up analytics first</button></div>
+    </div>
+  </main>
+</div>
+
+<!-- MODAL -->
+<div id="modal-overlay" class="modal-overlay hidden" onclick="handleOverlayClick(event)">
+  <div class="modal" id="modal-box">
+    <div class="modal-header">
+      <h3 id="modal-title"></h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast" class="toast hidden"></div>
+
+<!-- FIREBASE -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged, updateProfile, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, addDoc, updateDoc, deleteDoc, collection, query, where, onSnapshot, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAttVdMXHfGFwYprxhb1_Ntrb5Dxvaf2h0",
+  authDomain: "studioos-8878d.firebaseapp.com",
+  projectId: "studioos-8878d",
+  storageBucket: "studioos-8878d.firebasestorage.app",
+  messagingSenderId: "187660646381",
+  appId: "1:187660646381:web:baa0690d8ccb5df356d9e4",
+  measurementId: "G-99GDVYB2XE"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const googleProvider = new GoogleAuthProvider();
+
+// ── OWNER UID — set this after your first sign-in ──
+// After you create your account, your UID will show in the console.
+// Replace the string below with your actual UID.
+const OWNER_UID = "Ik37l96crFV1wjT5rv3q3b0HFT53";
+
+// ── STATE ──
+let currentUser = null;
+let userProfile = null;
+let isOwner = false;
+let projects = [];
+let tasks = [];
+let files = [];
+let teamMembers = [];
+let activeFilter = 'all';
+let currentProject = null;
+let currentProjectTab = 'overview';
+let unsubscribers = [];
+
+// ── UTILS ──
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+
+function showToast(msg, duration=2800) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.remove('hidden');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.classList.add('hidden'), duration);
+}
+
+function showView(name) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const view = document.getElementById('view-' + name);
+  if (view) view.classList.add('active');
+  const nav = document.querySelector(`[data-view="${name}"]`);
+  if (nav) nav.classList.add('active');
+  if (name === 'dashboard')  renderDashboard();
+  if (name === 'projects')   renderProjects();
+  if (name === 'tasks')      renderTasks();
+  if (name === 'files')      renderFiles();
+  if (name === 'team')       renderTeam();
+}
+window.showView = showView;
+
+function openModal(title, bodyHTML) {
+  document.getElementById('modal-title').textContent = title;
+  document.getElementById('modal-body').innerHTML = bodyHTML;
+  document.getElementById('modal-overlay').classList.remove('hidden');
+}
+window.openModal = openModal;
+
+function closeModal() { document.getElementById('modal-overlay').classList.add('hidden'); }
+window.closeModal = closeModal;
+
+window.handleOverlayClick = (e) => { if(e.target === document.getElementById('modal-overlay')) closeModal(); };
+
+function getTypeIcon(t) { return t==='roblox'?'🎮':t==='youtube'?'▶️':'📁'; }
+function getStatusColor(s) { return {active:'',planning:'yellow',paused:'red',complete:'blue'}[s]||''; }
+function getFileIcon(name) {
+  const ext = (name||'').split('.').pop().toLowerCase();
+  return {fbx:'🧊',obj:'🧊',rbxm:'🎮',blend:'🟠',png:'🖼️',jpg:'🖼️',jpeg:'🖼️',gif:'🖼️',mp4:'🎬',mov:'🎬',mp3:'🎵',wav:'🎵',pdf:'📄',doc:'📄',docx:'📄',txt:'📄',zip:'📦',lua:'📜',luau:'📜',js:'📜',py:'📜'}[ext]||'📎';
+}
+function formatDate(ts) {
+  if (!ts) return '';
+  const d = ts.toDate ? ts.toDate() : new Date(ts);
+  return d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+}
+
+// ── AUTH FUNCTIONS ──
+window.switchAuthTab = (tab) => {
+  document.getElementById('form-signin').style.display = tab==='signin'?'':'none';
+  document.getElementById('form-signup').style.display = tab==='signup'?'':'none';
+  document.getElementById('tab-signin').classList.toggle('active', tab==='signin');
+  document.getElementById('tab-signup').classList.toggle('active', tab==='signup');
+  clearAuthMessages();
+};
+
+function showAuthError(msg) {
+  const el = document.getElementById('auth-error');
+  el.textContent = msg; el.style.display = '';
+  document.getElementById('auth-success').style.display = 'none';
+}
+function showAuthSuccess(msg) {
+  const el = document.getElementById('auth-success');
+  el.textContent = msg; el.style.display = '';
+  document.getElementById('auth-error').style.display = 'none';
+}
+function clearAuthMessages() {
+  document.getElementById('auth-error').style.display = 'none';
+  document.getElementById('auth-success').style.display = 'none';
+}
+
+window.doSignIn = async () => {
+  const email = document.getElementById('signin-email').value.trim();
+  const pass = document.getElementById('signin-password').value;
+  if (!email || !pass) { showAuthError('Please enter email and password.'); return; }
+  const btn = document.getElementById('signin-btn');
+  btn.disabled = true; btn.textContent = 'Signing in...';
+  try {
+    await signInWithEmailAndPassword(auth, email, pass);
+  } catch(e) {
+    showAuthError(friendlyAuthError(e.code));
+    btn.disabled = false; btn.textContent = 'Sign In';
+  }
+};
+
+window.doSignUp = async () => {
+  const name = document.getElementById('signup-name').value.trim();
+  const email = document.getElementById('signup-email').value.trim();
+  const pass = document.getElementById('signup-password').value;
+  const confirm = document.getElementById('signup-confirm').value;
+  if (!name || !email || !pass) { showAuthError('All fields are required.'); return; }
+  if (pass !== confirm) { showAuthError('Passwords do not match.'); return; }
+  if (pass.length < 6) { showAuthError('Password must be at least 6 characters.'); return; }
+  const btn = document.getElementById('signup-btn');
+  btn.disabled = true; btn.textContent = 'Creating account...';
+  try {
+    const cred = await createUserWithEmailAndPassword(auth, email, pass);
+    await updateProfile(cred.user, { displayName: name });
+    await sendEmailVerification(cred.user);
+    // Save profile to Firestore
+    await setDoc(doc(db, 'users', cred.user.uid), {
+      name, email, role: 'developer', createdAt: serverTimestamp()
+    });
+    showAuthSuccess(`Welcome, ${name}! A verification email has been sent to ${email}. Check your inbox!`);
+    btn.disabled = false; btn.textContent = 'Create Account';
+  } catch(e) {
+    showAuthError(friendlyAuthError(e.code));
+    btn.disabled = false; btn.textContent = 'Create Account';
+  }
+};
+
+window.doGoogleSignIn = async () => {
+  try {
+    const result = await signInWithPopup(auth, googleProvider);
+    const user = result.user;
+    // Create profile if new
+    const ref = doc(db, 'users', user.uid);
+    const snap = await getDoc(ref);
+    if (!snap.exists()) {
+      await setDoc(ref, { name: user.displayName, email: user.email, role: 'developer', createdAt: serverTimestamp() });
+    }
+  } catch(e) {
+    showAuthError(friendlyAuthError(e.code));
+  }
+};
+
+window.doSignOut = async () => {
+  unsubscribers.forEach(u => u());
+  unsubscribers = [];
+  await signOut(auth);
+};
+
+function friendlyAuthError(code) {
+  const map = {
+    'auth/invalid-email': 'Invalid email address.',
+    'auth/user-not-found': 'No account found with that email.',
+    'auth/wrong-password': 'Incorrect password.',
+    'auth/email-already-in-use': 'An account already exists with that email.',
+    'auth/weak-password': 'Password is too weak — use at least 6 characters.',
+    'auth/popup-closed-by-user': 'Google sign-in was cancelled.',
+    'auth/invalid-credential': 'Incorrect email or password.',
+  };
+  return map[code] || 'Something went wrong. Please try again.';
+}
+
+// ── AUTH STATE ──
+onAuthStateChanged(auth, async (user) => {
+  document.getElementById('loading-screen').classList.add('hidden');
+  if (user) {
+    currentUser = user;
+    // Log UID to console so owner can copy it
+    console.log('YOUR UID:', user.uid);
+
+    // Fetch profile
+    const ref = doc(db, 'users', user.uid);
+    let snap = await getDoc(ref);
+    if (!snap.exists()) {
+      await setDoc(ref, { name: user.displayName || user.email, email: user.email, role: 'developer', createdAt: serverTimestamp() });
+      snap = await getDoc(ref);
+    }
+    userProfile = snap.data();
+    isOwner = user.uid === OWNER_UID || userProfile.role === 'owner';
+
+    // Update sidebar UI
+    const nameEl = document.getElementById('user-name');
+    const roleEl = document.getElementById('user-role-label');
+    const avatarEl = document.getElementById('user-avatar');
+    nameEl.textContent = (userProfile.name || user.displayName || user.email).split(' ')[0];
+    roleEl.textContent = isOwner ? 'Owner' : (userProfile.role || 'Developer');
+    roleEl.className = 'user-role ' + (isOwner ? 'role-owner' : 'role-developer');
+    if (user.photoURL) {
+      avatarEl.innerHTML = `<img src="${user.photoURL}" alt="">`;
+    } else {
+      avatarEl.textContent = (userProfile.name || user.email)[0].toUpperCase();
+    }
+
+    // Show/hide owner-only elements
+    document.querySelectorAll('.owner-only').forEach(el => {
+      el.style.display = isOwner ? '' : 'none';
+    });
+
+    document.getElementById('auth-screen').classList.add('hidden');
+    document.getElementById('app').classList.remove('hidden');
+
+    subscribeToData();
+    showView('dashboard');
+  } else {
+    currentUser = null;
+    userProfile = null;
+    isOwner = false;
+    document.getElementById('auth-screen').classList.remove('hidden');
+    document.getElementById('app').classList.add('hidden');
+  }
+});
+
+// ── FIRESTORE SUBSCRIPTIONS ──
+function subscribeToData() {
+  unsubscribers.forEach(u => u());
+  unsubscribers = [];
+
+  // Projects — owner sees all, devs see only ones they're members of
+  let projQuery;
+  if (isOwner) {
+    projQuery = collection(db, 'projects');
+  } else {
+    projQuery = query(collection(db, 'projects'), where('memberIds', 'array-contains', currentUser.uid));
+  }
+
+  const u1 = onSnapshot(projQuery, snap => {
+    projects = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    renderDashboard();
+    renderProjects();
+  });
+  unsubscribers.push(u1);
+
+  // Tasks — owner sees all, devs see tasks in their projects or assigned to them
+  let taskQuery;
+  if (isOwner) {
+    taskQuery = collection(db, 'tasks');
+  } else {
+    taskQuery = query(collection(db, 'tasks'), where('assigneeId', '==', currentUser.uid));
+  }
+
+  const u2 = onSnapshot(taskQuery, snap => {
+    tasks = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    renderDashboard();
+    renderTasks();
+  });
+  unsubscribers.push(u2);
+
+  // Files — owner sees all, devs see files in their projects
+  let fileQuery;
+  if (isOwner) {
+    fileQuery = collection(db, 'files');
+  } else {
+    fileQuery = query(collection(db, 'files'), where('projectMemberIds', 'array-contains', currentUser.uid));
+  }
+
+  const u3 = onSnapshot(fileQuery, snap => {
+    files = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    renderFiles();
+  });
+  unsubscribers.push(u3);
+
+  // Team (owner only)
+  if (isOwner) {
+    const u4 = onSnapshot(collection(db, 'users'), snap => {
+      teamMembers = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      renderTeam();
+      renderDashboard();
+    });
+    unsubscribers.push(u4);
+  }
+}
+
+// ── DASHBOARD ──
+function renderDashboard() {
+  const hour = new Date().getHours();
+  const greet = hour<12?'Good morning':hour<17?'Good afternoon':'Good evening';
+  const name = (userProfile?.name || currentUser?.displayName || '').split(' ')[0];
+  document.getElementById('dash-greeting').textContent = `${greet}, ${name} — here's your studio`;
+  document.getElementById('stat-projects').textContent = projects.length;
+  document.getElementById('stat-tasks').textContent = tasks.filter(t=>!t.done).length;
+  document.getElementById('stat-files').textContent = files.length;
+  if (isOwner) document.getElementById('stat-team').textContent = teamMembers.filter(m=>m.id!==currentUser.uid).length;
+
+  const projList = document.getElementById('dash-projects-list');
+  const recent = [...projects].sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0)).slice(0,5);
+  projList.innerHTML = recent.length === 0
+    ? `<div style="color:var(--text-muted);font-size:13px;padding:12px 0">No projects yet${isOwner?' — create your first one!':''}</div>`
+    : recent.map(p => `
+      <div class="project-row-sm" onclick="openProject('${p.id}')">
+        <span style="font-size:18px">${getTypeIcon(p.type)}</span>
+        <div style="flex:1;min-width:0">
+          <div class="project-row-name">${p.name}</div>
+          <div class="project-row-meta">${tasks.filter(t=>t.projectId===p.id&&!t.done).length} open tasks</div>
+        </div>
+        <div class="pulse-dot ${getStatusColor(p.status)}"></div>
+      </div>`).join('');
+
+  const taskList = document.getElementById('dash-tasks-list');
+  const myTasks = tasks.filter(t=>!t.done).slice(0,6);
+  taskList.innerHTML = myTasks.length === 0
+    ? `<div style="color:var(--text-muted);font-size:13px;padding:12px 0">No open tasks!</div>`
+    : myTasks.map(t => {
+        const proj = projects.find(p=>p.id===t.projectId);
+        return `<div class="task-row-sm">
+          <div class="task-check ${t.done?'done':''}" onclick="toggleTask('${t.id}',this)">${t.done?'✓':''}</div>
+          <div>
+            <div class="task-row-name ${t.done?'done':''}">${t.title}</div>
+            <div class="task-row-meta">${proj?.name||'Unknown'} · ${t.status}</div>
+          </div>
+        </div>`;
+      }).join('');
+}
+
+// ── PROJECTS ──
+function renderProjects() {
+  const grid = document.getElementById('projects-grid');
+  let filtered = activeFilter === 'all' ? projects : projects.filter(p => p.type===activeFilter || p.status===activeFilter);
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `<div class="empty-state"><div class="empty-icon">🎮</div><h3>No projects yet</h3><p>${isOwner?'Create your first Roblox game or YouTube series project.':'You haven\'t been added to any projects yet.'}</p>${isOwner?'<button class="btn-primary" onclick="openNewProjectModal()">+ New Project</button>':''}</div>`;
+    return;
+  }
+  grid.innerHTML = filtered.map(p => {
+    const tc = tasks.filter(t=>t.projectId===p.id&&!t.done).length;
+    const fc = files.filter(f=>f.projectId===p.id).length;
+    return `<div class="project-card" onclick="openProject('${p.id}')">
+      <div class="project-card-top">
+        <span class="project-icon">${getTypeIcon(p.type)}</span>
+        <span class="project-status-badge status-${p.status}">${p.status}</span>
+      </div>
+      <div class="project-card-name">${p.name}</div>
+      <div class="project-card-desc">${p.description||'No description.'}</div>
+      <div class="project-card-footer">
+        <div class="project-card-meta">
+          <span class="project-meta-item">✓ ${tc} task${tc!==1?'s':''}</span>
+          <span class="project-meta-item">📎 ${fc} file${fc!==1?'s':''}</span>
+        </div>
+        <div class="pulse-dot ${getStatusColor(p.status)}"></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    activeFilter = btn.dataset.filter;
+    renderProjects();
+  });
+});
+
+document.querySelectorAll('.nav-item').forEach(btn => {
+  btn.addEventListener('click', () => showView(btn.dataset.view));
+});
+
+window.openNewProjectModal = () => {
+  openModal('New Project', `
+    <div class="form-group"><label class="form-label">Project Name</label><input class="form-input" id="proj-name" placeholder="e.g. Don't Blink, Nen X..."/></div>
+    <div class="form-group"><label class="form-label">Type</label><select class="form-select" id="proj-type"><option value="roblox">🎮 Roblox Game</option><option value="youtube">▶️ YouTube Series</option><option value="other">📁 Other</option></select></div>
+    <div class="form-group"><label class="form-label">Status</label><select class="form-select" id="proj-status"><option value="planning">Planning</option><option value="active">Active</option><option value="paused">Paused</option><option value="complete">Complete</option></select></div>
+    <div class="form-group"><label class="form-label">Description</label><textarea class="form-textarea" id="proj-desc" placeholder="What is this project about?"></textarea></div>
+    <div class="modal-actions"><button class="btn-secondary" onclick="closeModal()">Cancel</button><button class="btn-primary" onclick="createProject()">Create Project</button></div>
+  `);
+  setTimeout(()=>document.getElementById('proj-name')?.focus(),50);
+};
+
+window.createProject = async () => {
+  const name = document.getElementById('proj-name')?.value?.trim();
+  if (!name) { showToast('Please enter a project name'); return; }
+  try {
+    await addDoc(collection(db,'projects'), {
+      name,
+      type: document.getElementById('proj-type').value,
+      status: document.getElementById('proj-status').value,
+      description: document.getElementById('proj-desc').value.trim(),
+      ownerId: currentUser.uid,
+      memberIds: [currentUser.uid],
+      createdAt: serverTimestamp(),
+    });
+    closeModal();
+    showToast(`✅ "${name}" created`);
+  } catch(e) {
+    showToast('Error creating project: ' + e.message);
+  }
+};
+
+// ── PROJECT DETAIL ──
+window.openProject = (id) => {
+  const project = projects.find(p=>p.id===id);
+  if (!project) return;
+  currentProject = project;
+  currentProjectTab = 'overview';
+
+  document.getElementById('project-detail-header').innerHTML = `
+    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+      <span style="font-size:36px">${getTypeIcon(project.type)}</span>
+      <div>
+        <h1 class="view-title">${project.name}</h1>
+        <div style="display:flex;align-items:center;gap:10px;margin-top:4px">
+          <span class="project-status-badge status-${project.status}">${project.status}</span>
+        </div>
+      </div>
+      <div style="margin-left:auto;display:flex;gap:8px">
+        ${isOwner?`<button class="btn-secondary" onclick="editProjectModal('${project.id}')">Edit</button>`:''}
+        <button class="btn-primary" onclick="openAddTaskModal('${project.id}')">+ Add Task</button>
+      </div>
+    </div>`;
+
+  const tabs = ['overview','tasks','files',isOwner?'team':''].filter(Boolean);
+  document.getElementById('project-tabs').innerHTML = tabs.map(t =>
+    `<button class="tab-btn ${t==='overview'?'active':''}" data-tab="${t}" onclick="switchProjectTab('${project.id}','${t}')">${t.charAt(0).toUpperCase()+t.slice(1)}</button>`
+  ).join('');
+
+  renderProjectDetail(project);
+  showView('project-detail');
+};
+
+window.switchProjectTab = (id, tab) => {
+  currentProjectTab = tab;
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
+  renderProjectDetail(projects.find(p=>p.id===id));
+};
+
+function renderProjectDetail(project) {
+  if (!project) return;
+  const tab = currentProjectTab;
+  const container = document.getElementById('project-detail-content');
+  const projTasks = tasks.filter(t=>t.projectId===project.id);
+  const projFiles = files.filter(f=>f.projectId===project.id);
+  const done = projTasks.filter(t=>t.done).length;
+  const progress = projTasks.length > 0 ? Math.round((done/projTasks.length)*100) : 0;
+
+  if (tab==='overview') {
+    container.innerHTML = `
+      <div class="overview-grid">
+        <div class="detail-card">
+          <h4>Progress</h4>
+          <div class="detail-big-num">${progress}%</div>
+          <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:${progress}%"></div></div>
+          <div style="color:var(--text-muted);font-size:12px;margin-top:8px">${done} of ${projTasks.length} tasks done</div>
+        </div>
+        <div class="detail-card">
+          <h4>About</h4>
+          <div style="color:var(--text-secondary);font-size:13.5px;line-height:1.6">${project.description||'<em>No description yet.</em>'}</div>
+        </div>
+      </div>
+      <div class="detail-card">
+        <h4>Recent Tasks</h4>
+        ${projTasks.slice(0,4).map(t=>`
+          <div class="task-row-sm" style="margin-top:8px">
+            <div class="task-check ${t.done?'done':''}" onclick="toggleTask('${t.id}',this)">${t.done?'✓':''}</div>
+            <div><div class="task-row-name ${t.done?'done':''}">${t.title}</div><div class="task-row-meta">${t.status} · ${t.priority} priority</div></div>
+          </div>`).join('') || '<div style="color:var(--text-muted);font-size:13px;padding:12px 0">No tasks yet.</div>'}
+      </div>`;
+  } else if (tab==='tasks') {
+    const byStatus = s => projTasks.filter(t=>t.status===s);
+    container.innerHTML = `
+      <div style="display:flex;justify-content:flex-end;margin-bottom:16px">
+        <button class="btn-primary" onclick="openAddTaskModal('${project.id}')">+ Add Task</button>
+      </div>
+      <div class="tasks-board">
+        ${['todo','in-progress','done'].map(s=>`
+          <div class="task-column">
+            <div class="task-column-header">
+              <span class="task-column-title"><div class="pulse-dot ${s==='todo'?'yellow':s==='done'?'blue':''}"></div>${s==='todo'?'To Do':s==='in-progress'?'In Progress':'Done'}</span>
+              <span class="task-count">${byStatus(s).length}</span>
+            </div>
+            <div class="task-cards">
+              ${byStatus(s).map(t=>`
+                <div class="task-card">
+                  <div class="task-card-name">${t.title}</div>
+                  ${t.description?`<div style="color:var(--text-secondary);font-size:12.5px;margin-bottom:8px">${t.description}</div>`:''}
+                  <div class="task-card-meta">
+                    <div style="display:flex;align-items:center;gap:5px"><div class="priority-dot priority-${t.priority}"></div><span style="font-size:11.5px;color:var(--text-muted)">${t.priority}</span></div>
+                    <div style="display:flex;gap:4px">
+                      <button class="btn-ghost" style="padding:3px 7px;font-size:11px" onclick="cycleTaskStatus('${t.id}')">Move →</button>
+                      ${isOwner?`<button class="btn-ghost" style="padding:3px 7px;font-size:11px;color:var(--red)" onclick="deleteTask('${t.id}')">✕</button>`:''}
+                    </div>
+                  </div>
+                </div>`).join('')}
+            </div>
+          </div>`).join('')}
+      </div>`;
+  } else if (tab==='files') {
+    container.innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+        <span style="color:var(--text-muted);font-size:13px">${projFiles.length} file${projFiles.length!==1?'s':''}</span>
+        ${isOwner?`<button class="btn-primary" onclick="openAddFileModal('${project.id}')">+ Add File</button>`:''}
+      </div>
+      <div class="files-list">
+        ${projFiles.length===0?`<div class="empty-state"><div class="empty-icon">📁</div><h3>No files yet</h3><p>Drop in 3D models, scripts, thumbnails.</p></div>`
+        :projFiles.map(f=>`
+          <div class="file-item">
+            <span class="file-icon">${getFileIcon(f.name)}</span>
+            <div class="file-info"><div class="file-name">${f.name}</div><div class="file-meta">${formatDate(f.createdAt)}${f.note?' · '+f.note:''}</div></div>
+            ${f.url?`<a href="${f.url}" target="_blank" class="btn-ghost">Open ↗</a>`:''}
+            ${isOwner?`<button class="btn-ghost" style="color:var(--red)" onclick="deleteFile('${f.id}')">Remove</button>`:''}
+          </div>`).join('')}
+      </div>`;
+  } else if (tab==='team') {
+    const members = teamMembers.filter(m=>(project.memberIds||[]).includes(m.id));
+    const nonMembers = teamMembers.filter(m=>!(project.memberIds||[]).includes(m.id) && m.id!==currentUser.uid);
+    container.innerHTML = `
+      <div style="margin-bottom:16px">
+        ${nonMembers.length>0?`<div style="margin-bottom:16px"><label class="form-label">Add member to project</label><div style="display:flex;gap:8px;flex-wrap:wrap">${nonMembers.map(m=>`<button class="btn-secondary" onclick="addMemberToProject('${project.id}','${m.id}')">${m.name} +</button>`).join('')}</div></div>`:''}
+      </div>
+      <div class="team-grid">
+        ${members.map(m=>`
+          <div class="team-card">
+            <div class="team-avatar">${(m.name||m.email||'?')[0].toUpperCase()}</div>
+            <div class="team-name">${m.name||m.email}</div>
+            <div class="team-email">${m.email}</div>
+            <div class="team-role-badge">${m.role||'developer'}</div>
+            <div style="display:flex;gap:8px;margin-top:4px">
+              ${m.id!==currentUser.uid?`<button class="btn-ghost" style="color:var(--red);font-size:12px" onclick="removeMemberFromProject('${project.id}','${m.id}')">Remove</button>`:'<span style="font-size:12px;color:var(--text-muted)">You (owner)</span>'}
+            </div>
+          </div>`).join('') || '<div class="empty-state"><div class="empty-icon">👥</div><h3>No members yet</h3><p>Add team members above.</p></div>'}
+      </div>`;
+  }
+}
+
+window.addMemberToProject = async (projectId, memberId) => {
+  const project = projects.find(p=>p.id===projectId);
+  if (!project) return;
+  const newIds = [...new Set([...(project.memberIds||[]), memberId])];
+  // Also update files in this project to include new member
+  const projFiles = files.filter(f=>f.projectId===projectId);
+  const batch = [];
+  batch.push(updateDoc(doc(db,'projects',projectId), { memberIds: newIds }));
+  projFiles.forEach(f => batch.push(updateDoc(doc(db,'files',f.id), { projectMemberIds: newIds })));
+  await Promise.all(batch);
+  showToast('✅ Member added to project');
+  renderProjectDetail(projects.find(p=>p.id===projectId));
+};
+
+window.removeMemberFromProject = async (projectId, memberId) => {
+  const project = projects.find(p=>p.id===projectId);
+  if (!project) return;
+  const newIds = (project.memberIds||[]).filter(id=>id!==memberId);
+  await updateDoc(doc(db,'projects',projectId), { memberIds: newIds });
+  showToast('Member removed from project');
+};
+
+window.editProjectModal = (id) => {
+  const p = projects.find(p=>p.id===id);
+  if (!p) return;
+  openModal('Edit Project', `
+    <div class="form-group"><label class="form-label">Name</label><input class="form-input" id="ep-name" value="${p.name}"/></div>
+    <div class="form-group"><label class="form-label">Status</label><select class="form-select" id="ep-status">
+      <option value="planning" ${p.status==='planning'?'selected':''}>Planning</option>
+      <option value="active" ${p.status==='active'?'selected':''}>Active</option>
+      <option value="paused" ${p.status==='paused'?'selected':''}>Paused</option>
+      <option value="complete" ${p.status==='complete'?'selected':''}>Complete</option>
+    </select></div>
+    <div class="form-group"><label class="form-label">Description</label><textarea class="form-textarea" id="ep-desc">${p.description||''}</textarea></div>
+    <div class="modal-actions">
+      <button class="btn-ghost" style="color:var(--red)" onclick="deleteProject('${id}')">Delete</button>
+      <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+      <button class="btn-primary" onclick="saveProject('${id}')">Save</button>
+    </div>`);
+};
+
+window.saveProject = async (id) => {
+  await updateDoc(doc(db,'projects',id), {
+    name: document.getElementById('ep-name').value.trim(),
+    status: document.getElementById('ep-status').value,
+    description: document.getElementById('ep-desc').value.trim(),
+  });
+  closeModal(); showToast('✅ Saved');
+  const updated = projects.find(p=>p.id===id);
+  if (updated) { openProject(id); }
+};
+
+window.deleteProject = async (id) => {
+  if (!confirm('Delete this project, all its tasks and files?')) return;
+  await deleteDoc(doc(db,'projects',id));
+  // Delete tasks and files
+  const tSnap = await getDocs(query(collection(db,'tasks'),where('projectId','==',id)));
+  const fSnap = await getDocs(query(collection(db,'files'),where('projectId','==',id)));
+  await Promise.all([...tSnap.docs.map(d=>deleteDoc(d.ref)), ...fSnap.docs.map(d=>deleteDoc(d.ref))]);
+  closeModal(); showView('projects'); showToast('Project deleted');
+};
+
+// ── TASKS ──
+window.openAddTaskModal = (projectId) => {
+  openModal('New Task', `
+    <div class="form-group"><label class="form-label">Task Title</label><input class="form-input" id="t-title" placeholder="e.g. Fix ragdoll physics"/></div>
+    <div class="form-group"><label class="form-label">Description</label><textarea class="form-textarea" id="t-desc" placeholder="Details..."></textarea></div>
+    <div class="form-group"><label class="form-label">Priority</label><select class="form-select" id="t-priority"><option value="high">🔴 High</option><option value="medium" selected>🟡 Medium</option><option value="low">🟢 Low</option></select></div>
+    <div class="form-group"><label class="form-label">Assign to</label><select class="form-select" id="t-assignee">
+      <option value="${currentUser.uid}">Me</option>
+      ${teamMembers.filter(m=>m.id!==currentUser.uid).map(m=>`<option value="${m.id}">${m.name}</option>`).join('')}
+    </select></div>
+    <div class="modal-actions"><button class="btn-secondary" onclick="closeModal()">Cancel</button><button class="btn-primary" onclick="createTask('${projectId}')">Add Task</button></div>`);
+  setTimeout(()=>document.getElementById('t-title')?.focus(),50);
+};
+
+window.createTask = async (projectId) => {
+  const title = document.getElementById('t-title')?.value?.trim();
+  if (!title) { showToast('Enter a task title'); return; }
+  const project = projects.find(p=>p.id===projectId);
+  await addDoc(collection(db,'tasks'), {
+    projectId, title,
+    description: document.getElementById('t-desc').value.trim(),
+    priority: document.getElementById('t-priority').value,
+    assigneeId: document.getElementById('t-assignee').value,
+    status: 'todo', done: false,
+    projectMemberIds: project?.memberIds || [currentUser.uid],
+    createdAt: serverTimestamp(),
+  });
+  closeModal(); showToast('✅ Task added');
+  if (currentProject?.id===projectId) renderProjectDetail(currentProject);
+};
+
+window.toggleTask = async (id, el) => {
+  const task = tasks.find(t=>t.id===id);
+  if (!task) return;
+  const newDone = !task.done;
+  await updateDoc(doc(db,'tasks',id), { done: newDone, status: newDone?'done':'todo' });
+  el.classList.toggle('done', newDone);
+  el.textContent = newDone ? '✓' : '';
+  const nameEl = el.nextElementSibling?.querySelector('.task-row-name');
+  if (nameEl) nameEl.classList.toggle('done', newDone);
+};
+
+window.cycleTaskStatus = async (id) => {
+  const task = tasks.find(t=>t.id===id);
+  if (!task) return;
+  const cycle = ['todo','in-progress','done'];
+  const next = cycle[(cycle.indexOf(task.status)+1)%cycle.length];
+  await updateDoc(doc(db,'tasks',id), { status: next, done: next==='done' });
+  showToast(`Moved to ${next}`);
+  if (currentProject) renderProjectDetail(currentProject);
+};
+
+window.deleteTask = async (id) => {
+  await deleteDoc(doc(db,'tasks',id));
+  if (currentProject) renderProjectDetail(currentProject);
+};
+
+function renderTasks() {
+  const board = document.getElementById('tasks-board');
+  const byStatus = s => tasks.filter(t=>t.status===s);
+  board.innerHTML = ['todo','in-progress','done'].map(s=>`
+    <div class="task-column">
+      <div class="task-column-header">
+        <span class="task-column-title"><div class="pulse-dot ${s==='todo'?'yellow':s==='done'?'blue':''}"></div>${s==='todo'?'To Do':s==='in-progress'?'In Progress':'Done'}</span>
+        <span class="task-count">${byStatus(s).length}</span>
+      </div>
+      <div class="task-cards">
+        ${byStatus(s).map(t=>{
+          const proj=projects.find(p=>p.id===t.projectId);
+          return `<div class="task-card">
+            <div class="task-card-name">${t.title}</div>
+            <div class="task-card-meta">
+              <span class="task-card-project">${proj?.name||'?'}</span>
+              <div style="display:flex;align-items:center;gap:4px">
+                <div class="priority-dot priority-${t.priority}"></div>
+                <button class="btn-ghost" style="padding:2px 6px;font-size:11px" onclick="cycleTaskStatus('${t.id}')">Move →</button>
+              </div>
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`).join('');
+}
+
+window.openGlobalTaskModal = () => {
+  if (projects.length===0) { showToast('Create a project first!'); return; }
+  openModal('New Task',`
+    <div class="form-group"><label class="form-label">Project</label><select class="form-select" id="gt-proj">${projects.map(p=>`<option value="${p.id}">${p.name}</option>`).join('')}</select></div>
+    <div class="form-group"><label class="form-label">Task Title</label><input class="form-input" id="t-title" placeholder="What needs to be done?"/></div>
+    <div class="form-group"><label class="form-label">Priority</label><select class="form-select" id="t-priority"><option value="high">🔴 High</option><option value="medium" selected>🟡 Medium</option><option value="low">🟢 Low</option></select></div>
+    <div class="modal-actions"><button class="btn-secondary" onclick="closeModal()">Cancel</button><button class="btn-primary" onclick="createTask(document.getElementById('gt-proj').value)">Add Task</button></div>`);
+  setTimeout(()=>document.getElementById('t-title')?.focus(),50);
+};
+
+// ── FILES ──
+window.openAddFileModal = (projectId) => {
+  openModal('Add File',`
+    <div class="form-group"><label class="form-label">File Name</label><input class="form-input" id="f-name" placeholder="e.g. KillerRig_v2.fbx"/></div>
+    <div class="form-group"><label class="form-label">Link / URL</label><input class="form-input" id="f-url" placeholder="Google Drive, Dropbox link..."/></div>
+    <div class="form-group"><label class="form-label">Note</label><input class="form-input" id="f-note" placeholder="e.g. Latest rigged version"/></div>
+    <div class="modal-actions"><button class="btn-secondary" onclick="closeModal()">Cancel</button><button class="btn-primary" onclick="createFile('${projectId}')">Add File</button></div>`);
+  setTimeout(()=>document.getElementById('f-name')?.focus(),50);
+};
+
+window.createFile = async (projectId) => {
+  const name = document.getElementById('f-name')?.value?.trim();
+  if (!name) { showToast('Enter a file name'); return; }
+  const project = projects.find(p=>p.id===projectId);
+  await addDoc(collection(db,'files'),{
+    projectId, name,
+    url: document.getElementById('f-url').value.trim(),
+    note: document.getElementById('f-note').value.trim(),
+    projectMemberIds: project?.memberIds || [currentUser.uid],
+    createdAt: serverTimestamp(),
+  });
+  closeModal(); showToast('✅ File added');
+  if (currentProject?.id===projectId) renderProjectDetail(currentProject);
+};
+
+window.deleteFile = async (id) => {
+  await deleteDoc(doc(db,'files',id));
+  if (currentProject) renderProjectDetail(currentProject);
+};
+
+function renderFiles() {
+  const list = document.getElementById('files-list');
+  if (files.length===0) {
+    list.innerHTML=`<div class="empty-state"><div class="empty-icon">📁</div><h3>Vault is empty</h3><p>Go into a project and add files.</p></div>`;
+    return;
+  }
+  list.innerHTML = files.map(f=>{
+    const proj=projects.find(p=>p.id===f.projectId);
+    return `<div class="file-item">
+      <span class="file-icon">${getFileIcon(f.name)}</span>
+      <div class="file-info"><div class="file-name">${f.name}</div><div class="file-meta">${formatDate(f.createdAt)}${f.note?' · '+f.note:''}</div></div>
+      ${proj?`<span class="file-project-tag">${proj.name}</span>`:''}
+      ${f.url?`<a href="${f.url}" target="_blank" class="btn-ghost">Open ↗</a>`:''}
+      ${isOwner?`<button class="btn-ghost" style="color:var(--red)" onclick="deleteFile('${f.id}')">Remove</button>`:''}
+    </div>`;
+  }).join('');
+}
+
+// ── TEAM ──
+window.openInviteModal = () => {
+  openModal('Invite Developer',`
+    <p style="color:var(--text-secondary);font-size:13.5px;line-height:1.6;margin-bottom:20px">
+      Share this link with your developer. They sign up or sign in with Google, and you'll see them appear here. Then you can add them to specific projects.
+    </p>
+    <div class="form-group"><label class="form-label">Site Link to Share</label>
+      <div style="display:flex;gap:8px">
+        <input class="form-input" value="${window.location.href}" readonly id="invite-link"/>
+        <button class="btn-secondary" onclick="navigator.clipboard.writeText(document.getElementById('invite-link').value);showToast('Link copied!')">Copy</button>
+      </div>
+    </div>
+    <p style="color:var(--text-muted);font-size:12.5px;line-height:1.6;margin-top:8px">Once they sign in, they'll appear in your team list. Go to a project → Team tab to add them to specific projects.</p>
+    <div class="modal-actions"><button class="btn-primary" onclick="closeModal()">Got it</button></div>`);
+};
+
+function renderTeam() {
+  if (!isOwner) return;
+  const grid = document.getElementById('team-grid');
+  const others = teamMembers.filter(m=>m.id!==currentUser?.uid);
+  if (others.length===0) {
+    grid.innerHTML=`<div class="empty-state"><div class="empty-icon">👥</div><h3>No team members yet</h3><p>Share the site link with developers. Once they sign in, they appear here and you can add them to projects.</p><button class="btn-primary" onclick="openInviteModal()">+ Invite Dev</button></div>`;
+    return;
+  }
+  grid.innerHTML = others.map(m=>`
+    <div class="team-card">
+      <div class="team-avatar">${(m.name||m.email||'?')[0].toUpperCase()}</div>
+      <div class="team-name">${m.name||m.email}</div>
+      <div class="team-email">${m.email}</div>
+      <div class="team-role-badge">${m.role||'developer'}</div>
+      <div style="font-size:12px;color:var(--text-muted)">${tasks.filter(t=>t.assigneeId===m.id&&!t.done).length} open tasks</div>
+    </div>`).join('');
+}
+
+</script>
+</body>
+</html>
