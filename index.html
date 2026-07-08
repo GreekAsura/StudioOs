@@ -1206,7 +1206,15 @@ onAuthStateChanged(auth, async (user) => {
       snap = await getDoc(ref);
     }
     userProfile = snap.data();
+    // UID match is the primary owner check — always trust it
     isOwner = user.uid === OWNER_UID || userProfile.role === 'owner';
+    
+    // Auto-fix: if UID matches but role is wrong, update Firestore
+    if (user.uid === OWNER_UID && userProfile.role !== 'owner') {
+      await updateDoc(doc(db, 'users', user.uid), { role: 'owner' });
+      userProfile.role = 'owner';
+      isOwner = true;
+    }
 
     // Update sidebar UI
     const nameEl = document.getElementById('user-name');
