@@ -1838,11 +1838,7 @@ function renderAdStrategy(strategy, gameName) {
 }
 
 // Override showView to trigger analytics load
-const _origShowView = window.showView;
-window.showView = (name) => {
-  _origShowView(name);
-  if (name === 'analytics') loadConnectedGames();
-};
+
 
 
 // ── YOUTUBE ──
@@ -2067,7 +2063,7 @@ window.openNote = (id) => {
   document.getElementById('note-title-input').value = activeNote.title || '';
   document.getElementById('note-body-input').value = activeNote.body || '';
   const projSelect = document.getElementById('note-project-select');
-  projSelect.innerHTML = '<option value="">No project</option>' + projects.map(p=>`<option value="${p.id}" ${activeNote.projectId===p.id?'selected:''}>${p.name}</option>`).join('');
+  projSelect.innerHTML = '<option value="">No project</option>' + projects.map(p=>`<option value="${p.id}" ${activeNote.projectId===p.id?'selected':''}>${p.name}</option>`).join('');
   renderNotesSidebar();
 };
 
@@ -2122,13 +2118,7 @@ document.addEventListener('input', (e) => {
   }
 });
 
-// Override showView for new views
-const _origShowView2 = window.showView;
-window.showView = (name) => {
-  _origShowView2(name);
-  if (name === 'youtube') loadYouTubeData();
-  if (name === 'notes') loadNotes();
-};
+
 
 // ── PWA INSTALL PROMPT ──
 let deferredInstallPrompt = null;
@@ -2149,6 +2139,16 @@ window.installPWA = async () => {
   const result = await deferredInstallPrompt.userChoice;
   if (result.outcome === 'accepted') showToast('StudioOS installed!');
   deferredInstallPrompt = null;
+};
+
+
+// ── CONSOLIDATED SHOWVIEW OVERRIDE ──
+const _baseShowView = window.showView;
+window.showView = (name) => {
+  _baseShowView(name);
+  if (name === 'analytics') { try { loadConnectedGames(); } catch(e) { console.error(e); } }
+  if (name === 'youtube')   { try { loadYouTubeData(); }    catch(e) { console.error(e); } }
+  if (name === 'notes')     { try { loadNotes(); }           catch(e) { console.error(e); } }
 };
 
 </script>
