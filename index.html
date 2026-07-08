@@ -82,6 +82,7 @@ a{color:inherit;text-decoration:none;}
 .role-developer{color:var(--green);}
 .signout-btn{color:var(--text-muted);padding:4px;border-radius:4px;transition:color var(--transition);}
 .signout-btn:hover{color:var(--red);}
+.owner-only{display:none;}
 
 /* MAIN */
 .main{flex:1;margin-left:var(--sidebar-w);min-height:100vh;overflow-y:auto;}
@@ -1026,7 +1027,7 @@ const googleProvider = new GoogleAuthProvider();
 // ── OWNER UID — set this after your first sign-in ──
 // After you create your account, your UID will show in the console.
 // Replace the string below with your actual UID.
-const OWNER_UID = "REPLACE_WITH_YOUR_UID";
+const OWNER_UID = "Ik37l96crFV1wjT5rv3q3b0HFT53";
 
 // ── STATE ──
 let currentUser = null;
@@ -1211,7 +1212,9 @@ onAuthStateChanged(auth, async (user) => {
     
     // Auto-fix: if UID matches but role is wrong, update Firestore
     if (user.uid === OWNER_UID && userProfile.role !== 'owner') {
-      await updateDoc(doc(db, 'users', user.uid), { role: 'owner' });
+      try {
+        await updateDoc(doc(db, 'users', user.uid), { role: 'owner' });
+      } catch(e) {}
       userProfile.role = 'owner';
       isOwner = true;
     }
@@ -1230,6 +1233,7 @@ onAuthStateChanged(auth, async (user) => {
     }
 
     // Show/hide owner-only elements
+    console.log('isOwner:', isOwner, 'uid:', user.uid, 'OWNER_UID:', OWNER_UID);
     document.querySelectorAll('.owner-only').forEach(el => {
       el.style.display = isOwner ? '' : 'none';
     });
