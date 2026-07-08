@@ -2646,13 +2646,11 @@ function generateLocalReply(text) {
 
   // Game description
   if (q.includes('description') || q.includes('write') || q.includes("don't blink") || q.includes('dontblink')) {
-    return "Here's a game description for Don't Blink:\n\n"Don't Blink is a heart-pounding horror survival experience where one player becomes the Killer — and everyone else must survive. The Killer is player-controlled, making every round unpredictable and terrifying. Hide in the shadows, work with your team, and whatever you do... don't blink.\n\nFeatures:\n• Player-controlled killer for unique every round\n• Team-based survival mechanics\n• Tension-filled horror atmosphere\n• Generator and blackout mechanics\n• Emotes, abilities, and progression"\n\nFeel free to edit this to match your current game version!";
-  }
+    return 'Here is a game description for Don\'t Blink:\n\nDon\'t Blink is a heart-pounding horror survival experience where one player becomes the Killer and everyone else must survive. The Killer is player-controlled, making every round unpredictable and terrifying. Hide in the shadows, work with your team, and whatever you do... don\'t blink.\n\nFeatures:\n- Player-controlled killer every round\n- Team-based survival mechanics\n- Horror atmosphere with blackouts\n- Emotes, abilities, and progression\n\nFeel free to edit this to match your current version!';  }
 
   // YouTube ideas
   if (q.includes('youtube') || q.includes('video') || q.includes('content') || q.includes('idea')) {
-    return "Here are some YouTube video ideas for your Roblox games:\n\n1. "I Played Don't Blink as the KILLER for 24 Hours" — POV killer content performs well\n2. "The SCARIEST Moments in Don't Blink" — compilations get rewatched\n3. "How to ALWAYS Win as Survivor" — tutorial/guide content drives long-term views\n4. "Don't Blink but the Killer is ACTUALLY GOOD" — challenge format\n5. "Playing Don't Blink with my Dev Team" — behind the scenes, builds community\n6. "Reacting to Players Playing My Game" — low effort, high engagement\n\nShorts: clip the scariest jump scares for YouTube Shorts — horror content goes viral there.";
-  }
+    return 'Here are some YouTube video ideas for your Roblox games:\n\n1. I Played Don\'t Blink as the KILLER for 24 Hours — POV killer content performs well\n2. The SCARIEST Moments in Don\'t Blink — compilations get rewatched\n3. How to ALWAYS Win as Survivor — tutorial content drives long-term views\n4. Don\'t Blink but the Killer is ACTUALLY GOOD — challenge format\n5. Playing Don\'t Blink with my Dev Team — behind the scenes, builds community\n6. Reacting to Players Playing My Game — low effort, high engagement\n\nShorts tip: clip the scariest jump scares for YouTube Shorts — horror content goes viral there.';  }
 
   // Team questions
   if (q.includes('team') || q.includes('dev') || q.includes('member')) {
@@ -2673,8 +2671,7 @@ function generateLocalReply(text) {
 
   // Patch notes
   if (q.includes('patch') || q.includes('update') || q.includes('changelog') || q.includes('notes')) {
-    return "Here are sample patch notes for Don't Blink:\n\n UPDATE v1.1 — The Killer Update\n\n NEW FEATURES\n• Killer speed now scales with survivors remaining\n• New ability: Blackout — cuts generator power for 30s\n• 3 new emotes added to the shop\n\nBALANCE\n• Generator repair time increased by 5s\n• Survivor sprint stamina reduced slightly\n• Killer hit detection improved\n\nBUG FIXES\n• Fixed ragdoll physics on death\n• Fixed spawn locations overlapping\n• Fixed coin counter not updating in real time\n\nFeel free to edit this with your actual changes!";
-  }
+    return 'Here are sample patch notes for Don\'t Blink:\n\nUPDATE v1.1 — The Killer Update\n\nNEW FEATURES\n- Killer speed scales with survivors remaining\n- New ability: Blackout cuts generator power for 30s\n- 3 new emotes added to the shop\n\nBALANCE\n- Generator repair time increased by 5s\n- Survivor sprint stamina reduced slightly\n- Killer hit detection improved\n\nBUG FIXES\n- Fixed ragdoll physics on death\n- Fixed spawn locations overlapping\n- Fixed coin counter not updating\n\nFeel free to edit with your actual changes!';  }
 
   // Default
   const projectNames = projects.map(p=>p.name).join(', ') || 'none yet';
