@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>StudioOS</title>
+<meta name="theme-color" content="#0D0E14">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="StudioOS">
+<link rel="manifest" href="data:application/json,{&quot;name&quot;:&quot;StudioOS&quot;,&quot;short_name&quot;:&quot;StudioOS&quot;,&quot;start_url&quot;:&quot;/&quot;,&quot;display&quot;:&quot;standalone&quot;,&quot;background_color&quot;:&quot;%230D0E14&quot;,&quot;theme_color&quot;:&quot;%230D0E14&quot;,&quot;icons&quot;:[{&quot;src&quot;:&quot;data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%237C5CFC'/><text y='.9em' font-size='80' x='10'>S</text></svg>&quot;,&quot;sizes&quot;:&quot;any&quot;,&quot;type&quot;:&quot;image/svg+xml&quot;}]}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -254,6 +259,8 @@ a{color:inherit;text-decoration:none;}
 .step-title{font-size:13.5px;font-weight:600;color:var(--text-primary);margin-bottom:3px;}
 .step-desc{font-size:12.5px;color:var(--text-secondary);line-height:1.6;}
 
+.game-tab{padding:8px 16px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;color:var(--text-secondary);background:var(--bg-surface);border:1px solid var(--border);transition:all var(--transition);font-family:var(--font-body);cursor:pointer;}
+.game-tab.active{background:var(--accent-dim);border-color:rgba(124,92,252,0.4);color:var(--accent);}
 /* ACCESS DENIED */
 .access-denied{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 20px;text-align:center;}
 .access-denied h2{font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--text-primary);margin-bottom:12px;margin-top:16px;}
@@ -368,10 +375,21 @@ a{color:inherit;text-decoration:none;}
       <button class="nav-item" data-view="analytics">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Analytics
       </button>
+      <button class="nav-item" data-view="youtube">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>YouTube
+      </button>
+      <button class="nav-item" data-view="notes">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Notes
+      </button>
       <button class="nav-item owner-only" data-view="ads">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>Ad Advisor
       </button>
     </nav>
+    <div style="padding:0 10px 8px">
+      <button id="pwa-install-btn" onclick="installPWA()" style="display:none;width:100%;padding:8px 12px;border-radius:var(--radius-sm);background:var(--accent-dim);border:1px solid rgba(124,92,252,0.3);color:var(--accent);font-size:12.5px;font-weight:600;cursor:pointer;font-family:var(--font-body)">
+        📱 Install App
+      </button>
+    </div>
     <div class="sidebar-bottom">
       <div class="user-pill" id="user-pill-click" style="cursor:pointer" title="Click to see your UID">
         <div class="user-avatar" id="user-avatar"></div>
@@ -582,6 +600,100 @@ a{color:inherit;text-decoration:none;}
         </div>
       </div>
     </div>
+
+    <!-- YOUTUBE -->
+    <div class="view" id="view-youtube">
+      <div class="view-header">
+        <div><h1 class="view-title">YouTube</h1><p class="view-sub">Channel performance & video tracking</p></div>
+        <button class="btn-primary" onclick="openConnectYouTubeModal()">+ Connect Channel</button>
+      </div>
+      <div id="youtube-empty" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 20px;text-align:center">
+        <div style="font-size:56px;margin-bottom:24px">▶️</div>
+        <h2 style="font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--text-primary);margin-bottom:12px">Connect your YouTube channel</h2>
+        <p style="color:var(--text-secondary);font-size:14px;max-width:400px;line-height:1.7;margin-bottom:28px">Track your video views, watch time, and subscriber growth. See exactly how your YouTube uploads drive players to your Roblox games.</p>
+        <button class="btn-primary" onclick="openConnectYouTubeModal()">+ Connect Channel</button>
+        <div style="margin-top:32px;display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:480px;text-align:left">
+          <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px">
+            <div style="font-size:18px;margin-bottom:8px">📈</div>
+            <div style="font-family:var(--font-display);font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:4px">View Trends</div>
+            <div style="font-size:12px;color:var(--text-muted);line-height:1.6">See which videos perform best and when your audience is most active.</div>
+          </div>
+          <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px">
+            <div style="font-size:18px;margin-bottom:8px">🎮</div>
+            <div style="font-family:var(--font-display);font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:4px">Game Traffic Correlation</div>
+            <div style="font-size:12px;color:var(--text-muted);line-height:1.6">See how YouTube uploads spike your Roblox player counts.</div>
+          </div>
+          <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px">
+            <div style="font-size:18px;margin-bottom:8px">🎬</div>
+            <div style="font-family:var(--font-display);font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:4px">Video Pipeline</div>
+            <div style="font-size:12px;color:var(--text-muted);line-height:1.6">Track videos from idea → filming → editing → published.</div>
+          </div>
+          <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px">
+            <div style="font-size:18px;margin-bottom:8px">🔔</div>
+            <div style="font-family:var(--font-display);font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:4px">Subscriber Tracking</div>
+            <div style="font-size:12px;color:var(--text-muted);line-height:1.6">Monitor subscriber growth and see what content drives subs.</div>
+          </div>
+        </div>
+      </div>
+      <div id="youtube-dashboard" style="display:none">
+        <div id="channel-selector" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px"></div>
+        <div class="stats-row" id="yt-stats" style="grid-template-columns:repeat(4,1fr);margin-bottom:20px"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px">
+          <div class="detail-card">
+            <h4>Recent Videos</h4>
+            <div id="yt-videos-list" style="margin-top:8px;display:flex;flex-direction:column;gap:10px"></div>
+          </div>
+          <div class="detail-card">
+            <h4>Video Pipeline</h4>
+            <div style="display:flex;justify-content:flex-end;margin-bottom:10px">
+              <button class="btn-ghost" style="font-size:12px" onclick="openAddVideoModal()">+ Add Video</button>
+            </div>
+            <div id="yt-pipeline" style="display:flex;flex-direction:column;gap:8px"></div>
+          </div>
+        </div>
+        <div style="background:linear-gradient(135deg,rgba(255,0,0,0.08),rgba(255,0,0,0.02));border:1px solid rgba(255,80,80,0.25);border-radius:var(--radius-lg);padding:18px;display:flex;align-items:center;gap:14px">
+          <span style="font-size:28px">🔑</span>
+          <div style="flex:1">
+            <div style="font-family:var(--font-display);font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:3px">Full analytics need YouTube Data API</div>
+            <div style="font-size:12.5px;color:var(--text-secondary)">Views, watch time, and subscriber data require a YouTube API key. Takes 2 minutes to set up.</div>
+          </div>
+          <button class="btn-secondary" onclick="openYouTubeAPIModal()">Set up API →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- NOTES -->
+    <div class="view" id="view-notes">
+      <div class="view-header">
+        <div><h1 class="view-title">Notes</h1><p class="view-sub">Ideas, design docs, lore — everything in one place</p></div>
+        <button class="btn-primary" onclick="openNewNoteModal()">+ New Note</button>
+      </div>
+      <div style="display:grid;grid-template-columns:260px 1fr;gap:20px;min-height:500px">
+        <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;display:flex;flex-direction:column;gap:6px">
+          <div style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">All Notes</div>
+          <div id="notes-sidebar" style="display:flex;flex-direction:column;gap:4px;flex:1;overflow-y:auto"></div>
+        </div>
+        <div id="note-editor" style="background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;display:flex;flex-direction:column">
+          <div id="note-empty-state" style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:12px;color:var(--text-muted)">
+            <div style="font-size:40px;opacity:0.4">📝</div>
+            <div style="font-size:14px">Select a note or create a new one</div>
+            <button class="btn-primary" onclick="openNewNoteModal()">+ New Note</button>
+          </div>
+          <div id="note-content" style="display:none;flex-direction:column;height:100%">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:12px">
+              <input id="note-title-input" class="form-input" style="font-family:var(--font-display);font-size:18px;font-weight:700;border:none;background:transparent;padding:0;font-size:20px" placeholder="Note title..."/>
+              <div style="display:flex;gap:8px;flex-shrink:0">
+                <select class="form-select" id="note-project-select" style="font-size:12px;padding:6px 28px 6px 10px;width:auto"></select>
+                <button class="btn-primary" onclick="saveNote()" style="font-size:12px;padding:6px 14px">Save</button>
+                <button class="btn-ghost" style="color:var(--red);font-size:12px" onclick="deleteCurrentNote()">Delete</button>
+              </div>
+            </div>
+            <textarea id="note-body-input" class="form-textarea" style="flex:1;min-height:400px;background:transparent;border:none;font-size:14px;line-height:1.8;resize:none;color:var(--text-primary)" placeholder="Start writing... (supports plain text, use # for headings, - for bullets)"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </main>
 </div>
 
@@ -1730,6 +1842,313 @@ const _origShowView = window.showView;
 window.showView = (name) => {
   _origShowView(name);
   if (name === 'analytics') loadConnectedGames();
+};
+
+
+// ── YOUTUBE ──
+let connectedChannels = [];
+let activeChannel = null;
+let videoPipeline = [];
+
+async function loadYouTubeData() {
+  if (!currentUser) return;
+  try {
+    const [chanSnap, pipeSnap] = await Promise.all([
+      getDocs(query(collection(db,'youtubeChannels'),where('ownerId','==',currentUser.uid))),
+      getDocs(query(collection(db,'videoPipeline'),where('ownerId','==',currentUser.uid)))
+    ]);
+    connectedChannels = chanSnap.docs.map(d=>({id:d.id,...d.data()}));
+    videoPipeline = pipeSnap.docs.map(d=>({id:d.id,...d.data()}));
+
+    if (connectedChannels.length > 0) {
+      document.getElementById('youtube-empty').style.display = 'none';
+      document.getElementById('youtube-dashboard').style.display = 'block';
+      activeChannel = connectedChannels[0];
+      renderChannelSelector();
+      await fetchYouTubeData(activeChannel);
+    }
+    renderVideoPipeline();
+  } catch(e) { console.error('YouTube load error:', e); }
+}
+
+window.openConnectYouTubeModal = () => {
+  openModal('Connect YouTube Channel', `
+    <p style="color:var(--text-secondary);font-size:13.5px;line-height:1.6;margin-bottom:20px">Enter your YouTube channel details to start tracking performance.</p>
+    <div class="form-group"><label class="form-label">Channel Name</label><input class="form-input" id="yt-channel-name" placeholder="e.g. TheLazar Gaming"/></div>
+    <div class="form-group"><label class="form-label">Channel ID or Handle</label><input class="form-input" id="yt-channel-id" placeholder="e.g. @TheLazar or UCxxxxxx"/>
+      <div style="color:var(--text-muted);font-size:12px;margin-top:6px">Find at youtube.com → your channel → About → Share channel → Copy channel ID</div>
+    </div>
+    <div class="modal-actions"><button class="btn-secondary" onclick="closeModal()">Cancel</button><button class="btn-primary" onclick="connectChannel()">Connect</button></div>`);
+  setTimeout(()=>document.getElementById('yt-channel-name')?.focus(),50);
+};
+
+window.connectChannel = async () => {
+  const name = document.getElementById('yt-channel-name')?.value?.trim();
+  const channelId = document.getElementById('yt-channel-id')?.value?.trim();
+  if (!name || !channelId) { showToast('Fill in both fields'); return; }
+  const ref = await addDoc(collection(db,'youtubeChannels'),{name,channelId,ownerId:currentUser.uid,connectedAt:serverTimestamp()});
+  connectedChannels.push({id:ref.id,name,channelId});
+  closeModal(); showToast('Channel connected!');
+  document.getElementById('youtube-empty').style.display = 'none';
+  document.getElementById('youtube-dashboard').style.display = 'block';
+  activeChannel = connectedChannels[connectedChannels.length-1];
+  renderChannelSelector();
+  await fetchYouTubeData(activeChannel);
+};
+
+function renderChannelSelector() {
+  const sel = document.getElementById('channel-selector');
+  if (!sel) return;
+  sel.innerHTML = connectedChannels.map(c=>`
+    <button class="game-tab ${activeChannel?.id===c.id?'active':''}" onclick="switchChannel('${c.id}')">${c.name}</button>`).join('')
+    + `<button class="game-tab" onclick="openConnectYouTubeModal()">+ Add Channel</button>`;
+}
+
+window.switchChannel = async (id) => {
+  activeChannel = connectedChannels.find(c=>c.id===id);
+  renderChannelSelector();
+  await fetchYouTubeData(activeChannel);
+};
+
+async function fetchYouTubeData(channel) {
+  if (!channel) return;
+  const statsEl = document.getElementById('yt-stats');
+  const videosList = document.getElementById('yt-videos-list');
+  if (statsEl) statsEl.innerHTML = '<div style="grid-column:1/-1;color:var(--text-muted);font-size:13px;padding:12px 0">Fetching channel data...</div>';
+
+  try {
+    // Try to fetch basic public data via YouTube oEmbed (no API key needed)
+    const handle = channel.channelId.startsWith('@') ? channel.channelId : '@' + channel.channelId;
+    
+    // Show channel stats placeholder — full data needs API key
+    if (statsEl) statsEl.innerHTML = [
+      {label:'Subscribers',value:'Set up API',sub:'YouTube Data API needed'},
+      {label:'Total Views',value:'Set up API',sub:'YouTube Data API needed'},
+      {label:'Videos',value:'—',sub:'Connect API key'},
+      {label:'Watch Time',value:'—',sub:'Last 28 days'},
+    ].map(s=>`
+      <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;display:flex;flex-direction:column;gap:4px">
+        <span style="font-size:11px;font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em">${s.label}</span>
+        <span style="font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--text-secondary)">${s.value}</span>
+        <span style="font-size:11.5px;color:var(--text-muted)">${s.sub}</span>
+      </div>`).join('');
+
+    if (videosList) videosList.innerHTML = `
+      <div style="background:var(--yellow-dim);border:1px solid var(--yellow);border-radius:var(--radius-sm);padding:12px;color:var(--yellow);font-size:13px">
+        ⚡ Full video analytics (views, watch time, CTR) need a YouTube Data API key.
+        <br><button class="btn-ghost" style="color:var(--accent);font-size:12px;padding:4px 0;margin-top:4px" onclick="openYouTubeAPIModal()">Set up in 2 minutes →</button>
+      </div>
+      <div style="color:var(--text-muted);font-size:12.5px;margin-top:8px">Connected channel: <strong style="color:var(--accent)">${channel.name}</strong> (${channel.channelId})</div>`;
+
+  } catch(e) {
+    console.error('YouTube fetch error:', e);
+  }
+}
+
+window.openYouTubeAPIModal = () => {
+  openModal('YouTube Data API Setup', `
+    <div style="font-size:13.5px;color:var(--text-secondary);line-height:1.8;margin-bottom:16px">
+      1. Go to <strong style="color:var(--text-primary)">console.cloud.google.com</strong><br>
+      2. Create a project → Enable <strong style="color:var(--text-primary)">YouTube Data API v3</strong><br>
+      3. Go to Credentials → Create API Key<br>
+      4. Paste it below
+    </div>
+    <div class="form-group"><label class="form-label">YouTube API Key</label><input class="form-input" id="yt-api-key" placeholder="AIza..."/></div>
+    <div class="modal-actions"><button class="btn-secondary" onclick="closeModal()">Cancel</button><button class="btn-primary" onclick="saveYouTubeAPIKey()">Save Key</button></div>`);
+};
+
+window.saveYouTubeAPIKey = async () => {
+  const key = document.getElementById('yt-api-key')?.value?.trim();
+  if (!key) return;
+  await setDoc(doc(db,'settings',currentUser.uid),{youtubeApiKey:key},{merge:true});
+  closeModal(); showToast('YouTube API key saved!');
+  if (activeChannel) await fetchYouTubeData(activeChannel);
+};
+
+// Video Pipeline
+window.openAddVideoModal = () => {
+  openModal('Add Video to Pipeline', `
+    <div class="form-group"><label class="form-label">Video Title / Idea</label><input class="form-input" id="vid-title" placeholder="e.g. Don't Blink Full Playthrough"/></div>
+    <div class="form-group"><label class="form-label">Stage</label>
+      <select class="form-select" id="vid-stage">
+        <option value="idea">💡 Idea</option>
+        <option value="filming">🎥 Filming</option>
+        <option value="editing">✂️ Editing</option>
+        <option value="ready">✅ Ready to Upload</option>
+        <option value="published">🚀 Published</option>
+      </select>
+    </div>
+    <div class="form-group"><label class="form-label">Linked Project</label>
+      <select class="form-select" id="vid-project">
+        <option value="">None</option>
+        ${projects.map(p=>`<option value="${p.id}">${p.name}</option>`).join('')}
+      </select>
+    </div>
+    <div class="modal-actions"><button class="btn-secondary" onclick="closeModal()">Cancel</button><button class="btn-primary" onclick="addVideoPipeline()">Add Video</button></div>`);
+  setTimeout(()=>document.getElementById('vid-title')?.focus(),50);
+};
+
+window.addVideoPipeline = async () => {
+  const title = document.getElementById('vid-title')?.value?.trim();
+  if (!title) { showToast('Enter a video title'); return; }
+  const ref = await addDoc(collection(db,'videoPipeline'),{
+    title, stage: document.getElementById('vid-stage').value,
+    projectId: document.getElementById('vid-project').value,
+    ownerId: currentUser.uid, createdAt: serverTimestamp()
+  });
+  videoPipeline.push({id:ref.id,title,stage:document.getElementById('vid-stage').value});
+  closeModal(); showToast('Video added to pipeline!');
+  renderVideoPipeline();
+};
+
+const stageIcon = s => ({idea:'💡',filming:'🎥',editing:'✂️',ready:'✅',published:'🚀'}[s]||'📹');
+const stageColor = s => ({idea:'var(--text-muted)',filming:'var(--blue)',editing:'var(--yellow)',ready:'var(--green)',published:'var(--accent)'}[s]||'var(--text-muted)');
+
+function renderVideoPipeline() {
+  const el = document.getElementById('yt-pipeline');
+  if (!el) return;
+  if (videoPipeline.length === 0) {
+    el.innerHTML = `<div style="color:var(--text-muted);font-size:13px;padding:8px 0">No videos in pipeline yet.</div>`;
+    return;
+  }
+  el.innerHTML = videoPipeline.map(v=>`
+    <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg-elevated);border-radius:var(--radius-sm);border:1px solid var(--border)">
+      <span style="font-size:16px">${stageIcon(v.stage)}</span>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:13px;font-weight:600;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${v.title}</div>
+        <div style="font-size:11px;color:${stageColor(v.stage)};font-weight:600;text-transform:uppercase;letter-spacing:0.05em;margin-top:2px">${v.stage}</div>
+      </div>
+      <select onchange="updateVideoStage('${v.id}',this.value)" style="background:var(--bg-surface);border:1px solid var(--border);color:var(--text-secondary);font-size:11px;padding:3px 6px;border-radius:4px;cursor:pointer">
+        ${['idea','filming','editing','ready','published'].map(s=>`<option value="${s}" ${v.stage===s?'selected':''}>${s}</option>`).join('')}
+      </select>
+    </div>`).join('');
+}
+
+window.updateVideoStage = async (id, stage) => {
+  await updateDoc(doc(db,'videoPipeline',id),{stage});
+  const v = videoPipeline.find(v=>v.id===id);
+  if (v) v.stage = stage;
+  renderVideoPipeline();
+  showToast('Updated!');
+};
+
+// ── NOTES ──
+let notes = [];
+let activeNote = null;
+
+async function loadNotes() {
+  if (!currentUser) return;
+  try {
+    const snap = await getDocs(query(collection(db,'notes'),where('ownerId','==',currentUser.uid)));
+    notes = snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.updatedAt?.seconds||0)-(a.updatedAt?.seconds||0));
+    renderNotesSidebar();
+  } catch(e) { console.error('Notes error:', e); }
+}
+
+function renderNotesSidebar() {
+  const el = document.getElementById('notes-sidebar');
+  if (!el) return;
+  if (notes.length === 0) {
+    el.innerHTML = `<div style="color:var(--text-muted);font-size:12.5px;padding:8px 4px">No notes yet. Create your first one!</div>`;
+    return;
+  }
+  el.innerHTML = notes.map(n=>`
+    <div onclick="openNote('${n.id}')" style="padding:10px 12px;border-radius:var(--radius-sm);cursor:pointer;border:1px solid ${activeNote?.id===n.id?'rgba(124,92,252,0.4)':'transparent'};background:${activeNote?.id===n.id?'var(--accent-dim)':'transparent'};transition:all var(--transition)">
+      <div style="font-size:13px;font-weight:600;color:${activeNote?.id===n.id?'var(--accent)':'var(--text-primary)'};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${n.title||'Untitled'}</div>
+      <div style="font-size:11px;color:var(--text-muted);margin-top:2px">${n.projectName||'No project'} · ${n.body?n.body.slice(0,30)+'...':''}</div>
+    </div>`).join('');
+}
+
+window.openNote = (id) => {
+  activeNote = notes.find(n=>n.id===id);
+  if (!activeNote) return;
+  document.getElementById('note-empty-state').style.display = 'none';
+  document.getElementById('note-content').style.display = 'flex';
+  document.getElementById('note-title-input').value = activeNote.title || '';
+  document.getElementById('note-body-input').value = activeNote.body || '';
+  const projSelect = document.getElementById('note-project-select');
+  projSelect.innerHTML = '<option value="">No project</option>' + projects.map(p=>`<option value="${p.id}" ${activeNote.projectId===p.id?'selected:''}>${p.name}</option>`).join('');
+  renderNotesSidebar();
+};
+
+window.openNewNoteModal = async () => {
+  const ref = await addDoc(collection(db,'notes'),{
+    title:'Untitled Note', body:'', ownerId:currentUser.uid,
+    projectId:'', projectName:'', createdAt:serverTimestamp(), updatedAt:serverTimestamp()
+  });
+  const newNote = {id:ref.id,title:'Untitled Note',body:'',projectId:'',projectName:''};
+  notes.unshift(newNote);
+  activeNote = newNote;
+  renderNotesSidebar();
+  document.getElementById('note-empty-state').style.display = 'none';
+  document.getElementById('note-content').style.display = 'flex';
+  document.getElementById('note-title-input').value = '';
+  document.getElementById('note-body-input').value = '';
+  const projSelect = document.getElementById('note-project-select');
+  projSelect.innerHTML = '<option value="">No project</option>' + projects.map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
+  setTimeout(()=>document.getElementById('note-title-input')?.focus(),50);
+};
+
+window.saveNote = async () => {
+  if (!activeNote) return;
+  const title = document.getElementById('note-title-input').value.trim() || 'Untitled';
+  const body = document.getElementById('note-body-input').value;
+  const projectId = document.getElementById('note-project-select').value;
+  const proj = projects.find(p=>p.id===projectId);
+  await updateDoc(doc(db,'notes',activeNote.id),{
+    title, body, projectId, projectName: proj?.name||'',updatedAt:serverTimestamp()
+  });
+  activeNote.title = title; activeNote.body = body; activeNote.projectId = projectId; activeNote.projectName = proj?.name||'';
+  renderNotesSidebar();
+  showToast('✅ Note saved');
+};
+
+window.deleteCurrentNote = async () => {
+  if (!activeNote || !confirm('Delete this note?')) return;
+  await deleteDoc(doc(db,'notes',activeNote.id));
+  notes = notes.filter(n=>n.id!==activeNote.id);
+  activeNote = null;
+  document.getElementById('note-empty-state').style.display = 'flex';
+  document.getElementById('note-content').style.display = 'none';
+  renderNotesSidebar();
+  showToast('Note deleted');
+};
+
+// Auto-save notes on typing
+document.addEventListener('input', (e) => {
+  if (e.target.id === 'note-body-input' || e.target.id === 'note-title-input') {
+    clearTimeout(window._noteSaveTimer);
+    window._noteSaveTimer = setTimeout(() => { if(activeNote) saveNote(); }, 1500);
+  }
+});
+
+// Override showView for new views
+const _origShowView2 = window.showView;
+window.showView = (name) => {
+  _origShowView2(name);
+  if (name === 'youtube') loadYouTubeData();
+  if (name === 'notes') loadNotes();
+};
+
+// ── PWA INSTALL PROMPT ──
+let deferredInstallPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  // Show install button in sidebar after sign in
+  const installBtn = document.getElementById('pwa-install-btn');
+  if (installBtn) installBtn.style.display = '';
+});
+
+window.installPWA = async () => {
+  if (!deferredInstallPrompt) {
+    showToast('To install: tap Share → Add to Home Screen in your browser');
+    return;
+  }
+  deferredInstallPrompt.prompt();
+  const result = await deferredInstallPrompt.userChoice;
+  if (result.outcome === 'accepted') showToast('StudioOS installed!');
+  deferredInstallPrompt = null;
 };
 
 </script>
