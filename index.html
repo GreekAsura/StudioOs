@@ -82,7 +82,7 @@ a{color:inherit;text-decoration:none;}
 .role-developer{color:var(--green);}
 .signout-btn{color:var(--text-muted);padding:4px;border-radius:4px;transition:color var(--transition);}
 .signout-btn:hover{color:var(--red);}
-.owner-only{display:none;}
+
 
 /* MAIN */
 .main{flex:1;margin-left:var(--sidebar-w);min-height:100vh;overflow-y:auto;}
@@ -496,7 +496,7 @@ a{color:inherit;text-decoration:none;}
       <button class="nav-item" data-view="files">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>File Vault
       </button>
-      <button class="nav-item owner-only" data-view="team">
+      <button class="nav-item owner-only" data-view="team" style="display:none">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Team
       </button>
       <button class="nav-item" data-view="analytics">
@@ -508,7 +508,7 @@ a{color:inherit;text-decoration:none;}
       <button class="nav-item" data-view="notes">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Notes
       </button>
-      <button class="nav-item owner-only" data-view="ads">
+      <button class="nav-item owner-only" data-view="ads" style="display:none">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>Ad Advisor
       </button>
       <button class="nav-item" data-view="ai">
@@ -1234,9 +1234,17 @@ onAuthStateChanged(auth, async (user) => {
 
     // Show/hide owner-only elements
     console.log('isOwner:', isOwner, 'uid:', user.uid, 'OWNER_UID:', OWNER_UID);
-    document.querySelectorAll('.owner-only').forEach(el => {
-      el.style.display = isOwner ? '' : 'none';
-    });
+    if (isOwner) {
+      document.querySelectorAll('.owner-only').forEach(el => {
+        el.style.display = '';
+        el.style.visibility = 'visible';
+        el.removeAttribute('hidden');
+      });
+    } else {
+      document.querySelectorAll('.owner-only').forEach(el => {
+        el.style.display = 'none';
+      });
+    }
 
     document.getElementById('auth-screen').classList.add('hidden');
     document.getElementById('app').classList.remove('hidden');
