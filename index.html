@@ -2539,18 +2539,13 @@ window.sendAIMessage = async () => {
   // Build context from real studio data
   const overdueTasksList = tasks.filter(t=>!t.done).slice(0,10).map(t=>{
     const p = projects.find(pr=>pr.id===t.projectId);
-    return `- ${t.title} (${p?.name||'unknown'}, ${t.priority} priority, ${t.status})`;
-  }).join('
-');
+    return '- ' + t.title + ' (' + (p?.name||'unknown') + ', ' + t.priority + ' priority, ' + t.status + ')';
+  }).join('\n');
 
-  const projectsList = projects.map(p=>`- ${p.name} (${p.type}, ${p.status}): ${tasks.filter(t=>t.projectId===p.id&&!t.done).length} open tasks`).join('
-');
-  const teamList = teamMembers.filter(m=>m.id!==currentUser?.uid).map(m=>`- ${m.name} (${m.role}): ${tasks.filter(t=>t.assigneeId===m.id&&!t.done).length} open tasks`).join('
-');
-  const gamesList = connectedGames.map(g=>`- ${g.name} (Universe ID: ${g.universeId})`).join('
-');
-  const channelsList = connectedChannels.map(c=>`- ${c.name} (${c.channelId})`).join('
-');
+  const projectsList = projects.map(p=>'- ' + p.name + ' (' + p.type + ', ' + p.status + '): ' + tasks.filter(t=>t.projectId===p.id&&!t.done).length + ' open tasks').join('\n');
+  const teamList = teamMembers.filter(m=>m.id!==currentUser?.uid).map(m=>'- ' + m.name + ' (' + m.role + '): ' + tasks.filter(t=>t.assigneeId===m.id&&!t.done).length + ' open tasks').join('\n');
+  const gamesList = connectedGames.map(g=>'- ' + g.name + ' (Universe ID: ' + g.universeId + ')').join('\n');
+  const channelsList = connectedChannels.map(c=>'- ' + c.name + ' (' + c.channelId + ')').join('\n');
 
   const systemPrompt = `You are an AI assistant built into StudioOS, a game studio management platform. You help ${userProfile?.name || 'the owner'} manage their Roblox game studio and YouTube channel.
 
@@ -2595,11 +2590,8 @@ Be helpful, specific, and reference their actual data. Keep responses concise bu
 
     // Remove typing indicator and add real response
     document.getElementById(typingId)?.remove();
-    msgs.innerHTML += `<div class="ai-msg ai-msg-assistant">
-      <div class="ai-avatar">S</div>
-      <div class="ai-bubble">${reply.replace(/
-/g,'<br>')}</div>
-    </div>`;
+    const replyHtml = reply.split('\n').join('<br>');
+    msgs.innerHTML += '<div class="ai-msg ai-msg-assistant"><div class="ai-avatar">S</div><div class="ai-bubble">' + replyHtml + '</div></div>';
   } catch(e) {
     document.getElementById(typingId)?.remove();
     msgs.innerHTML += `<div class="ai-msg ai-msg-assistant">
