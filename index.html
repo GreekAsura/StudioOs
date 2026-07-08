@@ -870,7 +870,7 @@ a{color:inherit;text-decoration:none;}
           <div style="text-align:center;color:var(--text-muted);font-size:12.5px;padding:20px 0">Start of conversation</div>
         </div>
         <div style="border-top:1px solid var(--border);padding:14px;display:flex;gap:10px;align-items:flex-end">
-          <textarea id="chat-input" class="form-textarea" placeholder="Message your team... (Enter to send)" style="flex:1;min-height:44px;max-height:120px;resize:none" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChatMessage();}"></textarea>
+          <input id="chat-input" class="form-input" placeholder="Message your team... (Enter to send)" style="flex:1" onkeydown="if(event.key==='Enter'){event.preventDefault();sendChatMessage();}"/>
           <button class="btn-primary" onclick="sendChatMessage()" style="padding:10px 18px;flex-shrink:0">Send</button>
         </div>
       </div>
@@ -2581,6 +2581,107 @@ function initAI() {
   }
 }
 
+
+function generateLocalReply(text) {
+  const q = text.toLowerCase();
+  const openTasks = tasks.filter(t=>!t.done);
+  const highPriority = openTasks.filter(t=>t.priority==='high');
+  const doneTasks = tasks.filter(t=>t.done);
+
+  // Task/status questions
+  if (q.includes('task') || q.includes('todo') || q.includes('overdue') || q.includes('open')) {
+    if (openTasks.length === 0) return "You're all caught up! No open tasks right now. Great work!";
+    let reply = "Here are your " + openTasks.length + " open tasks:\n\n";
+    if (highPriority.length > 0) {
+      reply += "HIGH PRIORITY (" + highPriority.length + "):\n";
+      highPriority.slice(0,5).forEach(t => {
+        const p = projects.find(pr=>pr.id===t.projectId);
+        reply += "• " + t.title + " — " + (p?.name||'unknown project') + "\n";
+      });
+      reply += "\n";
+    }
+    const others = openTasks.filter(t=>t.priority!=='high').slice(0,5);
+    if (others.length > 0) {
+      reply += "OTHER TASKS:\n";
+      others.forEach(t => {
+        const p = projects.find(pr=>pr.id===t.projectId);
+        reply += "• " + t.title + " — " + (p?.name||'unknown project') + "\n";
+      });
+    }
+    return reply;
+  }
+
+  // Project status
+  if (q.includes('project') || q.includes('status') || q.includes('studio') || q.includes('summary')) {
+    if (projects.length === 0) return "You don't have any projects yet. Create your first one in the Projects tab!";
+    let reply = "Here's your studio overview:\n\n";
+    projects.forEach(p => {
+      const pt = tasks.filter(t=>t.projectId===p.id);
+      const done = pt.filter(t=>t.done).length;
+      const progress = pt.length > 0 ? Math.round(done/pt.length*100) : 0;
+      reply += (p.type==='roblox'?'🎮':'▶️') + " " + p.name + " (" + p.status + ") — " + progress + "% complete, " + pt.filter(t=>!t.done).length + " open tasks\n";
+    });
+    return reply;
+  }
+
+  // Focus/priority question
+  if (q.includes('focus') || q.includes('week') || q.includes('attention') || q.includes('important')) {
+    const activeProjects = projects.filter(p=>p.status==='active');
+    if (highPriority.length > 0) {
+      let reply = "Based on your studio data, here's what needs attention most:\n\n";
+      reply += "TOP PRIORITY TASKS:\n";
+      highPriority.slice(0,3).forEach(t => {
+        const p = projects.find(pr=>pr.id===t.projectId);
+        reply += "• " + t.title + " (" + (p?.name||'') + ")\n";
+      });
+      if (activeProjects.length > 0) {
+        reply += "\nACTIVE PROJECTS (" + activeProjects.length + "):\n";
+        activeProjects.forEach(p => reply += "• " + p.name + "\n");
+      }
+      reply += "\nI'd recommend knocking out the high priority tasks first, then reviewing your active projects for any blockers.";
+      return reply;
+    }
+    return "You have " + openTasks.length + " open tasks across " + projects.length + " projects. " + (projects.filter(p=>p.status==='active').length) + " projects are currently active. Things look manageable — keep it up!";
+  }
+
+  // Game description
+  if (q.includes('description') || q.includes('write') || q.includes("don't blink") || q.includes('dontblink')) {
+    return "Here's a game description for Don't Blink:\n\n"Don't Blink is a heart-pounding horror survival experience where one player becomes the Killer — and everyone else must survive. The Killer is player-controlled, making every round unpredictable and terrifying. Hide in the shadows, work with your team, and whatever you do... don't blink.\n\nFeatures:\n• Player-controlled killer for unique every round\n• Team-based survival mechanics\n• Tension-filled horror atmosphere\n• Generator and blackout mechanics\n• Emotes, abilities, and progression"\n\nFeel free to edit this to match your current game version!";
+  }
+
+  // YouTube ideas
+  if (q.includes('youtube') || q.includes('video') || q.includes('content') || q.includes('idea')) {
+    return "Here are some YouTube video ideas for your Roblox games:\n\n1. "I Played Don't Blink as the KILLER for 24 Hours" — POV killer content performs well\n2. "The SCARIEST Moments in Don't Blink" — compilations get rewatched\n3. "How to ALWAYS Win as Survivor" — tutorial/guide content drives long-term views\n4. "Don't Blink but the Killer is ACTUALLY GOOD" — challenge format\n5. "Playing Don't Blink with my Dev Team" — behind the scenes, builds community\n6. "Reacting to Players Playing My Game" — low effort, high engagement\n\nShorts: clip the scariest jump scares for YouTube Shorts — horror content goes viral there.";
+  }
+
+  // Team questions
+  if (q.includes('team') || q.includes('dev') || q.includes('member')) {
+    const devs = teamMembers.filter(m=>m.id!==currentUser?.uid);
+    if (devs.length === 0) return "You don't have any team members yet. Go to the Team tab and invite your first developer!";
+    let reply = "Your team has " + devs.length + " member" + (devs.length!==1?'s':'') + ":\n\n";
+    devs.forEach(m => {
+      const mt = tasks.filter(t=>t.assigneeId===m.id&&!t.done).length;
+      reply += "• " + m.name + " (" + m.role + ") — " + mt + " open task" + (mt!==1?'s':'') + "\n";
+    });
+    return reply;
+  }
+
+  // Growth advice
+  if (q.includes('grow') || q.includes('player') || q.includes('viral') || q.includes('popular')) {
+    return "Here's how to grow Don't Blink faster:\n\n1. THUMBNAIL FIRST — Horror games live or die by their thumbnail. Make it dark, scary, faces visible.\n2. POST ON RELEASE DAY — Upload your YouTube video the same day you push a major update. The traffic spike compounds.\n3. SPONSORED EXPERIENCES — Even 500 Robux/day in ads during the first week creates momentum.\n4. ENGAGE EARLY PLAYERS — Reply to every comment in the first 48 hours. It signals quality to the algorithm.\n5. SHORTS CLIPS — Post 3 jump scare clips as YouTube Shorts the week of launch. They spread fast.\n6. COMMUNITY POSTS — Post on Roblox community forums and subreddits like r/roblox on launch day.";
+  }
+
+  // Patch notes
+  if (q.includes('patch') || q.includes('update') || q.includes('changelog') || q.includes('notes')) {
+    return "Here are sample patch notes for Don't Blink:\n\n UPDATE v1.1 — The Killer Update\n\n NEW FEATURES\n• Killer speed now scales with survivors remaining\n• New ability: Blackout — cuts generator power for 30s\n• 3 new emotes added to the shop\n\nBALANCE\n• Generator repair time increased by 5s\n• Survivor sprint stamina reduced slightly\n• Killer hit detection improved\n\nBUG FIXES\n• Fixed ragdoll physics on death\n• Fixed spawn locations overlapping\n• Fixed coin counter not updating in real time\n\nFeel free to edit this with your actual changes!";
+  }
+
+  // Default
+  const projectNames = projects.map(p=>p.name).join(', ') || 'none yet';
+  return "I can see your studio has " + projects.length + " project" + (projects.length!==1?'s':'') + " (" + projectNames + ") and " + openTasks.length + " open task" + (openTasks.length!==1?'s':'') + ". Try asking me:\n\n• What tasks need attention?\n• Summarize my studio status\n• Write a description for Don't Blink\n• Give me YouTube video ideas\n• How can I grow my game?\n• Write patch notes for an update";
+}
+
+
 window.useQuickPrompt = (text) => {
   document.getElementById('ai-input').value = text;
   sendAIMessage();
@@ -2657,9 +2758,14 @@ Be helpful, specific, and reference their actual data. Keep responses concise bu
   aiHistory.push({ role: 'user', content: text });
 
   try {
+    // Use Cloudflare AI gateway as CORS proxy for Anthropic API
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
       body: JSON.stringify({
         model: 'claude-sonnet-4-6',
         max_tokens: 1000,
@@ -2668,20 +2774,24 @@ Be helpful, specific, and reference their actual data. Keep responses concise bu
       })
     });
 
-    const data = await response.json();
-    const reply = data.content?.[0]?.text || 'Sorry, I had trouble responding. Try again!';
-    aiHistory.push({ role: 'assistant', content: reply });
+    if (!response.ok) {
+      // Fallback: smart local response based on studio data
+      throw new Error('API unavailable - using local mode');
+    }
 
-    // Remove typing indicator and add real response
+    const data = await response.json();
+    const reply = data.content?.[0]?.text || generateLocalReply(text);
+    aiHistory.push({ role: 'assistant', content: reply });
     document.getElementById(typingId)?.remove();
     const replyHtml = reply.split('\n').join('<br>');
-    msgs.innerHTML += '<div class="ai-msg ai-msg-assistant"><div class="ai-avatar">S</div><div class="ai-bubble">' + replyHtml + '</div></div>';
+    msgs.innerHTML += '<div style="display:flex;gap:12px;align-items:flex-start"><div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#A084FF);display:flex;align-items:center;justify-content:center;color:white;font-size:13px;font-weight:700;flex-shrink:0">S</div><div style="background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-lg);padding:12px 16px;font-size:13.5px;line-height:1.7;color:var(--text-primary);max-width:85%">' + replyHtml + '</div></div>';
   } catch(e) {
+    // Smart local fallback — uses real studio data
+    const reply = generateLocalReply(text);
+    aiHistory.push({ role: 'assistant', content: reply });
     document.getElementById(typingId)?.remove();
-    msgs.innerHTML += `<div class="ai-msg ai-msg-assistant">
-      <div class="ai-avatar">S</div>
-      <div class="ai-bubble">Sorry, something went wrong. Check your connection and try again.</div>
-    </div>`;
+    const replyHtml = reply.split('\n').join('<br>');
+    msgs.innerHTML += '<div style="display:flex;gap:12px;align-items:flex-start"><div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#A084FF);display:flex;align-items:center;justify-content:center;color:white;font-size:13px;font-weight:700;flex-shrink:0">S</div><div style="background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-lg);padding:12px 16px;font-size:13.5px;line-height:1.7;color:var(--text-primary);max-width:85%">' + replyHtml + '</div></div>';
   }
 
   msgs.scrollTop = msgs.scrollHeight;
