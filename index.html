@@ -829,29 +829,40 @@ a{color:inherit;text-decoration:none;}
     <div class="view" id="view-ai">
       <div class="view-header">
         <div><h1 class="view-title">AI Assistant</h1><p class="view-sub">Ask anything about your studio</p></div>
-        <button class="btn-ghost" onclick="clearAIChat()">Clear chat</button>
+        <button class="btn-primary" onclick="newAIConversation()">+ New Chat</button>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 260px;gap:20px;height:calc(100vh - 200px)">
+      <div style="display:grid;grid-template-columns:220px 1fr 240px;gap:16px;height:calc(100vh - 200px)">
+        
+        <!-- CONVERSATION HISTORY SIDEBAR -->
+        <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);display:flex;flex-direction:column;overflow:hidden">
+          <div style="padding:14px 14px 10px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em">Conversations</div>
+          <div id="ai-conv-list" style="flex:1;overflow-y:auto;padding:8px;display:flex;flex-direction:column;gap:4px"></div>
+        </div>
+
+        <!-- CHAT AREA -->
         <div style="display:flex;flex-direction:column;background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden">
+          <div id="ai-conv-title-bar" style="padding:12px 16px;border-bottom:1px solid var(--border);font-size:13.5px;font-weight:600;color:var(--text-primary)">New Conversation</div>
           <div id="ai-messages" style="flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:16px">
             <div style="display:flex;gap:12px;align-items:flex-start">
               <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#A084FF);display:flex;align-items:center;justify-content:center;color:white;font-size:13px;font-weight:700;flex-shrink:0">S</div>
-              <div style="background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-lg);padding:12px 16px;font-size:13.5px;line-height:1.7;color:var(--text-primary);max-width:85%">Hey! I am your StudioOS assistant. I know all about your projects, tasks, team, and games. Ask me anything!</div>
+              <div style="background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-lg);padding:12px 16px;font-size:13.5px;line-height:1.7;color:var(--text-primary);max-width:85%">Hey! I am your StudioOS assistant. Ask me anything about your projects, tasks, team, or games!</div>
             </div>
           </div>
-          <div style="border-top:1px solid var(--border);padding:16px;display:flex;gap:10px">
-            <input id="ai-input" class="form-input" placeholder="Ask anything about your studio..." style="flex:1" onkeydown="if(event.key==='Enter'){event.preventDefault();sendAIMessage();}"/>
+          <div style="border-top:1px solid var(--border);padding:14px;display:flex;gap:10px">
+            <input id="ai-input" class="form-input" placeholder="Ask anything..." style="flex:1" onkeydown="if(event.key==='Enter'){event.preventDefault();sendAIMessage();}"/>
             <button class="btn-primary" onclick="sendAIMessage()" id="ai-send-btn">Send</button>
           </div>
         </div>
+
+        <!-- RIGHT PANEL -->
         <div style="display:flex;flex-direction:column;gap:10px;overflow-y:auto">
-          <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px">
-            <div style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px">Quick Prompts</div>
-            <div style="display:flex;flex-direction:column;gap:6px" id="ai-quick-prompts"></div>
+          <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px">
+            <div style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">Quick Prompts</div>
+            <div style="display:flex;flex-direction:column;gap:5px" id="ai-quick-prompts"></div>
           </div>
-          <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px">
+          <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px">
             <div style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">Studio Snapshot</div>
-            <div id="ai-snapshot" style="font-size:12.5px;color:var(--text-secondary);line-height:2"></div>
+            <div id="ai-snapshot" style="font-size:12px;color:var(--text-secondary);line-height:2"></div>
           </div>
         </div>
       </div>
@@ -2549,6 +2560,8 @@ document.addEventListener('click', (e) => {
 
 // ── AI ASSISTANT ──
 let aiHistory = [];
+let aiConversations = [];
+let activeConvId = null;
 
 const quickPrompts = [
   "What tasks are overdue or need attention?",
@@ -2562,23 +2575,149 @@ const quickPrompts = [
 ];
 
 function initAI() {
-  // Render quick prompts
   const qp = document.getElementById('ai-quick-prompts');
   if (qp) {
-    qp.innerHTML = quickPrompts.map(p => `
-      <button class="ai-quick-btn" onclick="useQuickPrompt(this.textContent)">${p}</button>`).join('');
+    qp.innerHTML = quickPrompts.map(function(p) {
+      return '<button class="ai-quick-btn" onclick="useQuickPrompt(this.textContent)">' + p + '</button>';
+    }).join('');
   }
-  // Render snapshot
   const snap = document.getElementById('ai-snapshot');
   if (snap) {
-    snap.innerHTML = `
-      <div>📁 ${projects.length} project${projects.length!==1?'s':''}</div>
-      <div>✅ ${tasks.filter(t=>!t.done).length} open tasks</div>
-      <div>👥 ${teamMembers.filter(m=>m.id!==currentUser?.uid).length} team members</div>
-      <div>📎 ${files.length} files in vault</div>
-      <div>🎮 ${connectedGames.length} game${connectedGames.length!==1?'s':''} connected</div>
-      <div>▶️ ${connectedChannels.length} channel${connectedChannels.length!==1?'s':''} connected</div>`;
+    snap.innerHTML =
+      '<div>📁 ' + projects.length + ' project' + (projects.length!==1?'s':'') + '</div>' +
+      '<div>✅ ' + tasks.filter(t=>!t.done).length + ' open tasks</div>' +
+      '<div>👥 ' + teamMembers.filter(m=>m.id!==currentUser?.uid).length + ' team members</div>' +
+      '<div>📎 ' + files.length + ' files in vault</div>' +
+      '<div>🎮 ' + connectedGames.length + ' game' + (connectedGames.length!==1?'s':'') + '</div>' +
+      '<div>▶️ ' + connectedChannels.length + ' channel' + (connectedChannels.length!==1?'s':'') + '</div>';
   }
+  loadAIConversations();
+}
+
+
+
+// ── AI CONVERSATION MANAGEMENT ──
+async function loadAIConversations() {
+  if (!currentUser) return;
+  try {
+    const snap = await getDocs(query(
+      collection(db,'aiConversations'),
+      where('ownerId','==',currentUser.uid)
+    ));
+    aiConversations = snap.docs.map(d=>({id:d.id,...d.data()}))
+      .sort((a,b)=>(b.updatedAt?.seconds||0)-(a.updatedAt?.seconds||0));
+    renderConvList();
+    if (aiConversations.length > 0 && !activeConvId) {
+      loadConversation(aiConversations[0].id);
+    }
+  } catch(e) { console.error('Conv load error:', e); }
+}
+
+function renderConvList() {
+  const el = document.getElementById('ai-conv-list');
+  if (!el) return;
+  if (aiConversations.length === 0) {
+    el.innerHTML = '<div style="color:var(--text-muted);font-size:12px;padding:8px 4px">No saved chats yet</div>';
+    return;
+  }
+  el.innerHTML = aiConversations.map(c => `
+    <div style="padding:9px 10px;border-radius:var(--radius-sm);cursor:pointer;border:1px solid ${activeConvId===c.id?'rgba(124,92,252,0.4)':'transparent'};background:${activeConvId===c.id?'var(--accent-dim)':'transparent'};transition:all var(--transition);display:flex;align-items:center;gap:6px" onclick="loadConversation('${c.id}')">
+      <div style="flex:1;min-width:0">
+        <div style="font-size:12.5px;font-weight:600;color:${activeConvId===c.id?'var(--accent)':'var(--text-primary)'};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${c.title||'Chat'}</div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:1px">${c.messageCount||0} messages</div>
+      </div>
+      <button onclick="event.stopPropagation();deleteConversation('${c.id}')" style="color:var(--text-muted);background:none;border:none;cursor:pointer;font-size:13px;padding:2px 4px;border-radius:3px;flex-shrink:0" onmouseover="this.style.color='var(--red)'" onmouseout="this.style.color='var(--text-muted)'">✕</button>
+    </div>`).join('');
+}
+
+function loadConversation(id) {
+  const conv = aiConversations.find(c=>c.id===id);
+  if (!conv) return;
+  activeConvId = id;
+  aiHistory = conv.messages || [];
+  
+  const titleBar = document.getElementById('ai-conv-title-bar');
+  if (titleBar) titleBar.textContent = conv.title || 'Chat';
+  
+  const msgs = document.getElementById('ai-messages');
+  if (!msgs) return;
+  
+  if (aiHistory.length === 0) {
+    msgs.innerHTML = '<div style="display:flex;gap:12px;align-items:flex-start"><div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#A084FF);display:flex;align-items:center;justify-content:center;color:white;font-size:13px;font-weight:700;flex-shrink:0">S</div><div style="background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-lg);padding:12px 16px;font-size:13.5px;line-height:1.7;color:var(--text-primary);max-width:85%">Hey! Ask me anything about your studio!</div></div>';
+  } else {
+    msgs.innerHTML = aiHistory.map(m => {
+      const isUser = m.role === 'user';
+      const initial = isUser ? (userProfile?.name||currentUser?.email||'U')[0].toUpperCase() : 'S';
+      const bg = isUser ? 'linear-gradient(135deg,var(--green),#1aab70)' : 'linear-gradient(135deg,var(--accent),#A084FF)';
+      const bubbleBg = isUser ? 'var(--accent-dim)' : 'var(--bg-elevated)';
+      const bubbleBorder = isUser ? 'rgba(124,92,252,0.3)' : 'var(--border)';
+      const content = m.content.split('\n').join('<br>');
+      return `<div style="display:flex;gap:12px;align-items:flex-start;${isUser?'flex-direction:row-reverse':''}">
+        <div style="width:32px;height:32px;border-radius:50%;background:${bg};display:flex;align-items:center;justify-content:center;color:white;font-size:13px;font-weight:700;flex-shrink:0">${initial}</div>
+        <div style="background:${bubbleBg};border:1px solid ${bubbleBorder};border-radius:var(--radius-lg);padding:12px 16px;font-size:13.5px;line-height:1.7;color:var(--text-primary);max-width:85%">${content}</div>
+      </div>`;
+    }).join('');
+  }
+  msgs.scrollTop = msgs.scrollHeight;
+  renderConvList();
+}
+
+window.newAIConversation = async () => {
+  try {
+    const ref = await addDoc(collection(db,'aiConversations'), {
+      title: 'New Chat',
+      messages: [],
+      messageCount: 0,
+      ownerId: currentUser.uid,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp()
+    });
+    const newConv = {id:ref.id, title:'New Chat', messages:[], messageCount:0};
+    aiConversations.unshift(newConv);
+    loadConversation(ref.id);
+    renderConvList();
+    document.getElementById('ai-input')?.focus();
+  } catch(e) {
+    // Local fallback
+    activeConvId = 'local_' + Date.now();
+    aiHistory = [];
+    const msgs = document.getElementById('ai-messages');
+    if (msgs) msgs.innerHTML = '<div style="display:flex;gap:12px;align-items:flex-start"><div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#A084FF);display:flex;align-items:center;justify-content:center;color:white;font-size:13px;font-weight:700;flex-shrink:0">S</div><div style="background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-lg);padding:12px 16px;font-size:13.5px;line-height:1.7;color:var(--text-primary);max-width:85%">New conversation started!</div></div>';
+  }
+};
+
+window.deleteConversation = async (id) => {
+  if (!confirm('Delete this conversation?')) return;
+  try { await deleteDoc(doc(db,'aiConversations',id)); } catch(e) {}
+  aiConversations = aiConversations.filter(c=>c.id!==id);
+  if (activeConvId === id) {
+    activeConvId = null;
+    aiHistory = [];
+    if (aiConversations.length > 0) {
+      loadConversation(aiConversations[0].id);
+    } else {
+      const msgs = document.getElementById('ai-messages');
+      if (msgs) msgs.innerHTML = '<div style="display:flex;gap:12px;align-items:flex-start"><div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#A084FF);display:flex;align-items:center;justify-content:center;color:white;font-size:13px;font-weight:700;flex-shrink:0">S</div><div style="background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-lg);padding:12px 16px;font-size:13.5px;line-height:1.7;color:var(--text-primary);max-width:85%">Start a new conversation!</div></div>';
+    }
+  }
+  renderConvList();
+  showToast('Conversation deleted');
+};
+
+async function saveAIConversation(title) {
+  if (!activeConvId || !currentUser) return;
+  try {
+    if (activeConvId.startsWith('local_')) return;
+    await updateDoc(doc(db,'aiConversations',activeConvId), {
+      title: title || 'Chat',
+      messages: aiHistory,
+      messageCount: aiHistory.length,
+      updatedAt: serverTimestamp()
+    });
+    const conv = aiConversations.find(c=>c.id===activeConvId);
+    if (conv) { conv.title = title||'Chat'; conv.messages = aiHistory; conv.messageCount = aiHistory.length; }
+    renderConvList();
+  } catch(e) { console.error('Save conv error:', e); }
 }
 
 
@@ -2684,14 +2823,7 @@ window.useQuickPrompt = (text) => {
   sendAIMessage();
 };
 
-window.clearAIChat = () => {
-  aiHistory = [];
-  const msgs = document.getElementById('ai-messages');
-  msgs.innerHTML = `<div class="ai-msg ai-msg-assistant">
-    <div class="ai-avatar">S</div>
-    <div class="ai-bubble">Chat cleared! What can I help you with?</div>
-  </div>`;
-};
+// clearAIChat replaced by newAIConversation
 
 window.sendAIMessage = async () => {
   const input = document.getElementById('ai-input');
@@ -2699,23 +2831,19 @@ window.sendAIMessage = async () => {
   if (!text) return;
   input.value = '';
 
+  // Create new conversation if none active
+  if (!activeConvId) { await newAIConversation(); }
+
   const btn = document.getElementById('ai-send-btn');
   btn.disabled = true;
 
-  // Add user message
   const msgs = document.getElementById('ai-messages');
-  const userInitial = (userProfile?.name || currentUser?.email || 'U')[0].toUpperCase();
-  msgs.innerHTML += `<div class="ai-msg ai-msg-user">
-    <div class="ai-avatar ai-avatar-user">${userInitial}</div>
-    <div class="ai-bubble">${text}</div>
-  </div>`;
+  const userInitial = (userProfile?.name || currentUser?.displayName || currentUser?.email || 'U')[0].toUpperCase();
+  
+  msgs.innerHTML += '<div style="display:flex;gap:12px;align-items:flex-start;flex-direction:row-reverse"><div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--green),#1aab70);display:flex;align-items:center;justify-content:center;color:white;font-size:13px;font-weight:700;flex-shrink:0">' + userInitial + '</div><div style="background:var(--accent-dim);border:1px solid rgba(124,92,252,0.3);border-radius:var(--radius-lg);padding:12px 16px;font-size:13.5px;line-height:1.7;color:var(--text-primary);max-width:85%">' + text + '</div></div>';
 
-  // Add typing indicator
   const typingId = 'typing-' + Date.now();
-  msgs.innerHTML += `<div class="ai-msg ai-msg-assistant" id="${typingId}">
-    <div class="ai-avatar">S</div>
-    <div class="ai-bubble"><div class="ai-typing"><span></span><span></span><span></span></div></div>
-  </div>`;
+  msgs.innerHTML += '<div id="' + typingId + '" style="display:flex;gap:12px;align-items:flex-start"><div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#A084FF);display:flex;align-items:center;justify-content:center;color:white;font-size:13px;font-weight:700;flex-shrink:0">S</div><div style="background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-lg);padding:12px 16px"><div style="display:flex;gap:4px;padding:4px 0"><span style="width:6px;height:6px;border-radius:50%;background:var(--text-muted);animation:typing 1.2s infinite;display:inline-block"></span><span style="width:6px;height:6px;border-radius:50%;background:var(--text-muted);animation:typing 1.2s infinite 0.2s;display:inline-block"></span><span style="width:6px;height:6px;border-radius:50%;background:var(--text-muted);animation:typing 1.2s infinite 0.4s;display:inline-block"></span></div></div></div>';
   msgs.scrollTop = msgs.scrollHeight;
 
   // Build context from real studio data
@@ -2782,13 +2910,16 @@ Be helpful, specific, and reference their actual data. Keep responses concise bu
     document.getElementById(typingId)?.remove();
     const replyHtml = reply.split('\n').join('<br>');
     msgs.innerHTML += '<div style="display:flex;gap:12px;align-items:flex-start"><div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#A084FF);display:flex;align-items:center;justify-content:center;color:white;font-size:13px;font-weight:700;flex-shrink:0">S</div><div style="background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-lg);padding:12px 16px;font-size:13.5px;line-height:1.7;color:var(--text-primary);max-width:85%">' + replyHtml + '</div></div>';
+    const convTitle = text.length > 30 ? text.slice(0,30)+'...' : text;
+    await saveAIConversation(convTitle);
   } catch(e) {
-    // Smart local fallback — uses real studio data
     const reply = generateLocalReply(text);
     aiHistory.push({ role: 'assistant', content: reply });
     document.getElementById(typingId)?.remove();
     const replyHtml = reply.split('\n').join('<br>');
     msgs.innerHTML += '<div style="display:flex;gap:12px;align-items:flex-start"><div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#A084FF);display:flex;align-items:center;justify-content:center;color:white;font-size:13px;font-weight:700;flex-shrink:0">S</div><div style="background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-lg);padding:12px 16px;font-size:13.5px;line-height:1.7;color:var(--text-primary);max-width:85%">' + replyHtml + '</div></div>';
+    const convTitle = text.length > 30 ? text.slice(0,30)+'...' : text;
+    await saveAIConversation(convTitle);
   }
 
   msgs.scrollTop = msgs.scrollHeight;
@@ -2798,6 +2929,7 @@ Be helpful, specific, and reference their actual data. Keep responses concise bu
 
 // ── TEAM CHAT ──
 let activeChatProject = 'general';
+let chatLocalMessages = [];
 let chatUnsubscriber = null;
 
 function initChat() {
@@ -2818,12 +2950,28 @@ window.switchChatProject = (projectId) => {
 
 function subscribeToChat(channel) {
   if (chatUnsubscriber) chatUnsubscriber();
-  const q = query(collection(db,'chat'), where('channel','==',channel));
-  chatUnsubscriber = onSnapshot(q, snap => {
-    const msgs = snap.docs.map(d=>({id:d.id,...d.data()}))
-      .sort((a,b)=>(a.createdAt?.seconds||0)-(b.createdAt?.seconds||0));
-    renderChatMessages(msgs);
-  });
+  chatLocalMessages = [];
+  try {
+    const q = query(collection(db,'chat'), where('channel','==',channel));
+    chatUnsubscriber = onSnapshot(q, snap => {
+      const msgs = snap.docs.map(d=>({id:d.id,...d.data()}))
+        .sort((a,b)=>(a.createdAt?.seconds||0)-(b.createdAt?.seconds||0));
+      chatLocalMessages = chatLocalMessages.filter(m=>m.id.startsWith('temp_'));
+      renderChatMessages([...msgs, ...chatLocalMessages]
+        .sort((a,b)=>(a.createdAt?.seconds||0)-(b.createdAt?.seconds||0)));
+    }, (err) => {
+      console.error('Chat snapshot error:', err);
+      renderLocalChatMessages();
+    });
+  } catch(e) {
+    console.error('Chat subscribe error:', e);
+    renderLocalChatMessages();
+  }
+}
+
+function renderLocalChatMessages() {
+  renderChatMessages(chatLocalMessages.filter(m=>m.channel===activeChatProject)
+    .sort((a,b)=>(a.createdAt?.seconds||0)-(b.createdAt?.seconds||0)));
 }
 
 function renderChatMessages(msgs) {
@@ -2854,16 +3002,31 @@ window.sendChatMessage = async () => {
   const text = input.value.trim();
   if (!text || !currentUser) return;
   input.value = '';
+  
+  // Optimistic UI - show message immediately
+  const tempMsg = {
+    id: 'temp_' + Date.now(),
+    text, channel: activeChatProject,
+    userId: currentUser.uid,
+    userName: userProfile?.name || currentUser.displayName || currentUser.email,
+    createdAt: { seconds: Math.floor(Date.now()/1000) }
+  };
+  chatLocalMessages.push(tempMsg);
+  renderLocalChatMessages();
+  
   try {
     await addDoc(collection(db,'chat'), {
       text, channel: activeChatProject,
       userId: currentUser.uid,
-      userName: userProfile?.name || currentUser.email,
+      userName: userProfile?.name || currentUser.displayName || currentUser.email,
       createdAt: serverTimestamp()
     });
+    // Remove temp message (real one will come from snapshot)
+    chatLocalMessages = chatLocalMessages.filter(m=>m.id!==tempMsg.id);
   } catch(e) {
-    showToast('Error sending message');
-    input.value = text;
+    console.error('Chat error:', e);
+    // Keep local message visible even if Firestore fails
+    showToast('Message saved locally (check Firestore rules)');
   }
 };
 
@@ -3003,21 +3166,42 @@ window.openNewEventModal = (prefillDate='') => {
 };
 
 window.createEvent = async () => {
-  const title = document.getElementById('ev-title')?.value?.trim();
-  const date = document.getElementById('ev-date')?.value;
-  if (!title || !date) { showToast('Fill in title and date'); return; }
-  const projectId = document.getElementById('ev-project').value;
+  const titleEl = document.getElementById('ev-title');
+  const dateEl = document.getElementById('ev-date');
+  const typeEl = document.getElementById('ev-type');
+  const projEl = document.getElementById('ev-project');
+  
+  const title = titleEl?.value?.trim();
+  const date = dateEl?.value;
+  if (!title) { showToast('Please enter a title'); return; }
+  if (!date) { showToast('Please pick a date'); return; }
+  
+  const type = typeEl?.value || 'other';
+  const projectId = projEl?.value || '';
   const proj = projects.find(p=>p.id===projectId);
-  const ref = await addDoc(collection(db,'calEvents'),{
-    title, date, type: document.getElementById('ev-type').value,
+  
+  const eventData = {
+    title, date, type,
     projectId, projectName: proj?.name||'',
-    ownerId: currentUser.uid, createdAt: serverTimestamp()
-  });
-  calEvents.push({id:ref.id,title,date,type:document.getElementById('ev-type').value,projectId,projectName:proj?.name||''});
+    ownerId: currentUser.uid
+  };
+  
+  try {
+    const ref = await addDoc(collection(db,'calEvents'), {
+      ...eventData, createdAt: serverTimestamp()
+    });
+    calEvents.push({id: ref.id, ...eventData});
+  } catch(e) {
+    // Save locally if Firestore fails
+    const localId = 'local_' + Date.now();
+    calEvents.push({id: localId, ...eventData});
+    console.error('Calendar Firestore error:', e);
+  }
+  
   closeModal();
   renderCalendar();
   renderUpcoming();
-  showToast('✅ Event added');
+  showToast('Event added!');
 };
 
 window.deleteEvent = async (id) => {
