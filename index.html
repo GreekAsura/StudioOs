@@ -2038,12 +2038,15 @@ function renderFiles() {
     if (projects.length > 0) {
       emptyHtml += '<div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:4px">';
       projects.slice(0,4).forEach(p => {
-        emptyHtml += '<button class="btn-secondary" onclick="openProject('' + p.id + '')" style="font-size:13px">' + getTypeIcon(p.type) + ' ' + p.name + '</button>';
+        emptyHtml += '<button class="btn-secondary" style="font-size:13px" data-pid="' + p.id + '">' + getTypeIcon(p.type) + ' ' + p.name + '</button>';
       });
       emptyHtml += '</div>';
     }
     emptyHtml += '</div>';
     list.innerHTML = emptyHtml;
+    list.querySelectorAll('[data-pid]').forEach(btn => {
+      btn.addEventListener('click', () => openProject(btn.dataset.pid));
+    });
     return;
   }
 
