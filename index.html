@@ -1340,10 +1340,6 @@ function subscribeToData() {
     tasks = snap.docs.map(d => ({ id: d.id, ...d.data() }));
     renderDashboard();
     renderTasks();
-    // Re-render project detail only if on that view, preserving current tab
-    if (currentProject && document.getElementById('view-project-detail')?.classList.contains('active')) {
-      renderProjectDetail(currentProject);
-    }
   });
   unsubscribers.push(u2);
 
@@ -1358,10 +1354,6 @@ function subscribeToData() {
   const u3 = onSnapshot(fileQuery, snap => {
     files = snap.docs.map(d => ({ id: d.id, ...d.data() }));
     renderFiles();
-    // Re-render project detail only if on that view
-    if (currentProject && document.getElementById('view-project-detail')?.classList.contains('active')) {
-      renderProjectDetail(currentProject);
-    }
   });
   unsubscribers.push(u3);
 
@@ -1528,29 +1520,19 @@ window.openProject = (id) => {
   showView('project-detail');
 };
 
-window.switchProjectTab = async (id, tab) => {
+window.switchProjectTab = (id, tab) => {
   currentProjectTab = tab;
-  // Update active tab button immediately
   document.querySelectorAll('.tab-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.tab === tab);
   });
-  // Clear content and show loading state
-  const container = document.getElementById('project-detail-content');
-  if (container) container.innerHTML = '<div style="color:var(--text-muted);font-size:13px;padding:20px 0;text-align:center">Loading...</div>';
-  
   const project = projects.find(p=>p.id===id);
   if (project) {
     currentProject = project;
-    // Small delay to let any in-flight snapshots settle
-    await new Promise(r => setTimeout(r, 50));
-    // Re-check tab hasn't changed
-    if (currentProjectTab === tab) {
-      await renderProjectDetail(project);
-    }
+    renderProjectDetail(project);
   }
 };
 
-async function renderProjectDetail(project) {
+function renderProjectDetail(project) {
   if (!project) return;
   const tab = currentProjectTab;
   const container = document.getElementById('project-detail-content');
@@ -1639,17 +1621,10 @@ async function renderProjectDetail(project) {
     const members = teamMembers.filter(m=>(project.memberIds||[]).includes(m.id));
     const nonMembers = teamMembers.filter(m=>!(project.memberIds||[]).includes(m.id) && m.id!==currentUser.uid);
     
-    container.innerHTML = '<div id="team-tab-content"><div style="color:var(--text-muted);font-size:13px;padding:12px 0">Loading team...</div></div>';
-    
-    // Refresh team members from Firestore to make sure we have latest
-    try {
-      const usersSnap = await getDocs(collection(db, 'users'));
-      teamMembers = usersSnap.docs.map(d=>({id:d.id,...d.data()}));
-    } catch(e) { console.error('Team load error:', e); }
-    
     const freshMembers = teamMembers.filter(m=>(project.memberIds||[]).includes(m.id));
     const freshNonMembers = teamMembers.filter(m=>!(project.memberIds||[]).includes(m.id) && m.id!==currentUser.uid);
     
+    container.innerHTML = '<div id="team-tab-content"></div>';
     const teamContent = document.getElementById('team-tab-content');
     if (!teamContent) return;
     
@@ -1745,11 +1720,8 @@ window.deleteProject = async (id) => {
 };
 
 // ── TASKS ──
-window.openAddTaskModal = async (projectId) => {
-  try {
-    const usersSnap = await getDocs(collection(db, 'users'));
-    teamMembers = usersSnap.docs.map(d=>({id:d.id,...d.data()}));
-  } catch(e) {}
+window.openAddTaskModal = (projectId) => {
+  // Use cached teamMembers (refreshed on login and team tab visits)
 
   const project = projects.find(p=>p.id===projectId);
   const assignableMembers = teamMembers.filter(m=>m.id!==currentUser.uid);
