@@ -1340,6 +1340,10 @@ function subscribeToData() {
     tasks = snap.docs.map(d => ({ id: d.id, ...d.data() }));
     renderDashboard();
     renderTasks();
+    // Re-render project detail only if on that view, preserving current tab
+    if (currentProject && document.getElementById('view-project-detail')?.classList.contains('active')) {
+      renderProjectDetail(currentProject);
+    }
   });
   unsubscribers.push(u2);
 
@@ -1354,6 +1358,10 @@ function subscribeToData() {
   const u3 = onSnapshot(fileQuery, snap => {
     files = snap.docs.map(d => ({ id: d.id, ...d.data() }));
     renderFiles();
+    // Re-render project detail only if on that view
+    if (currentProject && document.getElementById('view-project-detail')?.classList.contains('active')) {
+      renderProjectDetail(currentProject);
+    }
   });
   unsubscribers.push(u3);
 
@@ -1522,11 +1530,23 @@ window.openProject = (id) => {
 
 window.switchProjectTab = async (id, tab) => {
   currentProjectTab = tab;
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
+  // Update active tab button immediately
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.tab === tab);
+  });
+  // Clear content and show loading state
+  const container = document.getElementById('project-detail-content');
+  if (container) container.innerHTML = '<div style="color:var(--text-muted);font-size:13px;padding:20px 0;text-align:center">Loading...</div>';
+  
   const project = projects.find(p=>p.id===id);
   if (project) {
     currentProject = project;
-    await renderProjectDetail(project);
+    // Small delay to let any in-flight snapshots settle
+    await new Promise(r => setTimeout(r, 50));
+    // Re-check tab hasn't changed
+    if (currentProjectTab === tab) {
+      await renderProjectDetail(project);
+    }
   }
 };
 
