@@ -31,14 +31,10 @@ button{cursor:pointer;border:none;background:none;font-family:inherit;}
 input,textarea,select{font-family:inherit;}
 .hidden{display:none!important;}
 a{color:inherit;text-decoration:none;}
-
-/* LOADING */
 .loading-screen{position:fixed;inset:0;background:var(--bg-base);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;gap:16px;}
 .loading-logo{display:flex;align-items:center;gap:10px;}
 .spinner{width:28px;height:28px;border:2px solid var(--border-light);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
-
-/* AUTH */
 .auth-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
 .auth-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(124,92,252,0.18) 0%,transparent 70%);}
 .auth-grid{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:40px 40px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 30%,transparent 100%);opacity:0.4;}
@@ -60,8 +56,6 @@ a{color:inherit;text-decoration:none;}
 .btn-google{display:flex;align-items:center;gap:12px;background:var(--bg-elevated);border:1px solid var(--border-light);color:var(--text-primary);font-size:14px;font-weight:500;padding:11px 20px;border-radius:var(--radius-sm);transition:all var(--transition);width:100%;justify-content:center;}
 .btn-google:hover{background:var(--bg-hover);border-color:var(--accent);}
 .auth-note{color:var(--text-muted);font-size:12px;margin-top:16px;text-align:center;line-height:1.6;}
-
-/* APP LAYOUT */
 .app{display:flex;min-height:100vh;}
 .sidebar{width:var(--sidebar-w);flex-shrink:0;background:var(--bg-surface);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:100;background-image:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(255,255,255,0.012) 3px,rgba(255,255,255,0.012) 4px);}
 .sidebar-top{padding:20px 16px 12px;border-bottom:1px solid var(--border);}
@@ -82,17 +76,12 @@ a{color:inherit;text-decoration:none;}
 .role-developer{color:var(--green);}
 .signout-btn{color:var(--text-muted);padding:4px;border-radius:4px;transition:color var(--transition);}
 .signout-btn:hover{color:var(--red);}
-
-
-/* MAIN */
 .main{flex:1;margin-left:var(--sidebar-w);min-height:100vh;overflow-y:auto;}
 .view{display:none;padding:32px 36px 48px;max-width:1200px;}
 .view.active{display:block;}
 .view-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:28px;gap:16px;}
 .view-title{font-family:var(--font-display);font-size:26px;font-weight:700;color:var(--text-primary);letter-spacing:-0.4px;}
 .view-sub{color:var(--text-secondary);font-size:13.5px;margin-top:3px;}
-
-/* BUTTONS */
 .btn-primary{background:var(--accent);color:white;font-size:13.5px;font-weight:600;padding:9px 18px;border-radius:var(--radius-sm);transition:all var(--transition);white-space:nowrap;font-family:var(--font-body);}
 .btn-primary:hover{background:#8E72FF;box-shadow:0 0 20px var(--accent-glow);}
 .btn-primary:disabled{opacity:0.5;cursor:not-allowed;}
@@ -100,15 +89,11 @@ a{color:inherit;text-decoration:none;}
 .btn-ghost:hover{color:var(--text-primary);background:var(--bg-elevated);}
 .btn-secondary{background:var(--bg-elevated);border:1px solid var(--border-light);color:var(--text-primary);font-size:13px;font-weight:500;padding:8px 16px;border-radius:var(--radius-sm);transition:all var(--transition);font-family:var(--font-body);}
 .btn-secondary:hover{background:var(--bg-hover);border-color:var(--accent);}
-
-/* STATS */
 .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px;}
 .stat-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;display:flex;flex-direction:column;gap:6px;}
 .stat-label{font-size:12px;font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;}
 .stat-value{font-family:var(--font-display);font-size:32px;font-weight:700;color:var(--text-primary);line-height:1;}
 .stat-change{font-size:12px;color:var(--text-secondary);}
-
-/* DASH GRID */
 .dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
 .dash-section{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px;}
 .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
@@ -125,14 +110,10 @@ a{color:inherit;text-decoration:none;}
 .task-row-name{font-size:13px;font-weight:500;color:var(--text-primary);}
 .task-row-name.done{text-decoration:line-through;color:var(--text-muted);}
 .task-row-meta{font-size:11.5px;color:var(--text-muted);margin-top:2px;}
-
-/* FILTER */
 .filter-bar{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap;}
 .filter-btn{padding:6px 14px;border-radius:20px;font-size:13px;font-weight:500;color:var(--text-secondary);background:var(--bg-surface);border:1px solid var(--border);transition:all var(--transition);font-family:var(--font-body);}
 .filter-btn:hover{border-color:var(--border-light);color:var(--text-primary);}
 .filter-btn.active{background:var(--accent-dim);border-color:rgba(124,92,252,0.4);color:var(--accent);}
-
-/* PROJECT CARDS */
 .projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;}
 .project-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:22px;cursor:pointer;transition:all var(--transition);position:relative;overflow:hidden;}
 .project-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),transparent);opacity:0;transition:opacity var(--transition);}
@@ -159,20 +140,14 @@ a{color:inherit;text-decoration:none;}
 .pulse-dot.red::after{background:var(--red);}
 .pulse-dot.blue{background:var(--blue);}
 .pulse-dot.blue::after{background:var(--blue);}
-
-/* EMPTY */
 .empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;text-align:center;color:var(--text-muted);grid-column:1/-1;}
 .empty-icon{font-size:40px;margin-bottom:16px;opacity:0.6;}
 .empty-state h3{font-family:var(--font-display);font-size:17px;color:var(--text-secondary);margin-bottom:8px;}
 .empty-state p{font-size:13.5px;color:var(--text-muted);max-width:280px;line-height:1.6;margin-bottom:20px;}
-
-/* PROJECT DETAIL */
 .project-detail-tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:28px;}
 .tab-btn{padding:10px 18px;font-size:13.5px;font-weight:500;color:var(--text-secondary);border-bottom:2px solid transparent;margin-bottom:-1px;transition:all var(--transition);font-family:var(--font-body);}
 .tab-btn:hover{color:var(--text-primary);}
 .tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
-
-/* TASKS */
 .tasks-board{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:start;}
 .task-column{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;}
 .task-column-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
@@ -188,8 +163,6 @@ a{color:inherit;text-decoration:none;}
 .priority-high{background:var(--red);}
 .priority-medium{background:var(--yellow);}
 .priority-low{background:var(--green);}
-
-/* FILES */
 .files-list{display:flex;flex-direction:column;gap:10px;}
 .file-item{display:flex;align-items:center;gap:14px;background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;transition:all var(--transition);}
 .file-item:hover{border-color:var(--border-light);background:var(--bg-elevated);}
@@ -198,8 +171,6 @@ a{color:inherit;text-decoration:none;}
 .file-name{font-size:14px;font-weight:600;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .file-meta{font-size:12px;color:var(--text-muted);margin-top:2px;}
 .file-project-tag{font-size:12px;color:var(--accent);background:var(--accent-dim);padding:2px 10px;border-radius:20px;font-weight:500;white-space:nowrap;}
-
-/* TEAM */
 .team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;}
 .team-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:22px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;transition:all var(--transition);}
 .team-card:hover{border-color:var(--border-light);}
@@ -207,30 +178,22 @@ a{color:inherit;text-decoration:none;}
 .team-name{font-family:var(--font-display);font-size:15px;font-weight:700;color:var(--text-primary);}
 .team-email{font-size:12px;color:var(--text-muted);}
 .team-role-badge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:var(--accent-dim);color:var(--accent);}
-
-/* ANALYTICS */
 .analytics-coming{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 20px;text-align:center;}
 .coming-icon{font-size:56px;margin-bottom:24px;}
 .analytics-coming h2{font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--text-primary);margin-bottom:12px;}
 .analytics-coming p{color:var(--text-secondary);font-size:14px;max-width:380px;line-height:1.7;margin-bottom:28px;}
-
-/* OVERVIEW */
 .overview-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px;}
 .detail-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px;}
 .detail-card h4{font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;}
 .progress-bar-bg{height:6px;background:var(--bg-elevated);border-radius:3px;overflow:hidden;margin-top:8px;}
 .progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),#A084FF);border-radius:3px;transition:width 0.5s ease;}
 .detail-big-num{font-family:var(--font-display);font-size:36px;font-weight:700;color:var(--text-primary);}
-
-/* MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;}
 .modal{background:var(--bg-surface);border:1px solid var(--border-light);border-radius:var(--radius-xl);padding:28px;width:100%;max-width:480px;box-shadow:0 24px 80px rgba(0,0,0,0.6);}
 .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
 .modal-header h3{font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--text-primary);}
 .modal-close{color:var(--text-muted);font-size:18px;padding:4px 8px;border-radius:4px;transition:all var(--transition);}
 .modal-close:hover{color:var(--text-primary);background:var(--bg-elevated);}
-
-/* FORMS */
 .form-group{margin-bottom:18px;}
 .form-label{display:block;font-size:12.5px;font-weight:600;color:var(--text-secondary);margin-bottom:7px;text-transform:uppercase;letter-spacing:0.05em;}
 .form-input,.form-select,.form-textarea{width:100%;background:var(--bg-elevated);border:1px solid var(--border-light);border-radius:var(--radius-sm);color:var(--text-primary);font-size:14px;padding:10px 13px;transition:all var(--transition);outline:none;}
@@ -239,13 +202,8 @@ a{color:inherit;text-decoration:none;}
 .form-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238891AA' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;cursor:pointer;}
 .form-select option{background:var(--bg-elevated);}
 .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:24px;}
-
-/* TOAST */
 .toast{position:fixed;bottom:24px;right:24px;background:var(--bg-elevated);border:1px solid var(--border-light);border-radius:var(--radius);padding:12px 20px;font-size:14px;color:var(--text-primary);font-weight:500;z-index:9999;box-shadow:0 8px 32px rgba(0,0,0,0.4);animation:slideUp 0.2s ease;}
 @keyframes slideUp{from{transform:translateY(16px);opacity:0;}to{transform:translateY(0);opacity:1;}}
-
-
-/* ANALYTICS */
 .analytics-stat-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;display:flex;flex-direction:column;gap:4px;}
 .analytics-stat-label{font-size:11px;font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;}
 .analytics-stat-value{font-family:var(--font-display);font-size:24px;font-weight:700;color:var(--text-primary);line-height:1.1;}
@@ -259,34 +217,20 @@ a{color:inherit;text-decoration:none;}
 .step-content{flex:1;}
 .step-title{font-size:13.5px;font-weight:600;color:var(--text-primary);margin-bottom:3px;}
 .step-desc{font-size:12.5px;color:var(--text-secondary);line-height:1.6;}
-
-.game-tab{padding:8px 16px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;color:var(--text-secondary);background:var(--bg-surface);border:1px solid var(--border);transition:all var(--transition);font-family:var(--font-body);cursor:pointer;}
-.game-tab.active{background:var(--accent-dim);border-color:rgba(124,92,252,0.4);color:var(--accent);}
-
-/* AI CHAT */
-.ai-msg{display:flex;gap:12px;align-items:flex-start;}
-.ai-msg-user{flex-direction:row-reverse;}
-.ai-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#A084FF);display:flex;align-items:center;justify-content:center;color:white;font-size:13px;font-weight:700;font-family:var(--font-display);flex-shrink:0;}
-.ai-avatar-user{background:linear-gradient(135deg,var(--green),#1aab70);}
 .ai-bubble{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-lg);padding:12px 16px;font-size:13.5px;line-height:1.7;color:var(--text-primary);max-width:85%;white-space:pre-wrap;}
-.ai-msg-user .ai-bubble{background:var(--accent-dim);border-color:rgba(124,92,252,0.3);color:var(--text-primary);}
 .ai-typing{display:flex;gap:4px;padding:4px 0;}
 .ai-typing span{width:6px;height:6px;border-radius:50%;background:var(--text-muted);animation:typing 1.2s infinite;}
 .ai-typing span:nth-child(2){animation-delay:0.2s;}
 .ai-typing span:nth-child(3){animation-delay:0.4s;}
 @keyframes typing{0%,60%,100%{transform:translateY(0);}30%{transform:translateY(-6px);}}
-.ai-quick-btn{padding:8px 12px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-secondary);font-size:12.5px;text-align:left;cursor:pointer;transition:all var(--transition);font-family:var(--font-body);line-height:1.4;}
+.ai-quick-btn{padding:8px 12px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-secondary);font-size:12.5px;text-align:left;cursor:pointer;transition:all var(--transition);font-family:var(--font-body);line-height:1.4;width:100%;}
 .ai-quick-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
-
-/* CHAT */
 .chat-msg{display:flex;gap:10px;align-items:flex-start;}
 .chat-msg-mine{flex-direction:row-reverse;}
 .chat-avatar{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#A084FF);display:flex;align-items:center;justify-content:center;color:white;font-size:11px;font-weight:700;flex-shrink:0;}
 .chat-bubble{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-lg);padding:10px 14px;font-size:13.5px;line-height:1.6;color:var(--text-primary);max-width:80%;}
 .chat-msg-mine .chat-bubble{background:var(--accent-dim);border-color:rgba(124,92,252,0.3);}
 .chat-meta{font-size:11px;color:var(--text-muted);margin-top:3px;}
-
-/* CALENDAR */
 .cal-day{min-height:70px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-sm);padding:6px;cursor:pointer;transition:all var(--transition);position:relative;}
 .cal-day:hover{border-color:var(--border-light);}
 .cal-day.today{border-color:var(--accent);background:var(--accent-dim);}
@@ -303,15 +247,6 @@ a{color:inherit;text-decoration:none;}
 .upcoming-info{flex:1;}
 .upcoming-title{font-size:13px;font-weight:600;color:var(--text-primary);}
 .upcoming-type{font-size:11.5px;color:var(--text-muted);margin-top:2px;}
-
-@media(max-width:768px){
-  #view-ai > div:last-child{grid-template-columns:1fr;}
-  #view-ai > div:last-child > div:last-child{display:none;}
-  #view-calendar > div:last-child{grid-template-columns:1fr;}
-  #view-calendar > div:last-child > div:last-child{display:none;}
-}
-
-
 .drop-zone{border:2px dashed var(--border-light);border-radius:var(--radius-lg);padding:32px 20px;text-align:center;cursor:pointer;transition:all var(--transition);background:var(--bg-elevated);position:relative;}
 .drop-zone:hover,.drop-zone.drag-over{border-color:var(--accent);background:var(--accent-dim);}
 .drop-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
@@ -324,100 +259,16 @@ a{color:inherit;text-decoration:none;}
 .upload-progress-name{font-size:12.5px;color:var(--text-primary);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px;}
 .upload-progress-pct{font-size:12px;color:var(--accent);font-weight:600;min-width:36px;text-align:right;}
 .file-item-img{width:44px;height:44px;border-radius:var(--radius-sm);object-fit:cover;flex-shrink:0;}
-
-
-/* MOBILE FLOATING UPLOAD BUTTON */
-#mobile-upload-fab {
-  display: none;
-  position: fixed;
-  bottom: 80px;
-  right: 16px;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: var(--accent);
-  color: white;
-  font-size: 24px;
-  border: none;
-  cursor: pointer;
-  z-index: 150;
-  box-shadow: 0 4px 20px var(--accent-glow);
-  align-items: center;
-  justify-content: center;
-  transition: all var(--transition);
-}
-#mobile-upload-fab:hover { background: #8E72FF; transform: scale(1.05); }
-@media(max-width:768px) {
-  #mobile-upload-fab { display: flex; }
-}
-
-/* ACCESS DENIED */
-.access-denied{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 20px;text-align:center;}
-.access-denied h2{font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--text-primary);margin-bottom:12px;margin-top:16px;}
-.access-denied p{color:var(--text-secondary);font-size:14px;max-width:360px;line-height:1.7;}
-
-
-/* ── MOBILE IMPROVEMENTS ── */
-@media(max-width:768px){
-  :root{--sidebar-w:0px;}
-  .sidebar{display:none;}
-  .main{margin-left:0;}
-  .view{padding:16px 14px 80px;}
-  .view-header{flex-direction:column;gap:12px;align-items:flex-start;}
-  .stats-row{grid-template-columns:repeat(2,1fr);gap:10px;}
-  .dash-grid{grid-template-columns:1fr;}
-  .tasks-board{grid-template-columns:1fr;}
-  .overview-grid{grid-template-columns:1fr;}
-  .projects-grid{grid-template-columns:1fr;}
-  .team-grid{grid-template-columns:1fr;}
-  .filter-bar{gap:6px;}
-  .filter-btn{font-size:12px;padding:5px 10px;}
-  .modal{padding:20px 16px;border-radius:var(--radius-lg);}
-  .modal-actions{flex-direction:column;}
-  .modal-actions button{width:100%;}
-}
-
-/* MOBILE NAV BAR (bottom) */
-.mobile-nav{
-  display:none;
-  position:fixed;
-  bottom:0;left:0;right:0;
-  background:var(--bg-surface);
-  border-top:1px solid var(--border);
-  z-index:200;
-  padding:8px 4px 12px;
-  gap:2px;
-  justify-content:space-around;
-  align-items:center;
-}
-
-.mobile-nav-item{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:3px;
-  padding:6px 10px;
-  border-radius:var(--radius-sm);
-  color:var(--text-muted);
-  font-size:10px;
-  font-weight:500;
-  transition:all var(--transition);
-  cursor:pointer;
-  background:none;
-  border:none;
-  font-family:var(--font-body);
-  min-width:52px;
-}
-
+#mobile-upload-fab{display:none;position:fixed;bottom:80px;right:16px;width:56px;height:56px;border-radius:50%;background:var(--accent);color:white;font-size:24px;border:none;cursor:pointer;z-index:150;box-shadow:0 4px 20px var(--accent-glow);align-items:center;justify-content:center;transition:all var(--transition);}
+#mobile-upload-fab:hover{background:#8E72FF;transform:scale(1.05);}
+@media(max-width:768px){#mobile-upload-fab{display:flex;}}
+.mobile-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--bg-surface);border-top:1px solid var(--border);z-index:200;padding:8px 4px 12px;gap:2px;justify-content:space-around;align-items:center;}
+.mobile-nav-item{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 10px;border-radius:var(--radius-sm);color:var(--text-muted);font-size:10px;font-weight:500;transition:all var(--transition);cursor:pointer;background:none;border:none;font-family:var(--font-body);min-width:52px;}
 .mobile-nav-item.active{color:var(--accent);}
 .mobile-nav-item svg{opacity:0.7;}
 .mobile-nav-item.active svg{opacity:1;}
-
-@media(max-width:768px){
-  .mobile-nav{display:flex;}
-  #pwa-install-btn{display:none!important;}
-}
-
+@media(max-width:768px){.mobile-nav{display:flex;}#pwa-install-btn{display:none!important;}}
+@media(max-width:768px){:root{--sidebar-w:0px;}.sidebar{display:none;}.main{margin-left:0;}.view{padding:16px 14px 80px;}.view-header{flex-direction:column;gap:12px;align-items:flex-start;}.stats-row{grid-template-columns:repeat(2,1fr);gap:10px;}.dash-grid{grid-template-columns:1fr;}.tasks-board{grid-template-columns:1fr;}.overview-grid{grid-template-columns:1fr;}.projects-grid{grid-template-columns:1fr;}.team-grid{grid-template-columns:1fr;}.filter-bar{gap:6px;}.filter-btn{font-size:12px;padding:5px 10px;}.modal{padding:20px 16px;border-radius:var(--radius-lg);}.modal-actions{flex-direction:column;}.modal-actions button{width:100%;}}
 @media(max-width:900px){.stats-row{grid-template-columns:repeat(2,1fr);}.dash-grid{grid-template-columns:1fr;}.tasks-board{grid-template-columns:1fr;}.overview-grid{grid-template-columns:1fr;}}
 @media(max-width:640px){:root{--sidebar-w:0px;}.sidebar{display:none;}.view{padding:20px 16px 40px;}.stats-row{grid-template-columns:repeat(2,1fr);}}
 </style>
@@ -437,39 +288,22 @@ a{color:inherit;text-decoration:none;}
   </div>
 </div>
 
-<!-- AUTH SCREEN -->
-
 <script>
-  // If Firebase doesn't respond in 10s, show auth screen anyway
-  setTimeout(() => {
-    const loading = document.getElementById('loading-screen');
-    if (loading && !loading.classList.contains('hidden')) {
-      const msg = document.getElementById('loading-timeout-msg');
-      if (msg) msg.style.display = 'block';
-    }
-  }, 4000);
-  // Hard fallback - show auth screen after 12s no matter what
-  setTimeout(() => {
-    const loading = document.getElementById('loading-screen');
-    if (loading && !loading.classList.contains('hidden')) {
-      loading.classList.add('hidden');
-      const auth = document.getElementById('auth-screen');
-      if (auth) auth.classList.remove('hidden');
-    }
-  }, 12000);
-
-// Backup: attach auth button listeners via JS in case inline onclick fails
-document.addEventListener('DOMContentLoaded', () => {
-  const signinBtn = document.getElementById('signin-btn');
-  const signupBtn = document.getElementById('signup-btn');
-  const googleBtn = document.getElementById('google-btn');
-  if (signinBtn) signinBtn.addEventListener('click', () => window.doSignIn && window.doSignIn());
-  if (signupBtn) signupBtn.addEventListener('click', () => window.doSignUp && window.doSignUp());
-  if (googleBtn) googleBtn.addEventListener('click', () => window.doGoogleSignIn && window.doGoogleSignIn());
-});
-
+setTimeout(() => {
+  const msg = document.getElementById('loading-timeout-msg');
+  if (msg) msg.style.display = 'block';
+}, 4000);
+setTimeout(() => {
+  const loading = document.getElementById('loading-screen');
+  if (loading && !loading.classList.contains('hidden')) {
+    loading.classList.add('hidden');
+    const auth = document.getElementById('auth-screen');
+    if (auth) auth.classList.remove('hidden');
+  }
+}, 12000);
 </script>
 
+<!-- AUTH SCREEN -->
 <div id="auth-screen" class="auth-screen hidden">
   <div class="auth-bg"><div class="auth-grid"></div></div>
   <div class="auth-card">
@@ -478,50 +312,47 @@ document.addEventListener('DOMContentLoaded', () => {
       <span class="logo-text">StudioOS</span>
     </div>
     <p class="auth-tagline">Your game studio. One dashboard.</p>
-
     <div class="auth-tabs">
       <button class="auth-tab active" id="tab-signin" onclick="switchAuthTab('signin')">Sign In</button>
       <button class="auth-tab" id="tab-signup" onclick="switchAuthTab('signup')">Create Account</button>
     </div>
-
     <div id="auth-error" class="auth-error"></div>
     <div id="auth-success" class="auth-success"></div>
-
-    <!-- SIGN IN FORM -->
+    <!-- SIGN IN -->
     <div id="form-signin" style="width:100%">
       <div class="form-group">
         <label class="form-label">Email</label>
-        <input class="form-input" id="signin-email" type="email" placeholder="you@gmail.com" />
+        <input class="form-input" id="signin-email" type="email" placeholder="you@gmail.com"/>
       </div>
       <div class="form-group">
         <label class="form-label">Password</label>
-        <input class="form-input" id="signin-password" type="password" placeholder="Your password" />
+        <input class="form-input" id="signin-password" type="password" placeholder="Your password"
+          onkeydown="if(event.key==='Enter') window.doSignIn && window.doSignIn()"/>
       </div>
-      <button class="btn-primary" id="signin-btn" onclick="window.doSignIn && window.doSignIn()" style="width:100%;justify-content:center">Sign In</button>
+      <button class="btn-primary" id="signin-btn" onclick="window.doSignIn && window.doSignIn()" style="width:100%">Sign In</button>
       <div class="divider">or</div>
       <button class="btn-google" id="google-btn" onclick="window.doGoogleSignIn && window.doGoogleSignIn()">
         <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
         Continue with Google
       </button>
     </div>
-
-    <!-- SIGN UP FORM -->
+    <!-- SIGN UP -->
     <div id="form-signup" style="width:100%;display:none">
       <div class="form-group">
         <label class="form-label">Full Name</label>
-        <input class="form-input" id="signup-name" type="text" placeholder="Your name" />
+        <input class="form-input" id="signup-name" type="text" placeholder="Your name"/>
       </div>
       <div class="form-group">
         <label class="form-label">Email</label>
-        <input class="form-input" id="signup-email" type="email" placeholder="you@gmail.com" />
+        <input class="form-input" id="signup-email" type="email" placeholder="you@gmail.com"/>
       </div>
       <div class="form-group">
         <label class="form-label">Password</label>
-        <input class="form-input" id="signup-password" type="password" placeholder="Min 6 characters" />
+        <input class="form-input" id="signup-password" type="password" placeholder="Min 6 characters"/>
       </div>
       <div class="form-group">
         <label class="form-label">Confirm Password</label>
-        <input class="form-input" id="signup-confirm" type="password" placeholder="Repeat password" />
+        <input class="form-input" id="signup-confirm" type="password" placeholder="Repeat password"/>
       </div>
       <button class="btn-primary" id="signup-btn" onclick="window.doSignUp && window.doSignUp()" style="width:100%">Create Account</button>
       <div class="divider">or</div>
@@ -530,7 +361,6 @@ document.addEventListener('DOMContentLoaded', () => {
         Sign up with Google
       </button>
     </div>
-
     <p class="auth-note">By signing up you agree to StudioOS terms.<br>Your data is stored securely in Firebase.</p>
   </div>
 </div>
@@ -567,7 +397,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>YouTube
       </button>
       <button class="nav-item" data-view="notes">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Notes
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Notes
       </button>
       <button class="nav-item owner-only" data-view="ads" style="display:none">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>Ad Advisor
@@ -588,13 +418,13 @@ document.addEventListener('DOMContentLoaded', () => {
       </button>
     </div>
     <div class="sidebar-bottom">
-      <div class="user-pill" id="user-pill-click" style="cursor:pointer" title="Click to see your UID">
+      <div class="user-pill" id="user-pill-click" style="cursor:pointer" onclick="showToast('Your UID: ' + (window._currentUID||'loading...'))">
         <div class="user-avatar" id="user-avatar"></div>
         <div class="user-info">
           <span class="user-name" id="user-name">...</span>
           <span class="user-role" id="user-role-label">...</span>
         </div>
-        <button class="signout-btn" onclick="doSignOut()" title="Sign out">
+        <button class="signout-btn" onclick="event.stopPropagation();doSignOut()" title="Sign out">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
         </button>
       </div>
@@ -672,7 +502,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <div id="files-list" class="files-list"></div>
     </div>
 
-    <!-- TEAM (owner only) -->
+    <!-- TEAM -->
     <div class="view" id="view-team">
       <div class="view-header">
         <div><h1 class="view-title">Team</h1><p class="view-sub">Manage your developers</p></div>
@@ -687,76 +517,21 @@ document.addEventListener('DOMContentLoaded', () => {
         <div><h1 class="view-title">Analytics</h1><p class="view-sub">Roblox game performance dashboard</p></div>
         <button class="btn-primary" onclick="openConnectGameModal()">+ Connect Game</button>
       </div>
-
-      <!-- NO GAMES CONNECTED -->
       <div id="analytics-empty" class="analytics-coming">
         <div class="coming-icon">📊</div>
         <h2>Connect your Roblox game</h2>
-        <p>Once Don't Blink is published, paste your Universe ID here to pull live stats — visits, player counts, revenue, retention, and session data all in one place.</p>
+        <p>Paste your Universe ID to track your game. Find it at create.roblox.com → your game URL.</p>
         <button class="btn-primary" onclick="openConnectGameModal()">+ Connect Game</button>
-        <div style="margin-top:32px;background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;max-width:480px;text-align:left">
-          <div style="font-family:var(--font-display);font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:12px">📍 How to find your Universe ID</div>
-          <div style="color:var(--text-secondary);font-size:13px;line-height:1.8">
-            1. Go to <strong>create.roblox.com</strong><br>
-            2. Click on your game<br>
-            3. Look at the URL — it'll be: <code style="background:var(--bg-elevated);padding:2px 6px;border-radius:4px;color:var(--accent)">create.roblox.com/dashboard/creations/experiences/<strong>XXXXXXXXX</strong>/overview</code><br>
-            4. That number is your Universe ID
-          </div>
-        </div>
       </div>
-
-      <!-- GAMES CONNECTED -->
       <div id="analytics-dashboard" style="display:none">
-        <!-- GAME SELECTOR -->
         <div id="game-selector" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px"></div>
-
-        <!-- LIVE STATUS BANNER -->
         <div id="analytics-live-banner" style="display:flex;align-items:center;gap:10px;background:var(--green-dim);border:1px solid var(--green);border-radius:var(--radius);padding:12px 16px;margin-bottom:24px">
           <div class="pulse-dot"></div>
           <span style="color:var(--green);font-size:13.5px;font-weight:600" id="live-player-count">Fetching live data...</span>
           <span style="color:var(--text-muted);font-size:12px;margin-left:auto" id="last-updated"></span>
           <button class="btn-ghost" style="font-size:12px;padding:4px 10px" onclick="refreshAnalytics()">↻ Refresh</button>
         </div>
-
-        <!-- STAT CARDS -->
-        <div class="stats-row" style="grid-template-columns:repeat(5,1fr)" id="analytics-stats"></div>
-
-        <!-- CHARTS ROW -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px">
-          <div class="detail-card">
-            <h4>Visits Over Time</h4>
-            <canvas id="chart-visits" height="160"></canvas>
-          </div>
-          <div class="detail-card">
-            <h4>Concurrent Players</h4>
-            <canvas id="chart-concurrent" height="160"></canvas>
-          </div>
-        </div>
-
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-bottom:18px">
-          <div class="detail-card">
-            <h4>Revenue (Robux)</h4>
-            <canvas id="chart-revenue" height="160"></canvas>
-          </div>
-          <div class="detail-card">
-            <h4>Session Length</h4>
-            <div id="session-stats" style="padding-top:8px"></div>
-          </div>
-          <div class="detail-card">
-            <h4>Game Info</h4>
-            <div id="game-info-panel" style="padding-top:8px"></div>
-          </div>
-        </div>
-
-        <!-- AD ADVISOR TEASER -->
-        <div style="background:linear-gradient(135deg,var(--accent-dim),rgba(124,92,252,0.05));border:1px solid rgba(124,92,252,0.3);border-radius:var(--radius-lg);padding:20px;display:flex;align-items:center;gap:16px">
-          <span style="font-size:32px">🎯</span>
-          <div style="flex:1">
-            <div style="font-family:var(--font-display);font-size:15px;font-weight:700;color:var(--text-primary);margin-bottom:4px">Ad Advisor is ready</div>
-            <div style="color:var(--text-secondary);font-size:13px">Based on your analytics, get a personalized Roblox ad campaign strategy.</div>
-          </div>
-          <button class="btn-primary" onclick="showView('ads')">View Strategy →</button>
-        </div>
+        <div class="stats-row" id="analytics-stats"></div>
       </div>
     </div>
 
@@ -764,36 +539,14 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="view" id="view-ads">
       <div class="view-header">
         <div><h1 class="view-title">Ad Advisor</h1><p class="view-sub">AI-powered Roblox ad campaign strategy</p></div>
-        <button class="btn-primary" id="generate-strategy-btn" onclick="generateAdStrategy()">✨ Generate Strategy</button>
+        <button class="btn-primary" onclick="generateAdStrategy()">✨ Generate Strategy</button>
       </div>
       <div id="ads-content">
         <div class="analytics-coming">
           <div class="coming-icon">🎯</div>
-          <h2>Ready to advertise Don't Blink?</h2>
-          <p>Connect your game in Analytics first, then come back here for a personalized ad strategy based on your actual game data.</p>
+          <h2>Ready to advertise?</h2>
+          <p>Connect your game in Analytics first, then generate a personalized ad strategy.</p>
           <button class="btn-primary" onclick="showView('analytics')">Set up Analytics first</button>
-          <div style="margin-top:32px;display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:560px;text-align:left">
-            <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px">
-              <div style="font-size:20px;margin-bottom:8px">📢</div>
-              <div style="font-family:var(--font-display);font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:4px">Sponsored Experiences</div>
-              <div style="font-size:12px;color:var(--text-muted);line-height:1.6">Your game appears in Roblox search and discovery. Best for visibility.</div>
-            </div>
-            <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px">
-              <div style="font-size:20px;margin-bottom:8px">🌀</div>
-              <div style="font-family:var(--font-display);font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:4px">Portal Ads</div>
-              <div style="font-size:12px;color:var(--text-muted);line-height:1.6">In-game portals that teleport players to your game. High intent traffic.</div>
-            </div>
-            <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px">
-              <div style="font-size:20px;margin-bottom:8px">🖼️</div>
-              <div style="font-family:var(--font-display);font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:4px">Image Ads</div>
-              <div style="font-size:12px;color:var(--text-muted);line-height:1.6">Banner ads shown across Roblox. Good for brand awareness at low cost.</div>
-            </div>
-            <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px">
-              <div style="font-size:20px;margin-bottom:8px">🎥</div>
-              <div style="font-family:var(--font-display);font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:4px">Video Ads</div>
-              <div style="font-size:12px;color:var(--text-muted);line-height:1.6">Short video clips shown to players. Highest engagement, premium placement.</div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -807,34 +560,12 @@ document.addEventListener('DOMContentLoaded', () => {
       <div id="youtube-empty" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 20px;text-align:center">
         <div style="font-size:56px;margin-bottom:24px">▶️</div>
         <h2 style="font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--text-primary);margin-bottom:12px">Connect your YouTube channel</h2>
-        <p style="color:var(--text-secondary);font-size:14px;max-width:400px;line-height:1.7;margin-bottom:28px">Track your video views, watch time, and subscriber growth. See exactly how your YouTube uploads drive players to your Roblox games.</p>
+        <p style="color:var(--text-secondary);font-size:14px;max-width:400px;line-height:1.7;margin-bottom:28px">Track videos from idea to published and monitor your pipeline.</p>
         <button class="btn-primary" onclick="openConnectYouTubeModal()">+ Connect Channel</button>
-        <div style="margin-top:32px;display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:480px;text-align:left">
-          <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px">
-            <div style="font-size:18px;margin-bottom:8px">📈</div>
-            <div style="font-family:var(--font-display);font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:4px">View Trends</div>
-            <div style="font-size:12px;color:var(--text-muted);line-height:1.6">See which videos perform best and when your audience is most active.</div>
-          </div>
-          <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px">
-            <div style="font-size:18px;margin-bottom:8px">🎮</div>
-            <div style="font-family:var(--font-display);font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:4px">Game Traffic Correlation</div>
-            <div style="font-size:12px;color:var(--text-muted);line-height:1.6">See how YouTube uploads spike your Roblox player counts.</div>
-          </div>
-          <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px">
-            <div style="font-size:18px;margin-bottom:8px">🎬</div>
-            <div style="font-family:var(--font-display);font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:4px">Video Pipeline</div>
-            <div style="font-size:12px;color:var(--text-muted);line-height:1.6">Track videos from idea → filming → editing → published.</div>
-          </div>
-          <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px">
-            <div style="font-size:18px;margin-bottom:8px">🔔</div>
-            <div style="font-family:var(--font-display);font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:4px">Subscriber Tracking</div>
-            <div style="font-size:12px;color:var(--text-muted);line-height:1.6">Monitor subscriber growth and see what content drives subs.</div>
-          </div>
-        </div>
       </div>
       <div id="youtube-dashboard" style="display:none">
         <div id="channel-selector" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px"></div>
-        <div class="stats-row" id="yt-stats" style="grid-template-columns:repeat(4,1fr);margin-bottom:20px"></div>
+        <div class="stats-row" id="yt-stats" style="margin-bottom:20px"></div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px">
           <div class="detail-card">
             <h4>Recent Videos</h4>
@@ -847,10 +578,6 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             <div id="yt-pipeline" style="display:flex;flex-direction:column;gap:8px"></div>
           </div>
-        </div>
-        <div style="background:var(--green-dim);border:1px solid var(--green);border-radius:var(--radius-lg);padding:14px 18px;display:flex;align-items:center;gap:12px">
-          <div class="pulse-dot"></div>
-          <span style="color:var(--green);font-size:13px;font-weight:600">YouTube Data API connected — live data enabled</span>
         </div>
       </div>
     </div>
@@ -874,14 +601,14 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
           <div id="note-content" style="display:none;flex-direction:column;height:100%">
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:12px">
-              <input id="note-title-input" class="form-input" style="font-family:var(--font-display);font-size:18px;font-weight:700;border:none;background:transparent;padding:0;font-size:20px" placeholder="Note title..."/>
+              <input id="note-title-input" class="form-input" style="font-family:var(--font-display);font-size:20px;font-weight:700;border:none;background:transparent;padding:0" placeholder="Note title..."/>
               <div style="display:flex;gap:8px;flex-shrink:0">
                 <select class="form-select" id="note-project-select" style="font-size:12px;padding:6px 28px 6px 10px;width:auto"></select>
                 <button class="btn-primary" onclick="saveNote()" style="font-size:12px;padding:6px 14px">Save</button>
                 <button class="btn-ghost" style="color:var(--red);font-size:12px" onclick="deleteCurrentNote()">Delete</button>
               </div>
             </div>
-            <textarea id="note-body-input" class="form-textarea" style="flex:1;min-height:400px;background:transparent;border:none;font-size:14px;line-height:1.8;resize:none;color:var(--text-primary)" placeholder="Start writing... (supports plain text, use # for headings, - for bullets)"></textarea>
+            <textarea id="note-body-input" class="form-textarea" style="flex:1;min-height:400px;background:transparent;border:none;font-size:14px;line-height:1.8;resize:none;color:var(--text-primary)" placeholder="Start writing..."></textarea>
           </div>
         </div>
       </div>
@@ -894,29 +621,23 @@ document.addEventListener('DOMContentLoaded', () => {
         <button class="btn-primary" onclick="newAIConversation()">+ New Chat</button>
       </div>
       <div style="display:grid;grid-template-columns:220px 1fr 240px;gap:16px;height:calc(100vh - 200px)">
-        
-        <!-- CONVERSATION HISTORY SIDEBAR -->
         <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);display:flex;flex-direction:column;overflow:hidden">
           <div style="padding:14px 14px 10px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em">Conversations</div>
           <div id="ai-conv-list" style="flex:1;overflow-y:auto;padding:8px;display:flex;flex-direction:column;gap:4px"></div>
         </div>
-
-        <!-- CHAT AREA -->
         <div style="display:flex;flex-direction:column;background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden">
           <div id="ai-conv-title-bar" style="padding:12px 16px;border-bottom:1px solid var(--border);font-size:13.5px;font-weight:600;color:var(--text-primary)">New Conversation</div>
           <div id="ai-messages" style="flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:16px">
             <div style="display:flex;gap:12px;align-items:flex-start">
               <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#A084FF);display:flex;align-items:center;justify-content:center;color:white;font-size:13px;font-weight:700;flex-shrink:0">S</div>
-              <div style="background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-lg);padding:12px 16px;font-size:13.5px;line-height:1.7;color:var(--text-primary);max-width:85%">Hey! I am your StudioOS assistant. Ask me anything about your projects, tasks, team, or games!</div>
+              <div class="ai-bubble">Hey! I am your StudioOS assistant. Ask me anything about your projects, tasks, team, or games!</div>
             </div>
           </div>
           <div style="border-top:1px solid var(--border);padding:14px;display:flex;gap:10px">
             <input id="ai-input" class="form-input" placeholder="Ask anything..." style="flex:1" onkeydown="if(event.key==='Enter'){event.preventDefault();sendAIMessage();}"/>
-            <button class="btn-primary" onclick="sendAIMessage()" id="ai-send-btn">Send</button>
+            <button class="btn-primary" onclick="sendAIMessage()">Send</button>
           </div>
         </div>
-
-        <!-- RIGHT PANEL -->
         <div style="display:flex;flex-direction:column;gap:10px;overflow-y:auto">
           <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px">
             <div style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">Quick Prompts</div>
@@ -942,7 +663,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div id="chat-messages" style="flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:12px">
           <div style="text-align:center;color:var(--text-muted);font-size:12.5px;padding:20px 0">Start of conversation</div>
         </div>
-        <div style="border-top:1px solid var(--border);padding:14px;display:flex;gap:10px;align-items:flex-end">
+        <div style="border-top:1px solid var(--border);padding:14px;display:flex;gap:10px">
           <input id="chat-input" class="form-input" placeholder="Message your team... (Enter to send)" style="flex:1" onkeydown="if(event.key==='Enter'){event.preventDefault();sendChatMessage();}"/>
           <button class="btn-primary" onclick="sendChatMessage()" style="padding:10px 18px;flex-shrink:0">Send</button>
         </div>
@@ -953,7 +674,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="view" id="view-calendar">
       <div class="view-header">
         <div><h1 class="view-title">Calendar</h1><p class="view-sub">Schedule uploads, updates, and milestones</p></div>
-        <button class="btn-primary" onclick="openNewEventModal()">+ Add Event</button>
+        <button class="btn-primary" onclick="openNewEventModal('')">+ Add Event</button>
       </div>
       <div style="display:grid;grid-template-columns:1fr 280px;gap:20px">
         <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px">
@@ -981,73 +702,57 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
     </div>
-
   </main>
 
   <!-- MOBILE BOTTOM NAV -->
   <nav class="mobile-nav" id="mobile-nav">
     <button class="mobile-nav-item active" data-view="dashboard" onclick="mobileNav('dashboard')">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-      Home
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Home
     </button>
     <button class="mobile-nav-item" data-view="projects" onclick="mobileNav('projects')">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-      Projects
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>Projects
     </button>
     <button class="mobile-nav-item" data-view="tasks" onclick="mobileNav('tasks')">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-      Tasks
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Tasks
     </button>
     <button class="mobile-nav-item" data-view="analytics" onclick="mobileNav('analytics')">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-      Stats
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Stats
     </button>
     <button class="mobile-nav-item" data-view="ai" onclick="mobileNav('ai')">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/></svg>
-      AI
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/></svg>AI
     </button>
-    <button class="mobile-nav-item" data-view="more" onclick="toggleMobileMenu()">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      More
+    <button class="mobile-nav-item" onclick="toggleMobileMenu()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>More
     </button>
   </nav>
 
   <!-- MOBILE MORE MENU -->
-  <div id="mobile-more-menu" style="display:none;position:fixed;bottom:70px;left:0;right:0;background:var(--bg-surface);border-top:1px solid var(--border);z-index:199;padding:12px;gap:8px;flex-wrap:wrap">
+  <div id="mobile-more-menu" style="display:none;position:fixed;bottom:70px;left:0;right:0;background:var(--bg-surface);border-top:1px solid var(--border);z-index:199;padding:12px;flex-direction:column;gap:4px">
     <button class="mobile-nav-item" style="flex-direction:row;gap:10px;width:100%;justify-content:flex-start;padding:12px" onclick="mobileNav('files')">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
-      File Vault
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>File Vault
     </button>
     <button class="mobile-nav-item" style="flex-direction:row;gap:10px;width:100%;justify-content:flex-start;padding:12px" onclick="mobileNav('youtube')">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
-      YouTube
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12  a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>YouTube
     </button>
     <button class="mobile-nav-item" style="flex-direction:row;gap:10px;width:100%;justify-content:flex-start;padding:12px" onclick="mobileNav('chat')">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-      Team Chat
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Team Chat
     </button>
     <button class="mobile-nav-item" style="flex-direction:row;gap:10px;width:100%;justify-content:flex-start;padding:12px" onclick="mobileNav('calendar')">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-      Calendar
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Calendar
     </button>
     <button class="mobile-nav-item" style="flex-direction:row;gap:10px;width:100%;justify-content:flex-start;padding:12px" onclick="mobileNav('notes')">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-      Notes
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Notes
     </button>
     <button class="mobile-nav-item owner-only" style="flex-direction:row;gap:10px;width:100%;justify-content:flex-start;padding:12px" onclick="mobileNav('team')">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      Team
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Team
     </button>
     <button class="mobile-nav-item owner-only" style="flex-direction:row;gap:10px;width:100%;justify-content:flex-start;padding:12px" onclick="mobileNav('ads')">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
-      Ad Advisor
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>Ad Advisor
     </button>
     <button onclick="doSignOut();toggleMobileMenu();" style="flex-direction:row;gap:10px;width:100%;justify-content:flex-start;padding:12px;display:flex;align-items:center;color:var(--red);background:none;border:none;font-family:var(--font-body);font-size:13px;font-weight:500;cursor:pointer;border-radius:var(--radius-sm)">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-      Sign Out
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Sign Out
     </button>
   </div>
-
 </div>
 
 <!-- MOBILE UPLOAD FAB -->
@@ -1067,14 +772,14 @@ document.addEventListener('DOMContentLoaded', () => {
 <!-- TOAST -->
 <div id="toast" class="toast hidden"></div>
 
-<!-- FIREBASE -->
+<!-- FIREBASE + APP LOGIC -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged, updateProfile, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore, doc, getDoc, setDoc, addDoc, updateDoc, deleteDoc, collection, query, where, onSnapshot, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAttVdMXHfGFwYprxhb1_Ntrb5Dxvaf2h0",
+  apiKey: "AIzaSyAt•••••••••••••••••••••••••••••••",
   authDomain: "studioos-8878d.firebaseapp.com",
   projectId: "studioos-8878d",
   storageBucket: "studioos-8878d.firebasestorage.app",
@@ -1088,10 +793,12 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const googleProvider = new GoogleAuthProvider();
 
-// ── OWNER UID — set this after your first sign-in ──
-// After you create your account, your UID will show in the console.
-// Replace the string below with your actual UID.
 const OWNER_UID = "Ik37l96crFV1wjT5rv3q3b0HFT53";
+
+// Cloudinary
+const CLOUDINARY_CLOUD = 'oht0uqzn';
+const CLOUDINARY_PRESET = 'studioos_unsigned';
+const MAX_DIRECT_UPLOAD = 10 * 1024 * 1024;
 
 // ── STATE ──
 let currentUser = null;
@@ -1101,13 +808,35 @@ let projects = [];
 let tasks = [];
 let files = [];
 let teamMembers = [];
+let notes = [];
+let calendarEvents = [];
+let connectedGames = [];
+let youtubeChannels = [];
+let ytPipeline = [];
+let aiConversations = [];
+let currentAIConvId = null;
+let aiMessages = [];
 let activeFilter = 'all';
 let currentProject = null;
 let currentProjectTab = 'overview';
+let currentNote = null;
+let calendarYear = new Date().getFullYear();
+let calendarMonth = new Date().getMonth();
+let chatChannel = 'general';
+let chatUnsubscribe = null;
 let unsubscribers = [];
+let _pwaPrompt = null;
 
 // ── UTILS ──
 function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+
+function formatSize(bytes) {
+  if (!bytes || bytes === 0) return '0 B';
+  const k = 1024;
+  const sizes = ['B','KB','MB','GB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+}
 
 function showToast(msg, duration=2800) {
   const t = document.getElementById('toast');
@@ -1116,6 +845,7 @@ function showToast(msg, duration=2800) {
   clearTimeout(t._timer);
   t._timer = setTimeout(() => t.classList.add('hidden'), duration);
 }
+window.showToast = showToast;
 
 function showView(name) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -1124,11 +854,19 @@ function showView(name) {
   if (view) view.classList.add('active');
   const nav = document.querySelector(`[data-view="${name}"]`);
   if (nav) nav.classList.add('active');
-  if (name === 'dashboard')  renderDashboard();
-  if (name === 'projects')   renderProjects();
-  if (name === 'tasks')      renderTasks();
-  if (name === 'files')      renderFiles();
-  if (name === 'team')       renderTeam();
+  if (name === 'dashboard') renderDashboard();
+  if (name === 'projects') renderProjects();
+  if (name === 'tasks') renderTasks();
+  if (name === 'files') renderFiles();
+  if (name === 'team') renderTeam();
+  if (name === 'calendar') renderCalendar();
+  if (name === 'chat') loadChat();
+  if (name === 'ai') renderAIConvList();
+  if (name === 'notes') {
+    const sel = document.getElementById('note-project-select');
+    if (sel) sel.innerHTML = '<option value="">No project</option>' + projects.map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
+    renderNotesList();
+  }
 }
 window.showView = showView;
 
@@ -1139,10 +877,16 @@ function openModal(title, bodyHTML) {
 }
 window.openModal = openModal;
 
-function closeModal() { document.getElementById('modal-overlay').classList.add('hidden'); }
+function closeModal() {
+  document.removeEventListener('paste', window.handleFilePaste);
+  window._uploadProjectId = null;
+  document.getElementById('modal-overlay').classList.add('hidden');
+}
 window.closeModal = closeModal;
 
-window.handleOverlayClick = (e) => { if(e.target === document.getElementById('modal-overlay')) closeModal(); };
+window.handleOverlayClick = (e) => {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+};
 
 function getTypeIcon(t) { return t==='roblox'?'🎮':t==='youtube'?'▶️':'📁'; }
 function getStatusColor(s) { return {active:'',planning:'yellow',paused:'red',complete:'blue'}[s]||''; }
@@ -1156,13 +900,62 @@ function formatDate(ts) {
   return d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
 }
 
-// ── AUTH FUNCTIONS ──
+// ── PWA ──
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  _pwaPrompt = e;
+  const btn = document.getElementById('pwa-install-btn');
+  if (btn) btn.style.display = '';
+});
+window.installPWA = async () => {
+  if (!_pwaPrompt) return;
+  _pwaPrompt.prompt();
+  await _pwaPrompt.userChoice;
+  _pwaPrompt = null;
+  const btn = document.getElementById('pwa-install-btn');
+  if (btn) btn.style.display = 'none';
+};
+
+// ── MOBILE NAV ──
+window.mobileNav = (view) => {
+  document.getElementById('mobile-more-menu').style.display = 'none';
+  document.querySelectorAll('.mobile-nav-item').forEach(i => i.classList.remove('active'));
+  const active = document.querySelector(`.mobile-nav-item[data-view="${view}"]`);
+  if (active) active.classList.add('active');
+  showView(view);
+};
+window.toggleMobileMenu = () => {
+  const menu = document.getElementById('mobile-more-menu');
+  menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+};
+
+// ── MOBILE FAB ──
+window.mobileFABUpload = () => {
+  if (currentProject) {
+    openAddFileModal(currentProject.id);
+  } else if (projects.length > 0) {
+    openModal('Upload to Project', `
+      <div class="form-group"><label class="form-label">Choose project</label>
+      <select class="form-select" id="fab-proj-select">
+        ${projects.map(p=>`<option value="${p.id}">${getTypeIcon(p.type)} ${p.name}</option>`).join('')}
+      </select></div>
+      <div class="modal-actions">
+        <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+        <button class="btn-primary" onclick="(() => { const v = document.getElementById('fab-proj-select').value; closeModal(); openAddFileModal(v); })()">Continue</button>
+      </div>`);
+  } else {
+    showToast('Create a project first!');
+  }
+};
+
+// ── AUTH ──
 window.switchAuthTab = (tab) => {
-  document.getElementById('form-signin').style.display = tab==='signin'?'':'none';
-  document.getElementById('form-signup').style.display = tab==='signup'?'':'none';
+  document.getElementById('form-signin').style.display = tab==='signin' ? '' : 'none';
+  document.getElementById('form-signup').style.display = tab==='signup' ? '' : 'none';
   document.getElementById('tab-signin').classList.toggle('active', tab==='signin');
   document.getElementById('tab-signup').classList.toggle('active', tab==='signup');
-  clearAuthMessages();
+  document.getElementById('auth-error').style.display = 'none';
+  document.getElementById('auth-success').style.display = 'none';
 };
 
 function showAuthError(msg) {
@@ -1175,9 +968,18 @@ function showAuthSuccess(msg) {
   el.textContent = msg; el.style.display = '';
   document.getElementById('auth-error').style.display = 'none';
 }
-function clearAuthMessages() {
-  document.getElementById('auth-error').style.display = 'none';
-  document.getElementById('auth-success').style.display = 'none';
+
+function friendlyAuthError(code) {
+  const map = {
+    'auth/invalid-email':'Invalid email address.',
+    'auth/user-not-found':'No account found with that email.',
+    'auth/wrong-password':'Incorrect password.',
+    'auth/email-already-in-use':'An account already exists with that email.',
+    'auth/weak-password':'Password is too weak — use at least 6 characters.',
+    'auth/popup-closed-by-user':'Google sign-in was cancelled.',
+    'auth/invalid-credential':'Incorrect email or password.',
+  };
+  return map[code] || 'Something went wrong. Please try again.';
 }
 
 window.doSignIn = async () => {
@@ -1208,11 +1010,8 @@ window.doSignUp = async () => {
     const cred = await createUserWithEmailAndPassword(auth, email, pass);
     await updateProfile(cred.user, { displayName: name });
     await sendEmailVerification(cred.user);
-    // Save profile to Firestore
-    await setDoc(doc(db, 'users', cred.user.uid), {
-      name, email, role: 'developer', createdAt: serverTimestamp()
-    });
-    showAuthSuccess(`Welcome, ${name}! A verification email has been sent to ${email}. Check your inbox!`);
+    await setDoc(doc(db,'users',cred.user.uid), { name, email, role:'developer', createdAt: serverTimestamp() });
+    showAuthSuccess(`Welcome, ${name}! Check your inbox for a verification email.`);
     btn.disabled = false; btn.textContent = 'Create Account';
   } catch(e) {
     showAuthError(friendlyAuthError(e.code));
@@ -1224,38 +1023,22 @@ window.doGoogleSignIn = async () => {
   try {
     const result = await signInWithPopup(auth, googleProvider);
     const user = result.user;
-    // Create profile if new
-    const ref = doc(db, 'users', user.uid);
+    const ref = doc(db,'users',user.uid);
     const snap = await getDoc(ref);
     if (!snap.exists()) {
-      await setDoc(ref, { name: user.displayName, email: user.email, role: 'developer', createdAt: serverTimestamp() });
+      await setDoc(ref, { name: user.displayName, email: user.email, role:'developer', createdAt: serverTimestamp() });
     }
-  } catch(e) {
-    showAuthError(friendlyAuthError(e.code));
-  }
+  } catch(e) { showAuthError(friendlyAuthError(e.code)); }
 };
 
 window.doSignOut = async () => {
   unsubscribers.forEach(u => u());
   unsubscribers = [];
+  if (chatUnsubscribe) { chatUnsubscribe(); chatUnsubscribe = null; }
   await signOut(auth);
 };
 
-function friendlyAuthError(code) {
-  const map = {
-    'auth/invalid-email': 'Invalid email address.',
-    'auth/user-not-found': 'No account found with that email.',
-    'auth/wrong-password': 'Incorrect password.',
-    'auth/email-already-in-use': 'An account already exists with that email.',
-    'auth/weak-password': 'Password is too weak — use at least 6 characters.',
-    'auth/popup-closed-by-user': 'Google sign-in was cancelled.',
-    'auth/invalid-credential': 'Incorrect email or password.',
-  };
-  return map[code] || 'Something went wrong. Please try again.';
-}
-
 // ── AUTH STATE ──
-// Hard timeout - if Firebase doesn't respond, show auth screen
 const _authTimeout = window.setTimeout(() => {
   const ls = document.getElementById('loading-screen');
   const as = document.getElementById('auth-screen');
@@ -1268,153 +1051,97 @@ const _authTimeout = window.setTimeout(() => {
 onAuthStateChanged(auth, async (user) => {
   window.clearTimeout(_authTimeout);
   try {
-  document.getElementById('loading-screen').classList.add('hidden');
-  if (user) {
-    currentUser = user;
-    // Log UID to console so owner can copy it
-    console.log('YOUR UID:', user.uid);
-
-    // Fetch profile with timeout
-    const ref = doc(db, 'users', user.uid);
-    let snap;
-    try {
-      const snapPromise = getDoc(ref);
-      const timeoutPromise = new Promise((_, reject) => window.setTimeout(() => reject(new Error('Firestore timeout')), 5000));
-      snap = await Promise.race([snapPromise, timeoutPromise]);
-    } catch(firestoreErr) {
-      console.error('Firestore error:', firestoreErr);
-      // Continue with minimal profile if Firestore fails
-      snap = { exists: () => false, data: () => ({}) };
-    }
-    if (!snap.exists()) {
-      await setDoc(ref, { name: user.displayName || user.email, email: user.email, role: 'developer', createdAt: serverTimestamp() });
-      snap = await getDoc(ref);
-    }
-    userProfile = snap.data();
-    // UID match is the primary owner check — always trust it
-    isOwner = user.uid === OWNER_UID || userProfile.role === 'owner';
-    
-    // Auto-fix: if UID matches but role is wrong, update Firestore
-    if (user.uid === OWNER_UID && userProfile.role !== 'owner') {
+    document.getElementById('loading-screen').classList.add('hidden');
+    if (user) {
+      currentUser = user;
+      window._currentUID = user.uid;
+      console.log('YOUR UID:', user.uid);
+      const ref = doc(db,'users',user.uid);
+      let snap;
       try {
-        await updateDoc(doc(db, 'users', user.uid), { role: 'owner' });
-      } catch(e) {}
-      userProfile.role = 'owner';
-      isOwner = true;
-    }
-
-    // Update sidebar UI
-    const nameEl = document.getElementById('user-name');
-    const roleEl = document.getElementById('user-role-label');
-    const avatarEl = document.getElementById('user-avatar');
-    nameEl.textContent = (userProfile.name || user.displayName || user.email).split(' ')[0];
-    roleEl.textContent = isOwner ? 'Owner' : (userProfile.role || 'Developer');
-    roleEl.className = 'user-role ' + (isOwner ? 'role-owner' : 'role-developer');
-    if (user.photoURL) {
-      avatarEl.innerHTML = `<img src="${user.photoURL}" alt="">`;
+        const snapPromise = getDoc(ref);
+        const timeoutPromise = new Promise((_,reject) => window.setTimeout(() => reject(new Error('timeout')), 5000));
+        snap = await Promise.race([snapPromise, timeoutPromise]);
+      } catch(e) {
+        snap = { exists: () => false, data: () => ({}) };
+      }
+      if (!snap.exists()) {
+        await setDoc(ref, { name: user.displayName || user.email, email: user.email, role:'developer', createdAt: serverTimestamp() });
+        snap = await getDoc(ref);
+      }
+      userProfile = snap.data();
+      isOwner = user.uid === OWNER_UID || userProfile.role === 'owner';
+      if (user.uid === OWNER_UID && userProfile.role !== 'owner') {
+        try { await updateDoc(doc(db,'users',user.uid), { role:'owner' }); } catch(e) {}
+        userProfile.role = 'owner';
+        isOwner = true;
+      }
+      const nameEl = document.getElementById('user-name');
+      const roleEl = document.getElementById('user-role-label');
+      const avatarEl = document.getElementById('user-avatar');
+      nameEl.textContent = (userProfile.name || user.displayName || user.email).split(' ')[0];
+      roleEl.textContent = isOwner ? 'Owner' : (userProfile.role || 'Developer');
+      roleEl.className = 'user-role ' + (isOwner ? 'role-owner' : 'role-developer');
+      if (user.photoURL) {
+        avatarEl.innerHTML = `<img src="${user.photoURL}" alt="">`;
+      } else {
+        avatarEl.textContent = (userProfile.name || user.email)[0].toUpperCase();
+      }
+      if (isOwner) {
+        document.querySelectorAll('.owner-only').forEach(el => { el.style.display = ''; });
+      } else {
+        document.querySelectorAll('.owner-only').forEach(el => { el.style.display = 'none'; });
+      }
+      document.getElementById('auth-screen').classList.add('hidden');
+      document.getElementById('app').classList.remove('hidden');
+      subscribeToData();
+      showView('dashboard');
     } else {
-      avatarEl.textContent = (userProfile.name || user.email)[0].toUpperCase();
+      currentUser = null; userProfile = null; isOwner = false;
+      document.getElementById('auth-screen').classList.remove('hidden');
+      document.getElementById('app').classList.add('hidden');
     }
-
-    // Show/hide owner-only elements
-    console.log('isOwner:', isOwner, 'uid:', user.uid, 'OWNER_UID:', OWNER_UID);
-    if (isOwner) {
-      document.querySelectorAll('.owner-only').forEach(el => {
-        el.style.display = '';
-        el.style.visibility = 'visible';
-        el.removeAttribute('hidden');
-      });
-    } else {
-      document.querySelectorAll('.owner-only').forEach(el => {
-        el.style.display = 'none';
-      });
-    }
-
-    document.getElementById('auth-screen').classList.add('hidden');
-    document.getElementById('app').classList.remove('hidden');
-
-    subscribeToData();
-    showView('dashboard');
-  } else {
-    currentUser = null;
-    userProfile = null;
-    isOwner = false;
-    document.getElementById('auth-screen').classList.remove('hidden');
-    document.getElementById('app').classList.add('hidden');
-  }
   } catch(err) {
     console.error('Auth state error:', err);
-    const ls = document.getElementById('loading-screen');
-    const as = document.getElementById('auth-screen');
-    if (ls) ls.classList.add('hidden');
-    if (as) as.classList.remove('hidden');
+    document.getElementById('loading-screen').classList.add('hidden');
+    document.getElementById('auth-screen').classList.remove('hidden');
   }
 });
 
-// ── FIRESTORE SUBSCRIPTIONS ──
+// ── SUBSCRIPTIONS ──
 function subscribeToData() {
   unsubscribers.forEach(u => u());
   unsubscribers = [];
 
-  // Projects — owner sees all, devs see only ones they're members of
-  let projQuery;
-  if (isOwner) {
-    projQuery = collection(db, 'projects');
-  } else {
-    projQuery = query(collection(db, 'projects'), where('memberIds', 'array-contains', currentUser.uid));
-  }
+  const projQuery = isOwner ? collection(db,'projects') : query(collection(db,'projects'), where('memberIds','array-contains',currentUser.uid));
+  unsubscribers.push(onSnapshot(projQuery, snap => {
+    projects = snap.docs.map(d=>({id:d.id,...d.data()}));
+    renderDashboard(); renderProjects();
+  }));
 
-  const u1 = onSnapshot(projQuery, snap => {
-    projects = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-    renderDashboard();
-    renderProjects();
-  });
-  unsubscribers.push(u1);
+  const taskQuery = isOwner ? collection(db,'tasks') : query(collection(db,'tasks'), where('assigneeId','==',currentUser.uid));
+  unsubscribers.push(onSnapshot(taskQuery, snap => {
+    tasks = snap.docs.map(d=>({id:d.id,...d.data()}));
+    renderDashboard(); renderTasks();
+  }));
 
-  // Tasks — owner sees all, devs see tasks in their projects or assigned to them
-  let taskQuery;
-  if (isOwner) {
-    taskQuery = collection(db, 'tasks');
-  } else {
-    taskQuery = query(collection(db, 'tasks'), where('assigneeId', '==', currentUser.uid));
-  }
-
-  const u2 = onSnapshot(taskQuery, snap => {
-    tasks = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-    renderDashboard();
-    renderTasks();
-  });
-  unsubscribers.push(u2);
-
-  // Files — owner sees all, devs see files in their projects
-  let fileQuery;
-  if (isOwner) {
-    fileQuery = collection(db, 'files');
-  } else {
-    fileQuery = query(collection(db, 'files'), where('projectMemberIds', 'array-contains', currentUser.uid));
-  }
-
-  const u3 = onSnapshot(fileQuery, snap => {
-    files = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  const fileQuery = isOwner ? collection(db,'files') : query(collection(db,'files'), where('projectMemberIds','array-contains',currentUser.uid));
+  unsubscribers.push(onSnapshot(fileQuery, snap => {
+    files = snap.docs.map(d=>({id:d.id,...d.data()}));
     renderFiles();
-  });
-  unsubscribers.push(u3);
+  }));
 
-  // Team (owner only)
   if (isOwner) {
-    const u4 = onSnapshot(collection(db, 'users'), snap => {
-      teamMembers = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-      renderTeam();
-      renderDashboard();
-    });
-    unsubscribers.push(u4);
+    unsubscribers.push(onSnapshot(collection(db,'users'), snap => {
+      teamMembers = snap.docs.map(d=>({id:d.id,...d.data()}));
+      renderTeam(); renderDashboard();
+    }));
   }
 
-  // Pre-load YouTube channels, analytics games, and notes on startup
-  // so data is ready when user navigates to those tabs
+  try { loadNotes(); } catch(e) {}
   try { loadConnectedGames(); } catch(e) {}
   try { loadYouTubeData(); } catch(e) {}
-  try { loadNotes(); } catch(e) {}
+  try { loadCalendarEvents(); } catch(e) {}
 }
 
 // ── DASHBOARD ──
@@ -1432,7 +1159,7 @@ function renderDashboard() {
   const recent = [...projects].sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0)).slice(0,5);
   projList.innerHTML = recent.length === 0
     ? `<div style="color:var(--text-muted);font-size:13px;padding:12px 0">No projects yet${isOwner?' — create your first one!':''}</div>`
-    : recent.map(p => `
+    : recent.map(p=>`
       <div class="project-row-sm" onclick="openProject('${p.id}')">
         <span style="font-size:18px">${getTypeIcon(p.type)}</span>
         <div style="flex:1;min-width:0">
@@ -1446,7 +1173,7 @@ function renderDashboard() {
   const myTasks = tasks.filter(t=>!t.done).slice(0,6);
   taskList.innerHTML = myTasks.length === 0
     ? `<div style="color:var(--text-muted);font-size:13px;padding:12px 0">No open tasks!</div>`
-    : myTasks.map(t => {
+    : myTasks.map(t=>{
         const proj = projects.find(p=>p.id===t.projectId);
         return `<div class="task-row-sm">
           <div class="task-check ${t.done?'done':''}" onclick="toggleTask('${t.id}',this)">${t.done?'✓':''}</div>
@@ -1461,13 +1188,12 @@ function renderDashboard() {
 // ── PROJECTS ──
 function renderProjects() {
   const grid = document.getElementById('projects-grid');
-  let filtered = activeFilter === 'all' ? projects : projects.filter(p => p.type===activeFilter || p.status===activeFilter);
-
+  let filtered = activeFilter==='all' ? projects : projects.filter(p=>p.type===activeFilter||p.status===activeFilter);
   if (filtered.length === 0) {
     grid.innerHTML = `<div class="empty-state"><div class="empty-icon">🎮</div><h3>No projects yet</h3><p>${isOwner?'Create your first Roblox game or YouTube series project.':'You haven\'t been added to any projects yet.'}</p>${isOwner?'<button class="btn-primary" onclick="openNewProjectModal()">+ New Project</button>':''}</div>`;
     return;
   }
-  grid.innerHTML = filtered.map(p => {
+  grid.innerHTML = filtered.map(p=>{
     const tc = tasks.filter(t=>t.projectId===p.id&&!t.done).length;
     const fc = files.filter(f=>f.projectId===p.id).length;
     return `<div class="project-card" onclick="openProject('${p.id}')">
@@ -1498,18 +1224,33 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
 });
 
 document.querySelectorAll('.nav-item').forEach(btn => {
-  btn.addEventListener('click', () => showView(btn.dataset.view));
+  btn.addEventListener('click', () => { if (btn.dataset.view) showView(btn.dataset.view); });
 });
 
 window.openNewProjectModal = () => {
   openModal('New Project', `
-    <div class="form-group"><label class="form-label">Project Name</label><input class="form-input" id="proj-name" placeholder="e.g. Don't Blink, Nen X..."/></div>
-    <div class="form-group"><label class="form-label">Type</label><select class="form-select" id="proj-type"><option value="roblox">🎮 Roblox Game</option><option value="youtube">▶️ YouTube Series</option><option value="other">📁 Other</option></select></div>
-    <div class="form-group"><label class="form-label">Status</label><select class="form-select" id="proj-status"><option value="planning">Planning</option><option value="active">Active</option><option value="paused">Paused</option><option value="complete">Complete</option></select></div>
+    <div class="form-group"><label class="form-label">Project Name</label><input class="form-input" id="proj-name" placeholder="e.g. Don't Blink"/></div>
+    <div class="form-group"><label class="form-label">Type</label>
+      <select class="form-select" id="proj-type">
+        <option value="roblox">🎮 Roblox Game</option>
+        <option value="youtube">▶️ YouTube Series</option>
+        <option value="other">📁 Other</option>
+      </select>
+    </div>
+    <div class="form-group"><label class="form-label">Status</label>
+      <select class="form-select" id="proj-status">
+        <option value="planning">Planning</option>
+        <option value="active">Active</option>
+        <option value="paused">Paused</option>
+        <option value="complete">Complete</option>
+      </select>
+    </div>
     <div class="form-group"><label class="form-label">Description</label><textarea class="form-textarea" id="proj-desc" placeholder="What is this project about?"></textarea></div>
-    <div class="modal-actions"><button class="btn-secondary" onclick="closeModal()">Cancel</button><button class="btn-primary" onclick="createProject()">Create Project</button></div>
-  `);
-  setTimeout(()=>document.getElementById('proj-name')?.focus(),50);
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+      <button class="btn-primary" onclick="createProject()">Create Project</button>
+    </div>`);
+  setTimeout(()=>document.getElementById('proj-name')?.focus(), 50);
 };
 
 window.createProject = async () => {
@@ -1525,11 +1266,8 @@ window.createProject = async () => {
       memberIds: [currentUser.uid],
       createdAt: serverTimestamp(),
     });
-    closeModal();
-    showToast(`✅ "${name}" created`);
-  } catch(e) {
-    showToast('Error creating project: ' + e.message);
-  }
+    closeModal(); showToast(`✅ "${name}" created`);
+  } catch(e) { showToast('Error: ' + e.message); }
 };
 
 // ── PROJECT DETAIL ──
@@ -1538,7 +1276,6 @@ window.openProject = (id) => {
   if (!project) return;
   currentProject = project;
   currentProjectTab = 'overview';
-
   document.getElementById('project-detail-header').innerHTML = `
     <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
       <span style="font-size:36px">${getTypeIcon(project.type)}</span>
@@ -1554,31 +1291,23 @@ window.openProject = (id) => {
       </div>
     </div>`;
 
-  const tabs = ['overview','tasks','files',isOwner?'team':''].filter(Boolean);
+  const tabs = ['overview','tasks','files', ...(isOwner?['team']:[])];
   const tabsContainer = document.getElementById('project-tabs');
   tabsContainer.innerHTML = '';
   tabs.forEach(t => {
     const btn = document.createElement('button');
-    btn.className = 'tab-btn' + (t === 'overview' ? ' active' : '');
+    btn.className = 'tab-btn' + (t==='overview'?' active':'');
     btn.dataset.tab = t;
     btn.textContent = t.charAt(0).toUpperCase() + t.slice(1);
     btn.addEventListener('click', () => {
       currentProjectTab = t;
-      tabsContainer.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === t));
+      tabsContainer.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active', b.dataset.tab===t));
       renderProjectDetail(project, t);
     });
     tabsContainer.appendChild(btn);
   });
-
   renderProjectDetail(project, 'overview');
   showView('project-detail');
-};
-
-// Tab switching handled by event listeners in openProject
-window.switchProjectTab = (id, tab) => {
-  currentProjectTab = tab;
-  const project = projects.find(p=>p.id===id);
-  if (project) { currentProject = project; renderProjectDetail(project, currentProjectTab); }
 };
 
 function renderProjectDetail(project, forceTab) {
@@ -1610,7 +1339,7 @@ function renderProjectDetail(project, forceTab) {
           <div class="task-row-sm" style="margin-top:8px">
             <div class="task-check ${t.done?'done':''}" onclick="toggleTask('${t.id}',this)">${t.done?'✓':''}</div>
             <div><div class="task-row-name ${t.done?'done':''}">${t.title}</div><div class="task-row-meta">${t.status} · ${t.priority} priority</div></div>
-          </div>`).join('') || '<div style="color:var(--text-muted);font-size:13px;padding:12px 0">No tasks yet.</div>'}
+          </div>`).join('')||'<div style="color:var(--text-muted);font-size:13px;padding:12px 0">No tasks yet.</div>'}
       </div>`;
   } else if (tab==='tasks') {
     const byStatus = s => projTasks.filter(t=>t.status===s);
@@ -1641,53 +1370,39 @@ function renderProjectDetail(project, forceTab) {
             </div>
           </div>`).join('')}
       </div>`;
-    } else if (tab==='files') {
+  } else if (tab==='files') {
     let fileItems = '';
     if (projFiles.length === 0) {
-      fileItems = '<div class="empty-state"><div class="empty-icon">📁</div><h3>No files yet</h3><p>Tap the upload zone above or use the 📎 button.</p></div>';
+      fileItems = '<div class="empty-state"><div class="empty-icon">📁</div><h3>No files yet</h3><p>Tap the upload zone or use the 📎 button.</p></div>';
     } else {
       projFiles.forEach(f => {
-        const isImg = (f.type && f.type.startsWith('image/')) || /\.(png|jpg|jpeg|gif|webp|svg)$/i.test(f.name || '');
-        const sz = f.size > 0 ? formatSize(f.size) : (f.type === 'link' ? 'Link' : '');
+        const isImg = (f.type && f.type.startsWith('image/')) || /\.(png|jpg|jpeg|gif|webp|svg)$/i.test(f.name||'');
+        const sz = f.size > 0 ? formatSize(f.size) : (f.type==='link'?'Link':'');
         const name = f.name || 'Untitled';
         fileItems += '<div class="file-item">';
-        if (isImg && f.url) {
-          fileItems += '<img src="' + f.url + '" class="file-item-img" loading="lazy"/>';
-        } else {
-          fileItems += '<span class="file-icon">' + getFileIcon(name) + '</span>';
-        }
-        fileItems += '<div class="file-info"><div class="file-name">' + name + '</div>';
-        fileItems += '<div class="file-meta">' + formatDate(f.createdAt) + (sz ? ' · ' + sz : '') + '</div></div>';
-        if (f.url) fileItems += '<a href="' + f.url + '" target="_blank" class="btn-ghost">Open ↗</a>';
-        if (isOwner) fileItems += '<button class="btn-ghost" style="color:var(--red)" onclick="deleteFile(\'' + f.id + '\')">✕</button>';
+        if (isImg && f.url) fileItems += `<img src="${f.url}" class="file-item-img" loading="lazy"/>`;
+        else fileItems += `<span class="file-icon">${getFileIcon(name)}</span>`;
+        fileItems += `<div class="file-info"><div class="file-name">${name}</div><div class="file-meta">${formatDate(f.createdAt)}${sz?' · '+sz:''}</div></div>`;
+        if (f.url) fileItems += `<a href="${f.url}" target="_blank" class="btn-ghost">Open ↗</a>`;
+        if (isOwner) fileItems += `<button class="btn-ghost" style="color:var(--red)" onclick="deleteFile('${f.id}')">✕</button>`;
         fileItems += '</div>';
       });
     }
-
     container.innerHTML =
-      '<div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin-bottom:16px">' +
-        '<span style="color:var(--text-muted);font-size:13px">' + projFiles.length + ' file' + (projFiles.length !== 1 ? 's' : '') + '</span>' +
-        '<button class="btn-primary" onclick="openAddFileModal(\'' + project.id + '\')" style="min-width:110px">+ Add File</button>' +
-      '</div>' +
-      '<div onclick="openAddFileModal(\'' + project.id + '\')" style="border:2px dashed var(--border-light);border-radius:var(--radius-lg);padding:20px;text-align:center;cursor:pointer;background:var(--bg-elevated);margin-bottom:16px">' +
-        '<div style="font-size:28px;margin-bottom:6px">📂</div>' +
-        '<div style="color:var(--text-secondary);font-size:13.5px;font-weight:500">Tap or drag to upload files</div>' +
-        '<div style="color:var(--text-muted);font-size:12px;margin-top:3px">Images, 3D models, scripts — anything under 10MB uploads directly</div>' +
-      '</div>' +
-      '<div class="files-list">' + fileItems + '</div>';
-
-} else if (tab==='team') {
-    const members = teamMembers.filter(m=>(project.memberIds||[]).includes(m.id));
-    const nonMembers = teamMembers.filter(m=>!(project.memberIds||[]).includes(m.id) && m.id!==currentUser.uid);
-    
+      `<div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin-bottom:16px">
+        <span style="color:var(--text-muted);font-size:13px">${projFiles.length} file${projFiles.length!==1?'s':''}</span>
+        <button class="btn-primary" onclick="openAddFileModal('${project.id}')">+ Add File</button>
+      </div>
+      <div onclick="openAddFileModal('${project.id}')" style="border:2px dashed var(--border-light);border-radius:var(--radius-lg);padding:20px;text-align:center;cursor:pointer;background:var(--bg-elevated);margin-bottom:16px">
+        <div style="font-size:28px;margin-bottom:6px">📂</div>
+        <div style="color:var(--text-secondary);font-size:13.5px;font-weight:500">Tap or drag to upload files</div>
+        <div style="color:var(--text-muted);font-size:12px;margin-top:3px">Images, 3D models, scripts — anything under 10MB</div>
+      </div>
+      <div class="files-list">${fileItems}</div>`;
+  } else if (tab==='team') {
     const freshMembers = teamMembers.filter(m=>(project.memberIds||[]).includes(m.id));
     const freshNonMembers = teamMembers.filter(m=>!(project.memberIds||[]).includes(m.id) && m.id!==currentUser.uid);
-    
-    container.innerHTML = '<div id="team-tab-content"></div>';
-    const teamContent = document.getElementById('team-tab-content');
-    if (!teamContent) return;
-    
-    teamContent.innerHTML = (freshNonMembers.length > 0 ? `
+    container.innerHTML = (freshNonMembers.length>0 ? `
       <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:16px">
         <label class="form-label" style="margin-bottom:10px;display:block">Add member to this project</label>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
@@ -1698,21 +1413,19 @@ function renderProjectDetail(project, forceTab) {
             </button>`).join('')}
         </div>
       </div>` : '') +
-      '<div class="team-grid">' +
-      (freshMembers.length > 0 ? freshMembers.map(m=>`
-        <div class="team-card">
-          <div class="team-avatar">${(m.name||m.email||'?')[0].toUpperCase()}</div>
-          <div class="team-name">${m.name||m.email}</div>
-          <div class="team-email">${m.email||''}</div>
-          <div class="team-role-badge">${m.role||'developer'}</div>
-          <div style="display:flex;gap:8px;margin-top:6px">
+      `<div class="team-grid">
+        ${freshMembers.length>0 ? freshMembers.map(m=>`
+          <div class="team-card">
+            <div class="team-avatar">${(m.name||m.email||'?')[0].toUpperCase()}</div>
+            <div class="team-name">${m.name||m.email}</div>
+            <div class="team-email">${m.email||''}</div>
+            <div class="team-role-badge">${m.role||'developer'}</div>
             ${m.id!==currentUser.uid
-              ? `<button class="btn-ghost" style="color:var(--red);font-size:12px" onclick="removeMemberFromProject('${project.id}','${m.id}')">Remove from project</button>`
+              ? `<button class="btn-ghost" style="color:var(--red);font-size:12px" onclick="removeMemberFromProject('${project.id}','${m.id}')">Remove</button>`
               : '<span style="font-size:12px;color:var(--text-muted)">You (owner)</span>'}
-          </div>
-        </div>`).join('')
-      : '<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">👥</div><h3>No members yet</h3><p>Add team members using the button above.</p></div>') +
-      '</div>';
+          </div>`).join('')
+        : '<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">👥</div><h3>No members yet</h3><p>Add team members above.</p></div>'}
+      </div>`;
   }
 }
 
@@ -1720,14 +1433,11 @@ window.addMemberToProject = async (projectId, memberId) => {
   const project = projects.find(p=>p.id===projectId);
   if (!project) return;
   const newIds = [...new Set([...(project.memberIds||[]), memberId])];
-  // Also update files in this project to include new member
   const projFiles = files.filter(f=>f.projectId===projectId);
-  const batch = [];
-  batch.push(updateDoc(doc(db,'projects',projectId), { memberIds: newIds }));
+  const batch = [updateDoc(doc(db,'projects',projectId), { memberIds: newIds })];
   projFiles.forEach(f => batch.push(updateDoc(doc(db,'files',f.id), { projectMemberIds: newIds })));
   await Promise.all(batch);
-  showToast('✅ Member added to project');
-  renderProjectDetail(projects.find(p=>p.id===projectId), currentProjectTab);
+  showToast('✅ Member added');
 };
 
 window.removeMemberFromProject = async (projectId, memberId) => {
@@ -1735,7 +1445,7 @@ window.removeMemberFromProject = async (projectId, memberId) => {
   if (!project) return;
   const newIds = (project.memberIds||[]).filter(id=>id!==memberId);
   await updateDoc(doc(db,'projects',projectId), { memberIds: newIds });
-  showToast('Member removed from project');
+  showToast('Member removed');
 };
 
 window.editProjectModal = (id) => {
@@ -1743,12 +1453,14 @@ window.editProjectModal = (id) => {
   if (!p) return;
   openModal('Edit Project', `
     <div class="form-group"><label class="form-label">Name</label><input class="form-input" id="ep-name" value="${p.name}"/></div>
-    <div class="form-group"><label class="form-label">Status</label><select class="form-select" id="ep-status">
-      <option value="planning" ${p.status==='planning'?'selected':''}>Planning</option>
-      <option value="active" ${p.status==='active'?'selected':''}>Active</option>
-      <option value="paused" ${p.status==='paused'?'selected':''}>Paused</option>
-      <option value="complete" ${p.status==='complete'?'selected':''}>Complete</option>
-    </select></div>
+    <div class="form-group"><label class="form-label">Status</label>
+      <select class="form-select" id="ep-status">
+        <option value="planning" ${p.status==='planning'?'selected':''}>Planning</option>
+        <option value="active" ${p.status==='active'?'selected':''}>Active</option>
+        <option value="paused" ${p.status==='paused'?'selected':''}>Paused</option>
+        <option value="complete" ${p.status==='complete'?'selected':''}>Complete</option>
+      </select>
+    </div>
     <div class="form-group"><label class="form-label">Description</label><textarea class="form-textarea" id="ep-desc">${p.description||''}</textarea></div>
     <div class="modal-actions">
       <button class="btn-ghost" style="color:var(--red)" onclick="deleteProject('${id}')">Delete</button>
@@ -1765,40 +1477,29 @@ window.saveProject = async (id) => {
   });
   closeModal(); showToast('✅ Saved');
   const updated = projects.find(p=>p.id===id);
-  if (updated) { openProject(id); }
+  if (updated) openProject(id);
 };
 
 window.deleteProject = async (id) => {
   if (!confirm('Delete this project, all its tasks and files?')) return;
   await deleteDoc(doc(db,'projects',id));
-  // Delete tasks and files
   const tSnap = await getDocs(query(collection(db,'tasks'),where('projectId','==',id)));
   const fSnap = await getDocs(query(collection(db,'files'),where('projectId','==',id)));
-  await Promise.all([...tSnap.docs.map(d=>deleteDoc(d.ref)), ...fSnap.docs.map(d=>deleteDoc(d.ref))]);
+  await Promise.all([...tSnap.docs.map(d=>deleteDoc(d.ref)),...fSnap.docs.map(d=>deleteDoc(d.ref))]);
   closeModal(); showView('projects'); showToast('Project deleted');
 };
 
 // ── TASKS ──
 window.openAddTaskModal = (projectId) => {
-  // Use cached teamMembers (refreshed on login and team tab visits)
-
-  const project = projects.find(p=>p.id===projectId);
   const assignableMembers = teamMembers.filter(m=>m.id!==currentUser.uid);
-  
-  let assigneeOptions = '<option value="' + currentUser.uid + '">Me (you)</option>';
-  assignableMembers.forEach(m => {
-    assigneeOptions += '<option value="' + m.id + '">' + (m.name||m.email) + '</option>';
-  });
-
-  const body = 
-    '<div class="form-group"><label class="form-label">Task Title</label><input class="form-input" id="t-title" placeholder="e.g. Fix ragdoll physics"/></div>' +
-    '<div class="form-group"><label class="form-label">Description</label><textarea class="form-textarea" id="t-desc" placeholder="Details..."></textarea></div>' +
-    '<div class="form-group"><label class="form-label">Priority</label><select class="form-select" id="t-priority"><option value="high">High</option><option value="medium" selected>Medium</option><option value="low">Low</option></select></div>' +
-    '<div class="form-group"><label class="form-label">Assign to</label><select class="form-select" id="t-assignee">' + assigneeOptions + '</select></div>' +
-    '<div class="modal-actions"><button class="btn-secondary" onclick="closeModal()">Cancel</button><button class="btn-primary" id="create-task-btn">Add Task</button></div>';
-
-  openModal('New Task', body);
-  
+  let assigneeOptions = `<option value="${currentUser.uid}">Me (you)</option>`;
+  assignableMembers.forEach(m => { assigneeOptions += `<option value="${m.id}">${m.name||m.email}</option>`; });
+  openModal('New Task',
+    `<div class="form-group"><label class="form-label">Task Title</label><input class="form-input" id="t-title" placeholder="e.g. Fix ragdoll physics"/></div>
+    <div class="form-group"><label class="form-label">Description</label><textarea class="form-textarea" id="t-desc" placeholder="Details..."></textarea></div>
+    <div class="form-group"><label class="form-label">Priority</label><select class="form-select" id="t-priority"><option value="high">High</option><option value="medium" selected>Medium</option><option value="low">Low</option></select></div>
+    <div class="form-group"><label class="form-label">Assign to</label><select class="form-select" id="t-assignee">${assigneeOptions}</select></div>
+    <div class="modal-actions"><button class="btn-secondary" onclick="closeModal()">Cancel</button><button class="btn-primary" id="create-task-btn">Add Task</button></div>`);
   setTimeout(() => {
     document.getElementById('t-title')?.focus();
     const btn = document.getElementById('create-task-btn');
@@ -1816,7 +1517,7 @@ window.createTask = async (projectId) => {
     priority: document.getElementById('t-priority').value,
     assigneeId: document.getElementById('t-assignee').value,
     status: 'todo', done: false,
-    projectMemberIds: project?.memberIds || [currentUser.uid],
+    projectMemberIds: project?.memberIds||[currentUser.uid],
     createdAt: serverTimestamp(),
   });
   closeModal(); showToast('✅ Task added');
@@ -1878,12 +1579,12 @@ function renderTasks() {
 
 window.openGlobalTaskModal = () => {
   if (projects.length===0) { showToast('Create a project first!'); return; }
-  openModal('New Task',`
+  openModal('New Task', `
     <div class="form-group"><label class="form-label">Project</label><select class="form-select" id="gt-proj">${projects.map(p=>`<option value="${p.id}">${p.name}</option>`).join('')}</select></div>
     <div class="form-group"><label class="form-label">Task Title</label><input class="form-input" id="t-title" placeholder="What needs to be done?"/></div>
     <div class="form-group"><label class="form-label">Priority</label><select class="form-select" id="t-priority"><option value="high">🔴 High</option><option value="medium" selected>🟡 Medium</option><option value="low">🟢 Low</option></select></div>
     <div class="modal-actions"><button class="btn-secondary" onclick="closeModal()">Cancel</button><button class="btn-primary" onclick="createTask(document.getElementById('gt-proj').value)">Add Task</button></div>`);
-  setTimeout(()=>document.getElementById('t-title')?.focus(),50);
+  setTimeout(()=>document.getElementById('t-title')?.focus(), 50);
 };
 
 // ── FILES ──
@@ -1894,14 +1595,14 @@ window.openAddFileModal = (projectId) => {
     '<input type="file" id="file-input" multiple onchange="handleFileInputChange(event)"/>' +
     '<div class="drop-zone-icon">📂</div>' +
     '<div class="drop-zone-text">Tap to browse or drag files here</div>' +
-    '<div class="drop-zone-sub">Works on mobile too — images, 3D models, scripts, anything</div>' +
+    '<div class="drop-zone-sub">Images, 3D models, scripts — anything under 10MB</div>' +
     '</div>' +
     '<div style="background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 12px;font-size:12px;color:var(--text-muted);text-align:center;margin-top:8px">💡 You can also paste an image with Ctrl+V</div>' +
     '<div id="upload-list" style="margin-top:12px;display:flex;flex-direction:column;gap:8px"></div>' +
     '<div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border)">' +
     '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">' +
     '<label class="form-label" style="margin:0">Large files or links</label>' +
-    '<a href="https://drive.google.com" target="_blank" class="btn-ghost" style="font-size:12px;text-decoration:none">📁 Open Google Drive ↗</a>' +
+    '<a href="https://drive.google.com" target="_blank" class="btn-ghost" style="font-size:12px">📁 Open Google Drive ↗</a>' +
     '</div>' +
     '<div style="font-size:12px;color:var(--text-muted);margin-bottom:8px">Files over 10MB: upload to Google Drive → Share → Copy link → paste below</div>' +
     '<div style="display:flex;gap:8px">' +
@@ -1909,125 +1610,80 @@ window.openAddFileModal = (projectId) => {
     '<input class="form-input" id="f-name" placeholder="File name" style="width:130px"/>' +
     '<button class="btn-secondary" onclick="addFileByLink()">Add</button>' +
     '</div></div>' +
-    '<div class="modal-actions"><button class="btn-primary" onclick="closeModal()">Done</button></div>'
-  );
+    '<div class="modal-actions"><button class="btn-primary" onclick="closeModal()">Done</button></div>');
   setTimeout(() => { document.addEventListener('paste', handleFilePaste); }, 100);
 };
 
 window.handleFileDrop = (e) => {
-  const files = Array.from(e.dataTransfer.files);
-  if (files.length) uploadFiles(files, window._uploadProjectId);
+  const fs = Array.from(e.dataTransfer.files);
+  if (fs.length) uploadFiles(fs, window._uploadProjectId);
 };
-
 window.handleFileInputChange = (e) => {
-  const files = Array.from(e.target.files);
-  if (files.length) uploadFiles(files, window._uploadProjectId);
+  const fs = Array.from(e.target.files);
+  if (fs.length) uploadFiles(fs, window._uploadProjectId);
 };
-
 window.handleFilePaste = (e) => {
-  const items = Array.from(e.clipboardData?.items || []);
-  const fileItems = items.filter(i => i.kind === 'file');
-  const files = fileItems.map(i => i.getAsFile()).filter(Boolean);
-  if (files.length && window._uploadProjectId) uploadFiles(files, window._uploadProjectId);
+  const items = Array.from(e.clipboardData?.items||[]);
+  const fs = items.filter(i=>i.kind==='file').map(i=>i.getAsFile()).filter(Boolean);
+  if (fs.length && window._uploadProjectId) uploadFiles(fs, window._uploadProjectId);
 };
 
-const _baseCloseModal = window.closeModal;
-window.closeModal = () => {
-  document.removeEventListener('paste', window.handleFilePaste);
-  window._uploadProjectId = null;
-  _baseCloseModal();
-};
-
-// Cloudinary config — free 25GB, no credit card
-const CLOUDINARY_CLOUD = 'oht0uqzn';
-const CLOUDINARY_PRESET = 'studioos_unsigned';
-const MAX_DIRECT_UPLOAD = 10 * 1024 * 1024; // 10MB
-
-async function uploadFiles(files, projectId) {
-  const project = projects.find(p => p.id === projectId);
+async function uploadFiles(fileList, projectId) {
+  const project = projects.find(p=>p.id===projectId);
   const list = document.getElementById('upload-list');
-
-  for (const file of files) {
+  for (const file of fileList) {
     const itemId = 'up' + Date.now() + Math.random().toString(36).slice(2,6);
     const div = document.createElement('div');
     div.id = itemId;
     div.className = 'upload-progress';
-    div.innerHTML =
-      '<span style="font-size:18px">' + getFileIcon(file.name) + '</span>' +
-      '<div class="upload-progress-name">' + file.name + '</div>' +
-      '<div class="upload-progress-bar"><div class="upload-progress-fill" id="bar' + itemId + '" style="width:0%"></div></div>' +
-      '<div class="upload-progress-pct" id="pct' + itemId + '">0%</div>';
+    div.innerHTML = `<span style="font-size:18px">${getFileIcon(file.name)}</span><div class="upload-progress-name">${file.name}</div><div class="upload-progress-bar"><div class="upload-progress-fill" id="bar${itemId}" style="width:0%"></div></div><div class="upload-progress-pct" id="pct${itemId}">0%</div>`;
     if (list) list.appendChild(div);
-
-    // Large file — prompt for link
     if (file.size > MAX_DIRECT_UPLOAD) {
       const el = document.getElementById(itemId);
-      if (el) el.innerHTML =
-        '<span style="font-size:18px">' + getFileIcon(file.name) + '</span>' +
-        '<div style="flex:1"><div class="upload-progress-name">' + file.name + '</div>' +
-        '<div style="font-size:12px;color:var(--yellow);margin-top:2px">File is over 10MB — upload to Google Drive and paste the link below</div></div>';
-      // Pre-fill the name field
+      if (el) el.innerHTML = `<span style="font-size:18px">${getFileIcon(file.name)}</span><div style="flex:1"><div class="upload-progress-name">${file.name}</div><div style="font-size:12px;color:var(--yellow);margin-top:2px">File over 10MB — upload to Google Drive and paste link below</div></div>`;
       const nameInput = document.getElementById('f-name');
       if (nameInput) nameInput.value = file.name;
       continue;
     }
-
-    // Small file — upload via Cloudinary
     try {
       const formData = new FormData();
       formData.append('file', file);
       formData.append('upload_preset', CLOUDINARY_PRESET);
       formData.append('folder', 'studioos/' + projectId);
-
       const xhr = new XMLHttpRequest();
-      const uploadUrl = 'https://api.cloudinary.com/v1_1/' + CLOUDINARY_CLOUD + '/auto/upload';
-
       await new Promise((resolve, reject) => {
         xhr.upload.onprogress = (e) => {
           if (e.lengthComputable) {
-            const pct = Math.round(e.loaded / e.total * 100);
-            const bar = document.getElementById('bar' + itemId);
-            const pctEl = document.getElementById('pct' + itemId);
-            if (bar) bar.style.width = pct + '%';
-            if (pctEl) pctEl.textContent = pct + '%';
+            const pct = Math.round(e.loaded/e.total*100);
+            const bar = document.getElementById('bar'+itemId);
+            const pctEl = document.getElementById('pct'+itemId);
+            if (bar) bar.style.width = pct+'%';
+            if (pctEl) pctEl.textContent = pct+'%';
           }
         };
         xhr.onload = async () => {
-          if (xhr.status === 200) {
+          if (xhr.status===200) {
             const result = JSON.parse(xhr.responseText);
-            const url = result.secure_url;
-            await addDoc(collection(db, 'files'), {
-              projectId, name: file.name, url,
-              size: file.size, type: file.type, note: '',
-              projectMemberIds: project?.memberIds || [currentUser.uid],
+            await addDoc(collection(db,'files'), {
+              projectId, name: file.name, url: result.secure_url,
+              size: file.size, type: file.type, note:'',
+              projectMemberIds: project?.memberIds||[currentUser.uid],
               uploadedBy: currentUser.uid, createdAt: serverTimestamp()
             });
             const el = document.getElementById(itemId);
-            if (el) el.innerHTML =
-              '<span style="font-size:18px">' + getFileIcon(file.name) + '</span>' +
-              '<div class="upload-progress-name">' + file.name + '</div>' +
-              '<div class="upload-progress-bar"><div class="upload-progress-fill" style="width:100%"></div></div>' +
-              '<span style="color:var(--green);font-size:13px;font-weight:600">✓ Done</span>';
+            if (el) el.innerHTML = `<span style="font-size:18px">${getFileIcon(file.name)}</span><div class="upload-progress-name">${file.name}</div><div class="upload-progress-bar"><div class="upload-progress-fill" style="width:100%"></div></div><span style="color:var(--green);font-size:13px;font-weight:600">✓ Done</span>`;
             showToast(file.name + ' uploaded!');
-            if (currentProject?.id === projectId) renderProjectDetail(currentProject, currentProjectTab);
+            if (currentProject?.id===projectId) renderProjectDetail(currentProject, currentProjectTab);
             resolve();
-          } else {
-            reject(new Error('Upload failed: ' + xhr.status));
-          }
+          } else { reject(new Error('Upload failed: '+xhr.status)); }
         };
         xhr.onerror = () => reject(new Error('Network error'));
-        xhr.open('POST', uploadUrl);
+        xhr.open('POST', `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/auto/upload`);
         xhr.send(formData);
       });
     } catch(e) {
-      console.error('Upload error:', e);
       const el = document.getElementById(itemId);
-      if (el) el.innerHTML =
-        '<span style="font-size:18px">' + getFileIcon(file.name) + '</span>' +
-        '<div style="flex:1"><div class="upload-progress-name">' + file.name + '</div>' +
-        '<div style="font-size:12px;color:var(--red);margin-top:2px">Upload failed — paste a Google Drive link below instead</div></div>';
-      const nameInput = document.getElementById('f-name');
-      if (nameInput) nameInput.value = file.name;
+      if (el) el.innerHTML = `<span style="font-size:18px">${getFileIcon(file.name)}</span><div style="flex:1"><div class="upload-progress-name">${file.name}</div><div style="font-size:12px;color:var(--red);margin-top:2px">Upload failed — paste a Google Drive link instead</div></div>`;
     }
   }
 }
@@ -2037,34 +1693,19 @@ window.addFileByLink = async () => {
   const name = document.getElementById('f-name')?.value?.trim();
   const projectId = window._uploadProjectId;
   if (!url || !projectId) { showToast('Paste a link first'); return; }
-  const project = projects.find(p => p.id === projectId);
+  const project = projects.find(p=>p.id===projectId);
   const fileName = name || url.split('/').pop().split('?')[0] || 'Linked file';
   try {
-    await addDoc(collection(db, 'files'), {
-      projectId, name: fileName, url, note: '', size: 0, type: 'link',
-      projectMemberIds: project?.memberIds || [currentUser.uid],
+    await addDoc(collection(db,'files'), {
+      projectId, name: fileName, url, note:'', size:0, type:'link',
+      projectMemberIds: project?.memberIds||[currentUser.uid],
       uploadedBy: currentUser.uid, createdAt: serverTimestamp()
     });
     document.getElementById('f-url').value = '';
     document.getElementById('f-name').value = '';
     showToast('Link added');
-    if (currentProject?.id === projectId) renderProjectDetail(currentProject, currentProjectTab);
-  } catch(e) { showToast('Error: ' + e.message); }
-};
-
-window.createFile = async (projectId) => {
-  const name = document.getElementById('f-name')?.value?.trim();
-  if (!name) { showToast('Enter a file name'); return; }
-  const project = projects.find(p=>p.id===projectId);
-  await addDoc(collection(db,'files'),{
-    projectId, name,
-    url: document.getElementById('f-url').value.trim(),
-    note: document.getElementById('f-note').value.trim(),
-    projectMemberIds: project?.memberIds || [currentUser.uid],
-    createdAt: serverTimestamp(),
-  });
-  closeModal(); showToast('✅ File added');
-  if (currentProject?.id===projectId) renderProjectDetail(currentProject, currentProjectTab);
+    if (currentProject?.id===projectId) renderProjectDetail(currentProject, currentProjectTab);
+  } catch(e) { showToast('Error: '+e.message); }
 };
 
 window.deleteFile = async (id) => {
@@ -2075,46 +1716,585 @@ window.deleteFile = async (id) => {
 function renderFiles() {
   const list = document.getElementById('files-list');
   if (!list) return;
-
-  if (files.length === 0) {
+  if (files.length===0) {
     let emptyHtml = '<div class="empty-state"><div class="empty-icon">📁</div><h3>Vault is empty</h3><p>Go into a project and tap the upload zone to add files.</p>';
-    if (projects.length > 0) {
+    if (projects.length>0) {
       emptyHtml += '<div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:4px">';
-      projects.slice(0,4).forEach(p => {
-        emptyHtml += '<button class="btn-secondary" style="font-size:13px" data-pid="' + p.id + '">' + getTypeIcon(p.type) + ' ' + p.name + '</button>';
-      });
+      projects.slice(0,4).forEach(p => { emptyHtml += `<button class="btn-secondary" style="font-size:13px" onclick="openProject('${p.id}')">${getTypeIcon(p.type)} ${p.name}</button>`; });
       emptyHtml += '</div>';
     }
     emptyHtml += '</div>';
     list.innerHTML = emptyHtml;
-    list.querySelectorAll('[data-pid]').forEach(btn => {
-      btn.addEventListener('click', () => openProject(btn.dataset.pid));
-    });
     return;
   }
-
   let html = '';
   files.forEach(f => {
-    const proj = projects.find(p => p.id === f.projectId);
-    const isImg = (f.type && f.type.startsWith('image/')) || /\.(png|jpg|jpeg|gif|webp|svg)$/i.test(f.name || '');
-    const sz = f.size > 0 ? formatSize(f.size) : (f.type === 'link' ? 'Link' : '');
-    const name = f.name || 'Untitled';
-    const date = formatDate(f.createdAt);
-
+    const proj = projects.find(p=>p.id===f.projectId);
+    const isImg = (f.type&&f.type.startsWith('image/'))||/\.(png|jpg|jpeg|gif|webp|svg)$/i.test(f.name||'');
+    const sz = f.size>0 ? formatSize(f.size) : (f.type==='link'?'Link':'');
+    const name = f.name||'Untitled';
     html += '<div class="file-item">';
-    if (isImg && f.url) {
-      html += '<img src="' + f.url + '" class="file-item-img" loading="lazy"/>';
-    } else {
-      html += '<span class="file-icon">' + getFileIcon(name) + '</span>';
-    }
-    html += '<div class="file-info">';
-    html += '<div class="file-name">' + name + '</div>';
-    html += '<div class="file-meta">' + date + (sz ? ' · ' + sz : '') + '</div>';
-    html += '</div>';
-    if (proj) html += '<span class="file-project-tag">' + proj.name + '</span>';
-    if (f.url) html += '<a href="' + f.url + '" target="_blank" class="btn-ghost">Open ↗</a>';
-    if (isOwner) html += '<button class="btn-ghost" style="color:var(--red)" onclick="deleteFile('' + f.id + '')">✕</button>';
+    if (isImg&&f.url) html += `<img src="${f.url}" class="file-item-img" loading="lazy"/>`;
+    else html += `<span class="file-icon">${getFileIcon(name)}</span>`;
+    html += `<div class="file-info"><div class="file-name">${name}</div><div class="file-meta">${formatDate(f.createdAt)}${sz?' · '+sz:''}</div></div>`;
+    if (proj) html += `<span class="file-project-tag">${proj.name}</span>`;
+    if (f.url) html += `<a href="${f.url}" target="_blank" class="btn-ghost">Open ↗</a>`;
+    if (isOwner) html += `<button class="btn-ghost" style="color:var(--red)" onclick="deleteFile('${f.id}')">✕</button>`;
     html += '</div>';
   });
   list.innerHTML = html;
 }
+
+// ── TEAM ──
+function renderTeam() {
+  const grid = document.getElementById('team-grid');
+  if (!grid) return;
+  if (teamMembers.length===0) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">👥</div><h3>No team members yet</h3><p>Invite developers to collaborate on your projects.</p></div>`;
+    return;
+  }
+  grid.innerHTML = teamMembers.map(m=>`
+    <div class="team-card">
+      <div class="team-avatar">${(m.name||m.email||'?')[0].toUpperCase()}</div>
+      <div class="team-name">${m.name||m.email}</div>
+      <div class="team-email">${m.email||''}</div>
+      <div class="team-role-badge">${m.role||'developer'}</div>
+      ${m.id!==currentUser.uid
+        ? `<button class="btn-ghost" style="color:var(--red);font-size:12px;margin-top:4px" onclick="removeTeamMember('${m.id}')">Remove</button>`
+        : '<span style="font-size:12px;color:var(--text-muted)">You</span>'}
+    </div>`).join('');
+}
+
+window.openInviteModal = () => {
+  openModal('Invite Developer', `
+    <p style="color:var(--text-secondary);font-size:13.5px;margin-bottom:16px">The developer must already have a StudioOS account. Their UID is shown in the browser console when they sign in.</p>
+    <div class="form-group"><label class="form-label">Developer UID</label><input class="form-input" id="inv-uid" placeholder="Paste their UID here..."/></div>
+    <div class="form-group"><label class="form-label">Display Name (optional)</label><input class="form-input" id="inv-name" placeholder="e.g. Alex"/></div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+      <button class="btn-primary" onclick="inviteDev()">Add to Team</button>
+    </div>`);
+};
+
+window.inviteDev = async () => {
+  const uid = document.getElementById('inv-uid')?.value?.trim();
+  if (!uid) { showToast('Paste a UID'); return; }
+  try {
+    const ref = doc(db,'users',uid);
+    const snap = await getDoc(ref);
+    if (!snap.exists()) { showToast('No account found with that UID'); return; }
+    await updateDoc(ref, { role:'developer' });
+    closeModal(); showToast('✅ Developer added to team');
+  } catch(e) { showToast('Error: '+e.message); }
+};
+
+window.removeTeamMember = async (id) => {
+  if (!confirm('Remove this member from the team?')) return;
+  await updateDoc(doc(db,'users',id), { role:'removed' });
+  showToast('Member removed');
+};
+
+// ── NOTES ──
+async function loadNotes() {
+  const q = isOwner ? collection(db,'notes') : query(collection(db,'notes'), where('authorId','==',currentUser.uid));
+  const u = onSnapshot(q, snap => {
+    notes = snap.docs.map(d=>({id:d.id,...d.data()}));
+    renderNotesList();
+  });
+  unsubscribers.push(u);
+}
+
+function renderNotesList() {
+  const sidebar = document.getElementById('notes-sidebar');
+  if (!sidebar) return;
+  if (notes.length===0) {
+    sidebar.innerHTML = `<div style="color:var(--text-muted);font-size:12.5px;padding:8px 4px">No notes yet</div>`;
+    return;
+  }
+  sidebar.innerHTML = [...notes].sort((a,b)=>(b.updatedAt?.seconds||0)-(a.updatedAt?.seconds||0)).map(n=>`
+    <button onclick="openNote('${n.id}')" style="text-align:left;padding:9px 10px;border-radius:var(--radius-sm);background:${currentNote?.id===n.id?'var(--accent-dim)':'transparent'};border:1px solid ${currentNote?.id===n.id?'rgba(124,92,252,0.3)':'transparent'};color:var(--text-primary);font-size:13px;font-weight:500;width:100%;transition:all var(--transition);font-family:var(--font-body);cursor:pointer">
+      <div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${n.title||'Untitled'}</div>
+      <div style="font-size:11px;color:var(--text-muted);margin-top:2px">${formatDate(n.updatedAt||n.createdAt)}</div>
+    </button>`).join('');
+}
+
+window.openNote = (id) => {
+  const note = notes.find(n=>n.id===id);
+  if (!note) return;
+  currentNote = note;
+  document.getElementById('note-empty-state').style.display = 'none';
+  document.getElementById('note-content').style.display = 'flex';
+  document.getElementById('note-title-input').value = note.title||'';
+  document.getElementById('note-body-input').value = note.body||'';
+  const sel = document.getElementById('note-project-select');
+  if (sel) sel.value = note.projectId||'';
+  renderNotesList();
+};
+
+window.openNewNoteModal = async () => {
+  try {
+    const ref = await addDoc(collection(db,'notes'), {
+      title:'New Note', body:'',
+      projectId: projects[0]?.id||'',
+      authorId: currentUser.uid,
+      createdAt: serverTimestamp(), updatedAt: serverTimestamp()
+    });
+    const snap = await getDoc(ref);
+    currentNote = {id:ref.id,...snap.data()};
+    document.getElementById('note-empty-state').style.display = 'none';
+    document.getElementById('note-content').style.display = 'flex';
+    document.getElementById('note-title-input').value = '';
+    document.getElementById('note-body-input').value = '';
+    const sel = document.getElementById('note-project-select');
+    if (sel) {
+      sel.innerHTML = '<option value="">No project</option>' + projects.map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
+    }
+    document.getElementById('note-title-input').focus();
+  } catch(e) { showToast('Error: '+e.message); }
+};
+
+window.saveNote = async () => {
+  if (!currentNote) return;
+  const title = document.getElementById('note-title-input').value.trim()||'Untitled';
+  const body = document.getElementById('note-body-input').value;
+  const projectId = document.getElementById('note-project-select')?.value||'';
+  await updateDoc(doc(db,'notes',currentNote.id), { title, body, projectId, updatedAt: serverTimestamp() });
+  showToast('✅ Note saved');
+};
+
+window.deleteCurrentNote = async () => {
+  if (!currentNote) return;
+  if (!confirm('Delete this note?')) return;
+  await deleteDoc(doc(db,'notes',currentNote.id));
+  currentNote = null;
+  document.getElementById('note-content').style.display = 'none';
+  document.getElementById('note-empty-state').style.display = '';
+  showToast('Note deleted');
+};
+
+// ── CALENDAR ──
+async function loadCalendarEvents() {
+  const u = onSnapshot(collection(db,'events'), snap => {
+    calendarEvents = snap.docs.map(d=>({id:d.id,...d.data()}));
+    renderCalendar();
+  });
+  unsubscribers.push(u);
+}
+
+function renderCalendar() {
+  const label = document.getElementById('cal-month-label');
+  const grid = document.getElementById('cal-grid');
+  const upcoming = document.getElementById('cal-upcoming');
+  if (!label||!grid) return;
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  label.textContent = `${months[calendarMonth]} ${calendarYear}`;
+  const first = new Date(calendarYear,calendarMonth,1).getDay();
+  const days = new Date(calendarYear,calendarMonth+1,0).getDate();
+  const today = new Date();
+  let html = '';
+  for (let i=0;i<first;i++) {
+    const prevDay = new Date(calendarYear,calendarMonth,-first+i+1).getDate();
+    html += `<div class="cal-day other-month"><div class="cal-day-num">${prevDay}</div></div>`;
+  }
+  for (let d=1;d<=days;d++) {
+    const isToday = d===today.getDate()&&calendarMonth===today.getMonth()&&calendarYear===today.getFullYear();
+    const dateStr = `${calendarYear}-${String(calendarMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const dayEvents = calendarEvents.filter(e=>e.date===dateStr);
+    html += `<div class="cal-day${isToday?' today':''}" onclick="openNewEventModal('${dateStr}')">
+      <div class="cal-day-num">${d}</div>
+      ${dayEvents.map(e=>`<div class="cal-event-dot event-${e.type||'other'}">${e.title}</div>`).join('')}
+    </div>`;
+  }
+  grid.innerHTML = html;
+  if (upcoming) {
+    const now = new Date().toISOString().slice(0,10);
+    const soon = calendarEvents.filter(e=>e.date>=now).sort((a,b)=>a.date.localeCompare(b.date)).slice(0,6);
+    upcoming.innerHTML = soon.length===0
+      ? `<div style="color:var(--text-muted);font-size:13px">No upcoming events</div>`
+      : soon.map(e=>`
+          <div class="upcoming-event">
+            <div class="upcoming-date">${e.date?.slice(5)}</div>
+            <div class="upcoming-info"><div class="upcoming-title">${e.title}</div><div class="upcoming-type">${e.type||'other'}</div></div>
+            ${isOwner?`<button class="btn-ghost" style="color:var(--red);font-size:11px" onclick="deleteCalEvent('${e.id}')">✕</button>`:''}
+          </div>`).join('');
+  }
+}
+
+window.changeMonth = (dir) => {
+  calendarMonth += dir;
+  if (calendarMonth>11){calendarMonth=0;calendarYear++;}
+  if (calendarMonth<0){calendarMonth=11;calendarYear--;}
+  renderCalendar();
+};
+
+window.openNewEventModal = (date) => {
+  openModal('Add Event', `
+    <div class="form-group"><label class="form-label">Title</label><input class="form-input" id="ev-title" placeholder="e.g. Upload video, Game update..."/></div>
+    <div class="form-group"><label class="form-label">Date</label><input class="form-input" id="ev-date" type="date" value="${date||new Date().toISOString().slice(0,10)}"/></div>
+    <div class="form-group"><label class="form-label">Type</label>
+      <select class="form-select" id="ev-type">
+        <option value="youtube">YouTube Upload</option>
+        <option value="roblox">Roblox Update</option>
+        <option value="milestone">Milestone</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+      <button class="btn-primary" onclick="createCalEvent()">Add Event</button>
+    </div>`);
+  setTimeout(()=>document.getElementById('ev-title')?.focus(),50);
+};
+
+window.createCalEvent = async () => {
+  const title = document.getElementById('ev-title')?.value?.trim();
+  if (!title) { showToast('Enter a title'); return; }
+  await addDoc(collection(db,'events'), {
+    title, date: document.getElementById('ev-date').value,
+    type: document.getElementById('ev-type').value,
+    createdBy: currentUser.uid, createdAt: serverTimestamp()
+  });
+  closeModal(); showToast('✅ Event added');
+};
+
+window.deleteCalEvent = async (id) => {
+  await deleteDoc(doc(db,'events',id));
+};
+
+// ── TEAM CHAT ──
+function loadChat() {
+  if (chatUnsubscribe) chatUnsubscribe();
+  const sel = document.getElementById('chat-project-select');
+  if (sel) {
+    sel.innerHTML = '<option value="general">General</option>' + projects.map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
+    sel.value = chatChannel;
+  }
+  const q = query(collection(db,'messages'), where('channel','==',chatChannel));
+  chatUnsubscribe = onSnapshot(q, snap => {
+    const msgs = snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(a.createdAt?.seconds||0)-(b.createdAt?.seconds||0));
+    const container = document.getElementById('chat-messages');
+    if (!container) return;
+    const wasAtBottom = container.scrollTop+container.clientHeight>=container.scrollHeight-40;
+    const chanName = chatChannel==='general' ? 'general' : (projects.find(p=>p.id===chatChannel)?.name||chatChannel);
+    container.innerHTML = `<div style="text-align:center;color:var(--text-muted);font-size:12.5px;padding:20px 0">Start of #${chanName}</div>` +
+      msgs.map(m=>{
+        const mine = m.authorId===currentUser.uid;
+        return `<div class="chat-msg${mine?' chat-msg-mine':''}">
+          <div class="chat-avatar">${(m.authorName||'?')[0].toUpperCase()}</div>
+          <div>
+            ${!mine?`<div style="font-size:11px;color:var(--text-muted);margin-bottom:3px">${m.authorName}</div>`:''}
+            <div class="chat-bubble">${m.text}</div>
+            <div class="chat-meta">${m.createdAt?.toDate?.()?.toLocaleTimeString?.('en-US',{hour:'2-digit',minute:'2-digit'})||''}</div>
+          </div>
+        </div>`;
+      }).join('');
+    if (wasAtBottom) container.scrollTop = container.scrollHeight;
+  });
+}
+
+window.switchChatProject = (channel) => {
+  chatChannel = channel;
+  loadChat();
+};
+
+window.sendChatMessage = async () => {
+  const input = document.getElementById('chat-input');
+  const text = input?.value?.trim();
+  if (!text) return;
+  input.value = '';
+  await addDoc(collection(db,'messages'), {
+    channel: chatChannel, text,
+    authorId: currentUser.uid,
+    authorName: userProfile?.name||currentUser.displayName||currentUser.email,
+    createdAt: serverTimestamp()
+  });
+};
+
+// ── AI ASSISTANT ──
+function getStudioContext() {
+  return `Projects: ${projects.map(p=>p.name).join(', ')||'none'}. Open tasks: ${tasks.filter(t=>!t.done).length}. Team: ${teamMembers.map(m=>m.name||m.email).join(', ')||'just you'}. Files: ${files.length}.`;
+}
+
+function aiRespond(text) {
+  const t = text.toLowerCase();
+  if (t.includes('task')) return `You have ${tasks.filter(t=>!t.done).length} open tasks. High priority: ${tasks.filter(t=>!t.done&&t.priority==='high').map(t=>t.title).slice(0,3).join(', ')||'none'}.`;
+  if (t.includes('project')) return `You have ${projects.length} project${projects.length!==1?'s':''}: ${projects.map(p=>`${p.name} (${p.status})`).join(', ')||'none yet'}.`;
+  if (t.includes('team')||t.includes('member')||t.includes('dev')) return `Your team has ${teamMembers.length} member${teamMembers.length!==1?'s':''}: ${teamMembers.map(m=>m.name||m.email).join(', ')||'just you'}.`;
+  if (t.includes('file')) return `You have ${files.length} file${files.length!==1?'s':''} stored across all projects.`;
+  if (t.includes('hello')||t.includes('hi')) return `Hey! Studio snapshot: ${getStudioContext()} What do you need?`;
+  if (t.includes('help')) return 'I can answer questions about your projects, tasks, team, and files. Try "What tasks are open?" or "How many projects do I have?"';
+  return `Here\'s your studio right now: ${getStudioContext()} Is there something specific I can help with?`;
+}
+
+window.newAIConversation = () => {
+  currentAIConvId = uid();
+  aiMessages = [];
+  document.getElementById('ai-messages').innerHTML = `
+    <div style="display:flex;gap:12px;align-items:flex-start">
+      <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#A084FF);display:flex;align-items:center;justify-content:center;color:white;font-size:13px;font-weight:700;flex-shrink:0">S</div>
+      <div class="ai-bubble">Hey! I am your StudioOS assistant. Ask me anything about your projects, tasks, team, or games!</div>
+    </div>`;
+  document.getElementById('ai-conv-title-bar').textContent = 'New Conversation';
+  document.getElementById('ai-input')?.focus();
+  renderAIConvList();
+};
+
+window.sendAIMessage = async () => {
+  const input = document.getElementById('ai-input');
+  const text = input?.value?.trim();
+  if (!text) return;
+  input.value = '';
+  if (!currentAIConvId) currentAIConvId = uid();
+  const msgs = document.getElementById('ai-messages');
+  msgs.innerHTML += `
+    <div style="display:flex;gap:12px;align-items:flex-start;flex-direction:row-reverse">
+      <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--green),#1aab70);display:flex;align-items:center;justify-content:center;color:white;font-size:13px;font-weight:700;flex-shrink:0">${(userProfile?.name||'U')[0]}</div>
+      <div style="background:var(--accent-dim);border:1px solid rgba(124,92,252,0.3);border-radius:var(--radius-lg);padding:12px 16px;font-size:13.5px;line-height:1.7;color:var(--text-primary);max-width:85%">${text}</div>
+    </div>`;
+  msgs.scrollTop = msgs.scrollHeight;
+  const typingId = 'typing'+Date.now();
+  msgs.innerHTML += `
+    <div id="${typingId}" style="display:flex;gap:12px;align-items:flex-start">
+      <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#A084FF);display:flex;align-items:center;justify-content:center;color:white;font-size:13px;font-weight:700;flex-shrink:0">S</div>
+      <div class="ai-bubble"><div class="ai-typing"><span></span><span></span><span></span></div></div>
+    </div>`;
+  msgs.scrollTop = msgs.scrollHeight;
+  await new Promise(r=>setTimeout(r, 700+Math.random()*400));
+  const reply = aiRespond(text);
+  const typingEl = document.getElementById(typingId);
+  if (typingEl) typingEl.remove();
+  msgs.innerHTML += `
+    <div style="display:flex;gap:12px;align-items:flex-start">
+      <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#A084FF);display:flex;align-items:center;justify-content:center;color:white;font-size:13px;font-weight:700;flex-shrink:0">S</div>
+      <div class="ai-bubble">${reply}</div>
+    </div>`;
+  msgs.scrollTop = msgs.scrollHeight;
+  aiMessages.push({role:'user',text},{role:'ai',text:reply});
+  if (aiMessages.length===2) {
+    document.getElementById('ai-conv-title-bar').textContent = text.slice(0,40);
+    aiConversations.unshift({id:currentAIConvId,title:text.slice(0,40),msgs:[...aiMessages]});
+    renderAIConvList();
+  }
+};
+
+function renderAIConvList() {
+  const list = document.getElementById('ai-conv-list');
+  if (!list) return;
+  list.innerHTML = aiConversations.length===0
+    ? `<div style="color:var(--text-muted);font-size:12px;padding:8px">No conversations yet</div>`
+    : aiConversations.map(c=>`
+        <button onclick="loadAIConv('${c.id}')" style="text-align:left;padding:8px 10px;border-radius:var(--radius-sm);background:${c.id===currentAIConvId?'var(--accent-dim)':'transparent'};border:1px solid ${c.id===currentAIConvId?'rgba(124,92,252,0.3)':'transparent'};color:var(--text-secondary);font-size:12.5px;width:100%;cursor:pointer;font-family:var(--font-body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
+          ${c.title||'Chat'}
+        </button>`).join('');
+  const qp = document.getElementById('ai-quick-prompts');
+  if (qp) {
+    const prompts = ['What tasks are open?','How many projects do I have?','Summarize my team','What files are in the vault?'];
+    qp.innerHTML = prompts.map(p=>`<button class="ai-quick-btn" onclick="document.getElementById('ai-input').value='${p}';sendAIMessage()">${p}</button>`).join('');
+  }
+  const snap = document.getElementById('ai-snapshot');
+  if (snap) snap.innerHTML = getStudioContext().split('. ').filter(Boolean).map(s=>`<div>• ${s}</div>`).join('');
+}
+
+window.loadAIConv = (id) => {
+  const conv = aiConversations.find(c=>c.id===id);
+  if (!conv) return;
+  currentAIConvId = id;
+  aiMessages = conv.msgs;
+  document.getElementById('ai-conv-title-bar').textContent = conv.title||'Conversation';
+  const msgs = document.getElementById('ai-messages');
+  msgs.innerHTML = conv.msgs.map(m=>m.role==='user'
+    ? `<div style="display:flex;gap:12px;align-items:flex-start;flex-direction:row-reverse"><div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--green),#1aab70);display:flex;align-items:center;justify-content:center;color:white;font-size:13px;font-weight:700;flex-shrink:0">${(userProfile?.name||'U')[0]}</div><div style="background:var(--accent-dim);border:1px solid rgba(124,92,252,0.3);border-radius:var(--radius-lg);padding:12px 16px;font-size:13.5px;line-height:1.7;color:var(--text-primary);max-width:85%">${m.text}</div></div>`
+    : `<div style="display:flex;gap:12px;align-items:flex-start"><div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#A084FF);display:flex;align-items:center;justify-content:center;color:white;font-size:13px;font-weight:700;flex-shrink:0">S</div><div class="ai-bubble">${m.text}</div></div>`
+  ).join('');
+  msgs.scrollTop = msgs.scrollHeight;
+  renderAIConvList();
+};
+
+// ── ANALYTICS ──
+async function loadConnectedGames() {
+  const u = onSnapshot(collection(db,'connectedGames'), snap => {
+    connectedGames = snap.docs.map(d=>({id:d.id,...d.data()}));
+    if (connectedGames.length>0) {
+      document.getElementById('analytics-empty').style.display = 'none';
+      document.getElementById('analytics-dashboard').style.display = '';
+      renderGameSelector();
+    } else {
+      document.getElementById('analytics-empty').style.display = '';
+      document.getElementById('analytics-dashboard').style.display = 'none';
+    }
+  });
+  unsubscribers.push(u);
+}
+
+function renderGameSelector() {
+  const sel = document.getElementById('game-selector');
+  if (!sel) return;
+  sel.innerHTML = connectedGames.map((g,i)=>`<button class="game-tab${i===0?' active':''}" onclick="selectGame('${g.id}',this)">${g.name||g.universeId}</button>`).join('');
+  if (connectedGames.length>0) selectGame(connectedGames[0].id, sel.firstChild);
+}
+
+window.selectGame = (id, btn) => {
+  document.querySelectorAll('.game-tab').forEach(b=>b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  const game = connectedGames.find(g=>g.id===id);
+  if (!game) return;
+  const liveEl = document.getElementById('live-player-count');
+  if (liveEl) liveEl.textContent = `${game.name||game.universeId} — Live data requires Roblox Open Cloud API`;
+  const lastEl = document.getElementById('last-updated');
+  if (lastEl) lastEl.textContent = 'Connect API for live stats';
+  const statsEl = document.getElementById('analytics-stats');
+  if (statsEl) statsEl.innerHTML = `
+    <div class="analytics-stat-card"><div class="analytics-stat-label">Universe ID</div><div class="analytics-stat-value" style="font-size:16px">${game.universeId}</div></div>
+    <div class="analytics-stat-card"><div class="analytics-stat-label">Game Name</div><div class="analytics-stat-value" style="font-size:16px">${game.name||'—'}</div></div>
+    <div class="analytics-stat-card"><div class="analytics-stat-label">Status</div><div class="analytics-stat-value" style="font-size:14px">Connected ✓</div></div>`;
+};
+
+window.openConnectGameModal = () => {
+  openModal('Connect Roblox Game', `
+    <div class="form-group"><label class="form-label">Game Name</label><input class="form-input" id="cg-name" placeholder="e.g. Don't Blink"/></div>
+    <div class="form-group"><label class="form-label">Universe ID</label><input class="form-input" id="cg-uid" placeholder="e.g. 123456789" type="number"/></div>
+    <div style="background:var(--bg-elevated);border-radius:var(--radius-sm);padding:10px 12px;font-size:12.5px;color:var(--text-muted);margin-bottom:16px">Find it at create.roblox.com → your game URL → the number in the path</div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+      <button class="btn-primary" onclick="connectGame()">Connect</button>
+    </div>`);
+};
+
+window.connectGame = async () => {
+  const name = document.getElementById('cg-name')?.value?.trim();
+  const universeId = document.getElementById('cg-uid')?.value?.trim();
+  if (!universeId) { showToast('Enter a Universe ID'); return; }
+  await addDoc(collection(db,'connectedGames'),{ name, universeId, connectedBy: currentUser.uid, createdAt: serverTimestamp() });
+  closeModal(); showToast('✅ Game connected');
+};
+
+window.refreshAnalytics = () => showToast('Live data requires Roblox Open Cloud API setup');
+
+// ── YOUTUBE ──
+async function loadYouTubeData() {
+  const u = onSnapshot(collection(db,'youtubeChannels'), snap => {
+    youtubeChannels = snap.docs.map(d=>({id:d.id,...d.data()}));
+    if (youtubeChannels.length>0) {
+      document.getElementById('youtube-empty').style.display = 'none';
+      document.getElementById('youtube-dashboard').style.display = '';
+      renderYTDashboard();
+    } else {
+      document.getElementById('youtube-empty').style.display = '';
+      document.getElementById('youtube-dashboard').style.display = 'none';
+    }
+  });
+  unsubscribers.push(u);
+  const pu = onSnapshot(collection(db,'ytVideos'), snap => {
+    ytPipeline = snap.docs.map(d=>({id:d.id,...d.data()}));
+    renderYTPipeline();
+  });
+  unsubscribers.push(pu);
+}
+
+function renderYTDashboard() {
+  const sel = document.getElementById('channel-selector');
+  if (sel) sel.innerHTML = youtubeChannels.map((c,i)=>`<button class="game-tab${i===0?' active':''}">${c.name||c.channelId}</button>`).join('');
+  const stats = document.getElementById('yt-stats');
+  if (stats) stats.innerHTML = `
+    <div class="stat-card"><span class="stat-label">Channel</span><span class="stat-value" style="font-size:16px">${youtubeChannels[0]?.name||'—'}</span></div>
+    <div class="stat-card"><span class="stat-label">Channel ID</span><span class="stat-value" style="font-size:13px">${youtubeChannels[0]?.channelId||'—'}</span></div>
+    <div class="stat-card"><span class="stat-label">Pipeline</span><span class="stat-value">${ytPipeline.length}</span></div>
+    <div class="stat-card"><span class="stat-label">Status</span><span class="stat-value" style="font-size:14px">Connected ✓</span></div>`;
+  renderYTPipeline();
+}
+
+function renderYTPipeline() {
+  const container = document.getElementById('yt-pipeline');
+  if (!container) return;
+  container.innerHTML = ytPipeline.length===0
+    ? `<div style="color:var(--text-muted);font-size:13px">No videos in pipeline — add one!</div>`
+    : [...ytPipeline].sort((a,b)=>(a.createdAt?.seconds||0)-(b.createdAt?.seconds||0)).map(v=>`
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;background:var(--bg-elevated);border-radius:var(--radius-sm);border:1px solid var(--border)">
+          <div>
+            <div style="font-size:13px;font-weight:600;color:var(--text-primary)">${v.title}</div>
+            <div style="font-size:11.5px;color:var(--text-muted);margin-top:2px">${v.stage}</div>
+          </div>
+          <div style="display:flex;gap:4px">
+            ${v.stage!=='published'?`<button class="btn-ghost" style="font-size:11px;padding:3px 7px" onclick="advanceVideo('${v.id}')">→</button>`:'<span style="font-size:13px">✅</span>'}
+            <button class="btn-ghost" style="font-size:11px;padding:3px 7px;color:var(--red)" onclick="deleteVideo('${v.id}')">✕</button>
+          </div>
+        </div>`).join('');
+}
+
+window.openConnectYouTubeModal = () => {
+  openModal('Connect YouTube Channel', `
+    <div class="form-group"><label class="form-label">Channel Name</label><input class="form-input" id="yt-name" placeholder="Your channel name"/></div>
+    <div class="form-group"><label class="form-label">Channel ID</label><input class="form-input" id="yt-cid" placeholder="UCxxxxxxxxxx — from your channel URL"/></div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+      <button class="btn-primary" onclick="connectYT()">Connect</button>
+    </div>`);
+};
+
+window.connectYT = async () => {
+  const name = document.getElementById('yt-name')?.value?.trim();
+  const channelId = document.getElementById('yt-cid')?.value?.trim();
+  if (!channelId) { showToast('Enter a Channel ID'); return; }
+  await addDoc(collection(db,'youtubeChannels'),{ name, channelId, connectedBy: currentUser.uid, createdAt: serverTimestamp() });
+  closeModal(); showToast('✅ Channel connected');
+};
+
+window.openAddVideoModal = () => {
+  openModal('Add Video to Pipeline', `
+    <div class="form-group"><label class="form-label">Video Title</label><input class="form-input" id="vid-title" placeholder="e.g. Don't Blink Official Trailer"/></div>
+    <div class="form-group"><label class="form-label">Stage</label>
+      <select class="form-select" id="vid-stage">
+        <option value="idea">Idea</option>
+        <option value="scripting">Scripting</option>
+        <option value="filming">Filming</option>
+        <option value="editing">Editing</option>
+        <option value="published">Published</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+      <button class="btn-primary" onclick="addVideo()">Add</button>
+    </div>`);
+  setTimeout(()=>document.getElementById('vid-title')?.focus(),50);
+};
+
+window.addVideo = async () => {
+  const title = document.getElementById('vid-title')?.value?.trim();
+  if (!title) { showToast('Enter a title'); return; }
+  await addDoc(collection(db,'ytVideos'),{ title, stage: document.getElementById('vid-stage').value, createdBy: currentUser.uid, createdAt: serverTimestamp() });
+  closeModal(); showToast('✅ Video added to pipeline');
+};
+
+window.advanceVideo = async (id) => {
+  const stages = ['idea','scripting','filming','editing','published'];
+  const v = ytPipeline.find(v=>v.id===id);
+  if (!v) return;
+  const next = stages[Math.min(stages.indexOf(v.stage)+1, stages.length-1)];
+  await updateDoc(doc(db,'ytVideos',id),{ stage: next });
+  showToast(`Moved to ${next}`);
+};
+
+window.deleteVideo = async (id) => {
+  await deleteDoc(doc(db,'ytVideos',id));
+};
+
+// ── AD ADVISOR ──
+window.generateAdStrategy = () => {
+  const game = connectedGames[0];
+  if (!game) { showToast('Connect a game in Analytics first'); showView('analytics'); return; }
+  const content = document.getElementById('ads-content');
+  if (!content) return;
+  content.innerHTML = `
+    <div class="strategy-card">
+      <div style="font-family:var(--font-display);font-size:17px;font-weight:700;color:var(--text-primary);margin-bottom:4px">Ad Strategy for ${game.name||'Your Game'}</div>
+      <div style="color:var(--text-muted);font-size:13px;margin-bottom:16px">Generated based on your connected game</div>
+      <div class="strategy-step"><div class="step-num">1</div><div class="step-content"><div class="step-title">Start with Sponsored Experiences</div><div class="step-desc">Run a small 1,000 Robux test budget targeting ages 10-16. This is the most measurable format and lets you see direct game traffic increases.</div></div></div>
+      <div class="strategy-step"><div class="step-num">2</div><div class="step-content"><div class="step-title">Create a compelling thumbnail</div><div class="step-desc">Your thumbnail is the #1 factor in ad CTR. Show the scariest or most exciting moment in ${game.name||'your game'} with bold text like "CAN YOU ESCAPE?"</div></div></div>
+      <div class="strategy-step"><div class="step-num">3</div><div class="step-content"><div class="step-title">Upload a YouTube video first</div><div class="step-desc">Games that have a YouTube trailer see 2-3x better ad performance. Upload a 60-90 second gameplay clip before running ads.</div></div></div>
+      <div class="strategy-step"><div class="step-num">4</div><div class="step-content"><div class="step-title">Run ads on Friday 3-8pm EST</div><div class="step-desc">This is peak Roblox hours for your target age group. Weekend afternoons get the most player volume at the lowest cost.</div></div></div>
+      <div class="strategy-step"><div class="step-num">5</div><div class="step-content"><div class="step-title">Scale what works</div><div class="step-desc">After 7 days, check which ad creative got the most visits. Double the budget on the winner, pause the loser.</div></div></div>
+    </div>`;
+};
+</script>
+</body>
+</html>
