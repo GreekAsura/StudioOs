@@ -1512,24 +1512,30 @@ window.openProject = (id) => {
     </div>`;
 
   const tabs = ['overview','tasks','files',isOwner?'team':''].filter(Boolean);
-  document.getElementById('project-tabs').innerHTML = tabs.map(t =>
-    `<button class="tab-btn ${t==='overview'?'active':''}" data-tab="${t}" onclick="switchProjectTab('${project.id}','${t}')">${t.charAt(0).toUpperCase()+t.slice(1)}</button>`
-  ).join('');
+  const tabsContainer = document.getElementById('project-tabs');
+  tabsContainer.innerHTML = '';
+  tabs.forEach(t => {
+    const btn = document.createElement('button');
+    btn.className = 'tab-btn' + (t === 'overview' ? ' active' : '');
+    btn.dataset.tab = t;
+    btn.textContent = t.charAt(0).toUpperCase() + t.slice(1);
+    btn.addEventListener('click', () => {
+      currentProjectTab = t;
+      tabsContainer.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === t));
+      renderProjectDetail(project);
+    });
+    tabsContainer.appendChild(btn);
+  });
 
   renderProjectDetail(project);
   showView('project-detail');
 };
 
+// Tab switching handled by event listeners in openProject
 window.switchProjectTab = (id, tab) => {
   currentProjectTab = tab;
-  document.querySelectorAll('.tab-btn').forEach(b => {
-    b.classList.toggle('active', b.dataset.tab === tab);
-  });
   const project = projects.find(p=>p.id===id);
-  if (project) {
-    currentProject = project;
-    renderProjectDetail(project);
-  }
+  if (project) { currentProject = project; renderProjectDetail(project); }
 };
 
 function renderProjectDetail(project) {
