@@ -1535,7 +1535,7 @@ window.openProject = (id) => {
 window.switchProjectTab = (id, tab) => {
   currentProjectTab = tab;
   const project = projects.find(p=>p.id===id);
-  if (project) { currentProject = project; renderProjectDetail(project); }
+  if (project) { currentProject = project; renderProjectDetail(project, currentProjectTab); }
 };
 
 function renderProjectDetail(project, forceTab) {
@@ -1674,7 +1674,7 @@ window.addMemberToProject = async (projectId, memberId) => {
   projFiles.forEach(f => batch.push(updateDoc(doc(db,'files',f.id), { projectMemberIds: newIds })));
   await Promise.all(batch);
   showToast('✅ Member added to project');
-  renderProjectDetail(projects.find(p=>p.id===projectId));
+  renderProjectDetail(projects.find(p=>p.id===projectId), currentProjectTab);
 };
 
 window.removeMemberFromProject = async (projectId, memberId) => {
@@ -1767,7 +1767,7 @@ window.createTask = async (projectId) => {
     createdAt: serverTimestamp(),
   });
   closeModal(); showToast('✅ Task added');
-  if (currentProject?.id===projectId) renderProjectDetail(currentProject);
+  if (currentProject?.id===projectId) renderProjectDetail(currentProject, currentProjectTab);
 };
 
 window.toggleTask = async (id, el) => {
@@ -1788,12 +1788,12 @@ window.cycleTaskStatus = async (id) => {
   const next = cycle[(cycle.indexOf(task.status)+1)%cycle.length];
   await updateDoc(doc(db,'tasks',id), { status: next, done: next==='done' });
   showToast(`Moved to ${next}`);
-  if (currentProject) renderProjectDetail(currentProject);
+  if (currentProject) renderProjectDetail(currentProject, currentProjectTab);
 };
 
 window.deleteTask = async (id) => {
   await deleteDoc(doc(db,'tasks',id));
-  if (currentProject) renderProjectDetail(currentProject);
+  if (currentProject) renderProjectDetail(currentProject, currentProjectTab);
 };
 
 function renderTasks() {
@@ -1956,7 +1956,7 @@ async function uploadFiles(files, projectId) {
               '<div class="upload-progress-bar"><div class="upload-progress-fill" style="width:100%"></div></div>' +
               '<span style="color:var(--green);font-size:13px;font-weight:600">✓ Done</span>';
             showToast(file.name + ' uploaded!');
-            if (currentProject?.id === projectId) renderProjectDetail(currentProject);
+            if (currentProject?.id === projectId) renderProjectDetail(currentProject, currentProjectTab);
             resolve();
           } else {
             reject(new Error('Upload failed: ' + xhr.status));
@@ -1995,7 +1995,7 @@ window.addFileByLink = async () => {
     document.getElementById('f-url').value = '';
     document.getElementById('f-name').value = '';
     showToast('Link added');
-    if (currentProject?.id === projectId) renderProjectDetail(currentProject);
+    if (currentProject?.id === projectId) renderProjectDetail(currentProject, currentProjectTab);
   } catch(e) { showToast('Error: ' + e.message); }
 };
 
@@ -2011,12 +2011,12 @@ window.createFile = async (projectId) => {
     createdAt: serverTimestamp(),
   });
   closeModal(); showToast('✅ File added');
-  if (currentProject?.id===projectId) renderProjectDetail(currentProject);
+  if (currentProject?.id===projectId) renderProjectDetail(currentProject, currentProjectTab);
 };
 
 window.deleteFile = async (id) => {
   await deleteDoc(doc(db,'files',id));
-  if (currentProject) renderProjectDetail(currentProject);
+  if (currentProject) renderProjectDetail(currentProject, currentProjectTab);
 };
 
 function renderFiles() {
