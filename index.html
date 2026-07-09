@@ -1522,12 +1522,12 @@ window.openProject = (id) => {
     btn.addEventListener('click', () => {
       currentProjectTab = t;
       tabsContainer.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === t));
-      renderProjectDetail(project);
+      renderProjectDetail(project, t);
     });
     tabsContainer.appendChild(btn);
   });
 
-  renderProjectDetail(project);
+  renderProjectDetail(project, 'overview');
   showView('project-detail');
 };
 
@@ -1538,9 +1538,9 @@ window.switchProjectTab = (id, tab) => {
   if (project) { currentProject = project; renderProjectDetail(project); }
 };
 
-function renderProjectDetail(project) {
+function renderProjectDetail(project, forceTab) {
   if (!project) return;
-  const tab = currentProjectTab;
+  const tab = forceTab || currentProjectTab;
   const container = document.getElementById('project-detail-content');
   const projTasks = tasks.filter(t=>t.projectId===project.id);
   const projFiles = files.filter(f=>f.projectId===project.id);
